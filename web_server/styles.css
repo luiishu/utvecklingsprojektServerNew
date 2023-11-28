@@ -1,0 +1,36 @@
+/*
+input {
+    background-color : #9cf;
+    color : #000;
+}*/
+
+li {
+    float: left;
+    padding-left: 10px;
+    list-style-type: none;
+    nav-left: auto;
+}
+
+input, textarea, select {
+    background-color :ghostwhite;
+    color : #000;
+
+
+}
+form {
+    border : 1px solid #000;
+    padding : 5px;
+    background-color:darkseagreen;
+    background-image: linear-gradient(to right, rgb(163, 163, 219),  white);
+}
+
+h1 {
+    /*background-color: darkseagreen;*/
+    background-image: linear-gradient(to right,rgb(140, 140, 227),  white);
+    /*border : 1px solid #000;*/
+}
+
+h2 {
+    position: relative;
+    left: 0;
+}

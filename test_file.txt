@@ -1,0 +1,255 @@
+
+C:\Users\mekka\Documents\programming\rust\utvecklingsprojekt\server>cargo run
+warning: unused imports: `BufReader`, `fs`, `process`, `self`
+ --> src\lib.rs:2:5
+  |
+2 |     fs,
+  |     ^^
+3 |     io::{self, prelude::*, BufReader},
+  |          ^^^^              ^^^^^^^^^
+4 |     net::{IpAddr, Ipv4Addr,SocketAddr,  TcpListener, TcpStream},
+5 |     process,
+  |     ^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` on by default
+
+warning: `server` (lib) generated 1 warning (run `cargo fix --lib -p server` to apply 1 suggestion)
+   Compiling server v0.1.0 (C:\Users\mekka\Documents\programming\rust\utvecklingsprojekt\server)
+warning: unused imports: `BufReader`, `IpAddr`, `Ipv4Addr`, `SocketAddr`, `fs`, `self`
+ --> src\main.rs:2:5
+  |
+2 |     fs,
+  |     ^^
+3 |     io::{self, prelude::*, BufReader},
+  |          ^^^^              ^^^^^^^^^
+4 |     net::{IpAddr, Ipv4Addr,SocketAddr,  TcpListener, TcpStream},
+  |           ^^^^^^  ^^^^^^^^ ^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` on by default
+
+warning: unused import: `rand::Rng`
+ --> src\main.rs:8:5
+  |
+8 | use rand::Rng;
+  |     ^^^^^^^^^
+
+warning: unused imports: `BufReader`, `IpAddr`, `Ipv4Addr`, `SocketAddr`, `TcpListener`, `TcpStream`, `fs`, `prelude::*`, `process`, `self`
+ --> src\init.rs:2:5
+  |
+2 |     fs,
+  |     ^^
+3 |     io::{self, prelude::*, BufReader},
+  |          ^^^^  ^^^^^^^^^^  ^^^^^^^^^
+4 |     net::{IpAddr, Ipv4Addr,SocketAddr,  TcpListener, TcpStream},
+  |           ^^^^^^  ^^^^^^^^ ^^^^^^^^^^   ^^^^^^^^^^^  ^^^^^^^^^
+5 |     process,
+  |     ^^^^^^^
+
+warning: unused imports: `BufReader`, `prelude::*`, `self`
+ --> src\get_handler.rs:3:10
+  |
+3 |     io::{self, prelude::*, BufReader},
+  |          ^^^^  ^^^^^^^^^^  ^^^^^^^^^
+
+warning: unused imports: `BufReader`, `prelude::*`, `self`
+ --> src\post_handler.rs:3:10
+  |
+3 |     io::{self, prelude::*, BufReader},
+  |          ^^^^  ^^^^^^^^^^  ^^^^^^^^^
+
+warning: unused variable: `filename`
+  --> src\post_handler.rs:11:23
+   |
+11 |     let (status_line, filename) = ("HTTP/1.1 204 No Content", "index.html");
+   |                       ^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_filename`
+   |
+   = note: `#[warn(unused_variables)]` on by default
+
+warning: value assigned to `response` is never read
+  --> src\main.rs:92:13
+   |
+92 |     let mut response = String::new();
+   |             ^^^^^^^^
+   |
+   = help: maybe it is overwritten before being read?
+   = note: `#[warn(unused_assignments)]` on by default
+
+warning: unused variable: `body`
+   --> src\main.rs:102:17
+    |
+102 |         let mut body = server::get_body_line(&http_request);
+    |                 ^^^^ help: if this is intentional, prefix it with an underscore: `_body`
+
+warning: unused variable: `counter`
+  --> src\main.rs:64:49
+   |
+64 | fn handle_connection(mut stream: TcpStream, mut counter: i32) {
+   |                                                 ^^^^^^^ help: if this is intentional, prefix it with an underscore: `_counter`
+
+warning: variable does not need to be mutable
+  --> src\main.rs:64:45
+   |
+64 | fn handle_connection(mut stream: TcpStream, mut counter: i32) {
+   |                                             ----^^^^^^^
+   |                                             |
+   |                                             help: remove this `mut`
+   |
+   = note: `#[warn(unused_mut)]` on by default
+
+warning: variable does not need to be mutable
+   --> src\main.rs:102:13
+    |
+102 |         let mut body = server::get_body_line(&http_request);
+    |             ----^^^^
+    |             |
+    |             help: remove this `mut`
+
+warning: constant `LOCALHOST_IP_V4` is never used
+  --> src\main.rs:21:7
+   |
+21 | const LOCALHOST_IP_V4: &str = "127.0.0.1";
+   |       ^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` on by default
+
+warning: constant `SERVER_IP_V4` is never used
+  --> src\main.rs:22:7
+   |
+22 | const SERVER_IP_V4: &str = "192.168.1.178";
+   |       ^^^^^^^^^^^^
+
+warning: constant `RUST_PORT` is never used
+  --> src\main.rs:24:7
+   |
+24 | const RUST_PORT: u16 = 7878;
+   |       ^^^^^^^^^
+
+warning: `server` (bin "server") generated 14 warnings (run `cargo fix --bin "server"` to apply 10 suggestions)
+    Finished dev [unoptimized + debuginfo] target(s) in 0.89s
+     Running `target\debug\server.exe`
+Hello!
+
+Initializing server...
+Running server on: 127.0.0.1:7878
+Connection established! Counter 1
+================================================
+HTTP request:
+GET /grattis HTTP/1.1
+Host: localhost:7878
+Connection: keep-alive
+Cache-Control: max-age=0
+sec-ch-ua: "Google Chrome";v="119", "Chromium";v="119", "Not?A_Brand";v="24"
+sec-ch-ua-mobile: ?0
+sec-ch-ua-platform: "Windows"
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+Sec-Fetch-Site: none
+Sec-Fetch-Mode: navigate
+Sec-Fetch-User: ?1
+Sec-Fetch-Dest: document
+Accept-Encoding: gzip, deflate, br
+Accept-Language: sv-SE,sv;q=0.9,en-US;q=0.8,en;q=0.7
+
+
+================================================
+Request line print: GET /grattis HTTP/1.1
+Request line: GET /grattis HTTP/1.1
+================================================
+Incoming GET-request from client!
+---------------------------------------------------------
+Hello from handle_get_request!
+Request line received: GET /grattis HTTP/1.1
+banana
+Response from helper:
+ HTTP/1.1 200 OK
+Content-Length: 478
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Grattis på fars dag!</title>
+  </head>
+  <body>
+    <h1>Grattis på fars dag!</h1>
+    <img src="pogoPartyHatters.png" alt="gratulationer">
+
+
+    <!--
+    <img src="/server/grattis.html/pogoPartyHatters.png" alt="gratulationer">
+    <img src="server/pogoPartyHatters.png" alt="gratulationer">
+    <img src="/pogoPartyHatters.png" alt="gratulationer">
+
+  -->
+
+  </body>
+</html>
+
+---------------------------------------------------------
+Connection established! Counter 2
+================================================
+HTTP request:
+GET /pogoPartyHatters.png HTTP/1.1
+Host: localhost:7878
+Connection: keep-alive
+sec-ch-ua: "Google Chrome";v="119", "Chromium";v="119", "Not?A_Brand";v="24"
+sec-ch-ua-mobile: ?0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36
+sec-ch-ua-platform: "Windows"
+Accept: image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8
+Sec-Fetch-Site: same-origin
+Sec-Fetch-Mode: no-cors
+Sec-Fetch-Dest: image
+Referer: http://localhost:7878/grattis
+Accept-Encoding: gzip, deflate, br
+Accept-Language: sv-SE,sv;q=0.9,en-US;q=0.8,en;q=0.7
+
+
+================================================
+Request line print: GET /pogoPartyHatters.png HTTP/1.1
+Request line: GET /pogoPartyHatters.png HTTP/1.1
+================================================
+Incoming GET-request from client!
+---------------------------------------------------------
+Hello from handle_get_request!
+Request line received: GET /pogoPartyHatters.png HTTP/1.1
+banana
+Response from helper:
+ HTTP/1.1 200 OK
+Content-Length: 478
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Grattis på fars dag!</title>
+  </head>
+  <body>
+    <h1>Grattis på fars dag!</h1>
+    <img src="pogoPartyHatters.png" alt="gratulationer">
+
+
+    <!--
+    <img src="/server/grattis.html/pogoPartyHatters.png" alt="gratulationer">
+    <img src="server/pogoPartyHatters.png" alt="gratulationer">
+    <img src="/pogoPartyHatters.png" alt="gratulationer">
+
+  -->
+
+  </body>
+</html>
+
+---------------------------------------------------------
+Connection established! Counter 3
+
+
+
+################################################################################
+thread 'main' panicked at 'called `Result::unwrap()` on an `Err` value: Os
+{ code: 10053, kind: ConnectionAborted, message: "An established connection was aborted by the software in your host machine." }',
+src\main.rs:158:47
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+error: process didn't exit successfully: `target\debug\server.exe` (exit code: 101)
+
+// Line in main: stream.write_all(response.as_bytes()).unwrap(); // send http response to client

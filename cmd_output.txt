@@ -1,0 +1,451 @@
+
+C:\Users\mekka\Documents\programming\rust\utvecklingsprojekt\server>cargo run
+warning: unused import: `rand::Rng`
+ --> src\main.rs:8:5
+  |
+8 | use rand::Rng;
+  |     ^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` on by default
+
+warning: unused variable: `filename`
+   --> src\main.rs:126:23
+    |
+126 |     let (status_line, filename) = ("HTTP/1.1 200 OK", "index.html");
+    |                       ^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_filename`
+    |
+    = note: `#[warn(unused_variables)]` on by default
+
+warning: unused variable: `counter`
+   --> src\main.rs:106:54
+    |
+106 | fn handle_connection_test(mut stream: TcpStream, mut counter: i32) {
+    |                                                      ^^^^^^^ help: if this is intentional, prefix it with an underscore: `_counter`
+
+warning: variable does not need to be mutable
+   --> src\main.rs:106:50
+    |
+106 | fn handle_connection_test(mut stream: TcpStream, mut counter: i32) {
+    |                                                  ----^^^^^^^
+    |                                                  |
+    |                                                  help: remove this `mut`
+    |
+    = note: `#[warn(unused_mut)]` on by default
+
+warning: unused variable: `buf_reader`
+   --> src\main.rs:136:13
+    |
+136 |     let mut buf_reader = BufReader::new(&mut stream);
+    |             ^^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_buf_reader`
+
+warning: unused variable: `counter`
+   --> src\main.rs:135:55
+    |
+135 | fn handle_connection_test2(mut stream: TcpStream, mut counter: i32) {
+    |                                                       ^^^^^^^ help: if this is intentional, prefix it with an underscore: `_counter`
+
+warning: variable does not need to be mutable
+   --> src\main.rs:135:51
+    |
+135 | fn handle_connection_test2(mut stream: TcpStream, mut counter: i32) {
+    |                                                   ----^^^^^^^
+    |                                                   |
+    |                                                   help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> src\main.rs:136:9
+    |
+136 |     let mut buf_reader = BufReader::new(&mut stream);
+    |         ----^^^^^^^^^^
+    |         |
+    |         help: remove this `mut`
+
+warning: value assigned to `response` is never read
+   --> src\main.rs:189:13
+    |
+189 |     let mut response = String::new();
+    |             ^^^^^^^^
+    |
+    = help: maybe it is overwritten before being read?
+    = note: `#[warn(unused_assignments)]` on by default
+
+warning: unused variable: `counter`
+   --> src\main.rs:161:49
+    |
+161 | fn handle_connection(mut stream: TcpStream, mut counter: i32) {
+    |                                                 ^^^^^^^ help: if this is intentional, prefix it with an underscore: `_counter`
+
+warning: variable does not need to be mutable
+   --> src\main.rs:161:45
+    |
+161 | fn handle_connection(mut stream: TcpStream, mut counter: i32) {
+    |                                             ----^^^^^^^
+    |                                             |
+    |                                             help: remove this `mut`
+
+warning: unused variable: `filename`
+   --> src\main.rs:230:23
+    |
+230 |     let (status_line, filename) = ("HTTP/1.1 200 OK", "index.html");
+    |                       ^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_filename`
+
+warning: unused variable: `counter`
+   --> src\main.rs:213:53
+    |
+213 | fn handle_connection_new(mut stream: TcpStream, mut counter: i32) {
+    |                                                     ^^^^^^^ help: if this is intentional, prefix it with an underscore: `_counter`
+
+warning: variable does not need to be mutable
+   --> src\main.rs:213:49
+    |
+213 | fn handle_connection_new(mut stream: TcpStream, mut counter: i32) {
+    |                                                 ----^^^^^^^
+    |                                                 |
+    |                                                 help: remove this `mut`
+
+warning: unused variable: `filename`
+   --> src\main.rs:270:23
+    |
+270 |     let (status_line, filename) = ("HTTP/1.1 204 No Content", "index.html");
+    |                       ^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_filename`
+
+warning: variable does not need to be mutable
+   --> src\main.rs:283:9
+    |
+283 |     let mut buf_reader = BufReader::new(file);
+    |         ----^^^^^^^^^^
+    |         |
+    |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> src\main.rs:292:9
+    |
+292 |     let mut buf_reader = BufReader::new(file);
+    |         ----^^^^^^^^^^
+    |         |
+    |         help: remove this `mut`
+
+warning: constant `LOCALHOST_IP_V4` is never used
+  --> src\main.rs:15:7
+   |
+15 | const LOCALHOST_IP_V4: &str = "127.0.0.1";
+   |       ^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` on by default
+
+warning: constant `SERVER_IP_V4` is never used
+  --> src\main.rs:16:7
+   |
+16 | const SERVER_IP_V4: &str = "192.168.1.178";
+   |       ^^^^^^^^^^^^
+
+warning: function `init_database` is never used
+  --> src\main.rs:92:4
+   |
+92 | fn init_database() {
+   |    ^^^^^^^^^^^^^
+
+warning: function `handle_connection_test` is never used
+   --> src\main.rs:106:4
+    |
+106 | fn handle_connection_test(mut stream: TcpStream, mut counter: i32) {
+    |    ^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `handle_connection_test2` is never used
+   --> src\main.rs:135:4
+    |
+135 | fn handle_connection_test2(mut stream: TcpStream, mut counter: i32) {
+    |    ^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `handle_connection_new` is never used
+   --> src\main.rs:213:4
+    |
+213 | fn handle_connection_new(mut stream: TcpStream, mut counter: i32) {
+    |    ^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `test_bufReader` is never used
+   --> src\main.rs:280:4
+    |
+280 | fn test_bufReader() {
+    |    ^^^^^^^^^^^^^^
+
+warning: function `test_array_buffer` is never used
+   --> src\main.rs:313:4
+    |
+313 | fn test_array_buffer() {
+    |    ^^^^^^^^^^^^^^^^^
+
+warning: function `test_bufReader` should have a snake case name
+   --> src\main.rs:280:4
+    |
+280 | fn test_bufReader() {
+    |    ^^^^^^^^^^^^^^ help: convert the identifier to snake case: `test_buf_reader`
+    |
+    = note: `#[warn(non_snake_case)]` on by default
+
+warning: `server` (bin "server") generated 26 warnings (run `cargo fix --bin "server"` to apply 16 suggestions)
+    Finished dev [unoptimized + debuginfo] target(s) in 0.29s
+     Running `target\debug\server.exe`
+
+Initializing server...
+Running server on: 127.0.0.1:7878
+Connection established! Counter 1
+================================================
+HTTP request:
+GET / HTTP/1.1
+Host: localhost:7878
+Connection: keep-alive
+Cache-Control: max-age=0
+sec-ch-ua: "Google Chrome";v="119", "Chromium";v="119", "Not?A_Brand";v="24"
+sec-ch-ua-mobile: ?0
+sec-ch-ua-platform: "Windows"
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+Sec-Fetch-Site: none
+Sec-Fetch-Mode: navigate
+Sec-Fetch-User: ?1
+Sec-Fetch-Dest: document
+Accept-Encoding: gzip, deflate, br
+Accept-Language: sv-SE,sv;q=0.9,en-US;q=0.8,en;q=0.7
+
+
+================================================
+Request line print: GET / HTTP/1.1
+Request line: GET / HTTP/1.1
+================================================
+Incoming GET-request from client!
+---------------------------------------------------------
+Hello from handle_post_request!
+Request line received: GET / HTTP/1.1
+---------------------------------------------------------
+Connection established! Counter 2
+================================================
+HTTP request:
+POST /index.html HTTP/1.1
+Host: localhost:7878
+Connection: keep-alive
+Content-Length: 24
+Cache-Control: max-age=0
+sec-ch-ua: "Google Chrome";v="119", "Chromium";v="119", "Not?A_Brand";v="24"
+sec-ch-ua-mobile: ?0
+sec-ch-ua-platform: "Windows"
+Upgrade-Insecure-Requests: 1
+Origin: http://localhost:7878
+Content-Type: application/x-www-form-urlencoded
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+Sec-Fetch-Site: same-origin
+Sec-Fetch-Mode: navigate
+Sec-Fetch-User: ?1
+Sec-Fetch-Dest: document
+Referer: http://localhost:7878/
+Accept-Encoding: gzip, deflate, br
+Accept-Language: sv-SE,sv;q=0.9,en-US;q=0.8,en;q=0.7
+
+fname=John&lname=Johnson
+================================================
+Request line print: POST /index.html HTTP/1.1
+Request line: POST /index.html HTTP/1.1
+================================================
+Incoming POST-request from client!
+a
+b
+Request body:
+c
+---------------------------------------------------------
+Hello from handle_post_request!
+Request line received: POST /index.html HTTP/1.1
+---------------------------------------------------------
+Connection established! Counter 3
+================================================
+HTTP request:
+GET / HTTP/1.1
+Host: localhost:7878
+Connection: keep-alive
+Cache-Control: max-age=0
+sec-ch-ua: "Google Chrome";v="119", "Chromium";v="119", "Not?A_Brand";v="24"
+sec-ch-ua-mobile: ?0
+sec-ch-ua-platform: "Windows"
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+Sec-Fetch-Site: none
+Sec-Fetch-Mode: navigate
+Sec-Fetch-User: ?1
+Sec-Fetch-Dest: document
+Accept-Encoding: gzip, deflate, br
+Accept-Language: sv-SE,sv;q=0.9,en-US;q=0.8,en;q=0.7
+
+
+================================================
+Request line print: GET / HTTP/1.1
+Request line: GET / HTTP/1.1
+================================================
+Incoming GET-request from client!
+---------------------------------------------------------
+Hello from handle_post_request!
+Request line received: GET / HTTP/1.1
+---------------------------------------------------------
+Connection established! Counter 4
+================================================
+HTTP request:
+GET / HTTP/1.1
+Host: localhost:7878
+Connection: keep-alive
+Cache-Control: max-age=0
+sec-ch-ua: "Google Chrome";v="119", "Chromium";v="119", "Not?A_Brand";v="24"
+sec-ch-ua-mobile: ?0
+sec-ch-ua-platform: "Windows"
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+Sec-Fetch-Site: none
+Sec-Fetch-Mode: navigate
+Sec-Fetch-User: ?1
+Sec-Fetch-Dest: document
+Accept-Encoding: gzip, deflate, br
+Accept-Language: sv-SE,sv;q=0.9,en-US;q=0.8,en;q=0.7
+
+
+================================================
+Request line print: GET / HTTP/1.1
+Request line: GET / HTTP/1.1
+================================================
+Incoming GET-request from client!
+---------------------------------------------------------
+Hello from handle_post_request!
+Request line received: GET / HTTP/1.1
+---------------------------------------------------------
+Connection established! Counter 5
+================================================
+HTTP request:
+GET / HTTP/1.1
+Host: localhost:7878
+Connection: keep-alive
+Cache-Control: max-age=0
+sec-ch-ua: "Google Chrome";v="119", "Chromium";v="119", "Not?A_Brand";v="24"
+sec-ch-ua-mobile: ?0
+sec-ch-ua-platform: "Windows"
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+Sec-Fetch-Site: none
+Sec-Fetch-Mode: navigate
+Sec-Fetch-User: ?1
+Sec-Fetch-Dest: document
+Accept-Encoding: gzip, deflate, br
+Accept-Language: sv-SE,sv;q=0.9,en-US;q=0.8,en;q=0.7
+
+
+================================================
+Request line print: GET / HTTP/1.1
+Request line: GET / HTTP/1.1
+================================================
+Incoming GET-request from client!
+---------------------------------------------------------
+Hello from handle_post_request!
+Request line received: GET / HTTP/1.1
+---------------------------------------------------------
+Connection established! Counter 6
+================================================
+HTTP request:
+POST /index.html HTTP/1.1
+Host: localhost:7878
+Connection: keep-alive
+Content-Length: 24
+Cache-Control: max-age=0
+sec-ch-ua: "Google Chrome";v="119", "Chromium";v="119", "Not?A_Brand";v="24"
+sec-ch-ua-mobile: ?0
+sec-ch-ua-platform: "Windows"
+Upgrade-Insecure-Requests: 1
+Origin: http://localhost:7878
+Content-Type: application/x-www-form-urlencoded
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+Sec-Fetch-Site: same-origin
+Sec-Fetch-Mode: navigate
+Sec-Fetch-User: ?1
+Sec-Fetch-Dest: document
+Referer: http://localhost:7878/
+Accept-Encoding: gzip, deflate, br
+Accept-Language: sv-SE,sv;q=0.9,en-US;q=0.8,en;q=0.7
+
+fname=John&lname=Johnson
+================================================
+Request line print: POST /index.html HTTP/1.1
+Request line: POST /index.html HTTP/1.1
+================================================
+Incoming POST-request from client!
+a
+b
+Request body:
+c
+---------------------------------------------------------
+Hello from handle_post_request!
+Request line received: POST /index.html HTTP/1.1
+---------------------------------------------------------
+Connection established! Counter 7
+================================================
+HTTP request:
+GET / HTTP/1.1
+Host: localhost:7878
+Connection: keep-alive
+Cache-Control: max-age=0
+sec-ch-ua: "Google Chrome";v="119", "Chromium";v="119", "Not?A_Brand";v="24"
+sec-ch-ua-mobile: ?0
+sec-ch-ua-platform: "Windows"
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+Sec-Fetch-Site: none
+Sec-Fetch-Mode: navigate
+Sec-Fetch-User: ?1
+Sec-Fetch-Dest: document
+Accept-Encoding: gzip, deflate, br
+Accept-Language: sv-SE,sv;q=0.9,en-US;q=0.8,en;q=0.7
+
+
+================================================
+Request line print: GET / HTTP/1.1
+Request line: GET / HTTP/1.1
+================================================
+Incoming GET-request from client!
+---------------------------------------------------------
+Hello from handle_post_request!
+Request line received: GET / HTTP/1.1
+---------------------------------------------------------
+Connection established! Counter 8
+error: process didn't exit successfully: `target\debug\server.exe` (exit code: 0xc000013a, STATUS_CONTROL_C_EXIT)
+^C
+C:\Users\mekka\Documents\programming\rust\utvecklingsprojekt\server>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2023-11-28:
+Connection established! Counter 7
+Running handle_connection...
+Found error: Empty request error. Abort current connection.
+g
+f
+Connection established! Counter 8
+Running handle_connection...
+Found error: Empty request error. Abort current connection.
+g
+f
+Connection established! Counter 9
+Running handle_connection...
+thread 'main' panicked at 'called `Result::unwrap()` on an `Err` value: Os { code: 10054, kind: ConnectionReset, message: "An existing connection was forcibly closed by the remote host." }', src\lib.rs:60:47
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+error: process didn't exit successfully: `target\debug\server.exe` (exit code: 101)

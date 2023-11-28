@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Database test using forms</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <script src="script.js"></script>
+  </head>
+  <body>
+    <h1>Database test using forms!</h1>
+    
+      <li><a href="../index.html">Home</a></li>
+      <li><a href="login.html">Login</a></li>
+    
+    <br>
+    <h2>User registration:</h2>
+
+    <form id = "user-registration-form" name="user-registration-form" action="forms_test.html" method="post">
+      
+      <input type="hidden" id="table_identifier" name="table" value="user"> 
+      <label for="username">Username:</label><br>
+      <input type="text" id="username" name="username" value="Enter a username..."><br>
+      <label for="password">Password:</label><br>
+      <input type="text" id="password" name="password" value="Enter a password..."><br>
+      <input type="submit" value="Register">
+    </form>
+
+    <h2>Product registration:</h2>
+    <form action="forms_test.html" method="post">
+      <input type="hidden" id="table_identifier" name="table" value="product">
+      <label for="product_name">Product name:</label><br>
+
+      <input type="text" id="name" name="name" value="name"><br>
+      <label for="price">Price:</label><br>
+
+      <input type="text" id="price" name="price" value="69"><br>
+      <label for="amount">Amount:</label><br>
+
+      <input type="text" id="amount" name="amount" value="420"><br>
+      <label for="description">Description:</label><br>
+
+      <input type="text" id="description" name="description" value="description"><br>        
+      <input type="submit" value="Register">
+    </form>
+
+    <button onclick="fetch_latest_product()">Get latest product</button>
+    <button onclick="fetch_oldest_product()">Get oldest product</button>
+    <button onclick="fetch_cheapest_product()">Get cheapest product</button>
+    <button onclick="fetch_latest_order()">Get latest order</button>
+
+    <script>
+      function fetch_latest_product() {
+        fetch("latest-product")
+        .then(res => {
+          return res.text();
+        })
+        .then(data => {
+          console.log(data);
+        });
+      }
+      
+      function fetch_oldest_product() {
+        fetch("oldest-product")
+        .then(res => {
+          return res.text();
+        })
+        .then(data => {
+          console.log(data);
+        });
+      }
+
+      function fetch_cheapest_product() {
+        fetch("cheapest-product")
+        .then(res => {
+          return res.text();
+        })
+        .then(data => {
+          console.log(data);
+        });
+      }
+
+      function fetch_latest_order() {
+        fetch("latest-order")
+        .then(res => {
+          return res.text();
+        })
+        .then(data => {
+          console.log(data);
+        });
+      }
+    </script>
+
+    <h2>Order registration:</h2>
+
+    <h2>Address registration:</h2>
+
+    
+
+  </body>
+</html>
