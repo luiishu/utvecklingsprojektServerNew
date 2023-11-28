@@ -1,0 +1,24 @@
+{
+    "rows": [
+        {
+            "id": 1,
+            "type": "Red block",
+            "description": null
+        },
+        {
+            "id": 2,
+            "type": "Yellow block",
+            "description": null
+        },
+        {
+            "id": 3,
+            "type": "Green block",
+            "description": null
+        },
+        {
+            "id": 4,
+            "type": "Blue block",
+            "description": null
+        }
+    ]
+}

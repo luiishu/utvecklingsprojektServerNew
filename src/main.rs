@@ -28,6 +28,7 @@ mod get_handler;
 mod post_handler;
 mod request_line;
 mod database;
+mod fetch_handler;
 //mod database/hello_from_database;
 //static mut counter: i32 = 0;
 

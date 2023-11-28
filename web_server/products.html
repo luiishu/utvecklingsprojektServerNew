@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Products</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body>
+    <h1>Database test using forms!</h1>
+    
+      <li><a href="../index.html">Home</a></li>
+      <li><a href="login.html">Login</a></li>
+      <li><a href="forms_test.html">Test database using forms</a></li><br>
+      
+
+      <h2>POST</h2>
+      <h2>GET</h2>
+      <button onclick="fetch_products()">Get all products</button>
+      <button onclick="fetch_latest_product()">Get latest product</button>
+
+
+      <h2>PUT</h2>
+      <h2>DELETE</h2>
+      
+
+    <script>
+        fetch_arg = "latest-product"
+
+      function fetch_products() {
+        fetch("api/v1/products")
+        .then(res => {
+          return res.text();
+        })
+        .then(data => {
+          console.log(data);
+        });
+      }
+
+      function fetch_latest_product() {
+        fetch("latest-product")
+        .then(res => {
+          return res.text();
+        })
+        .then(data => {
+          console.log(data);
+        });
+      }
+      
+      function fetch_oldest_product() {
+        fetch("oldest-product")
+        .then(res => {
+          return res.text();
+        })
+        .then(data => {
+          console.log(data);
+        });
+      }
+
+      function fetch_cheapest_product() {
+        fetch("cheapest-product")
+        .then(res => {
+          return res.text();
+        })
+        .then(data => {
+          console.log(data);
+        });
+      }
+
+      function fetch_latest_order() {
+        fetch("latest-order")
+        .then(res => {
+          return res.text();
+        })
+        .then(data => {
+          console.log(data);
+        });
+      }
+    </script>
+
+</body>
+</html>

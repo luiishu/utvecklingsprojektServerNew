@@ -31,6 +31,7 @@ h1 {
 }
 
 h2 {
+    background-image: linear-gradient(to right,rgb(140, 140, 227),  white);
     position: relative;
     left: 0;
 }

@@ -67,6 +67,7 @@ pub fn init_database(in_memory: bool) -> Connection {
 
     //print_rows_from_query(&conn, "SELECT * FROM sqlite_master where type='table';").unwrap();
     //print_rows_from_query(&conn, "SELECT tbl_name FROM sqlite_master where type='table';").unwrap();
+    /* 
     print_rows_from_query(&conn, "SELECT name FROM sqlite_master where type='table';").unwrap();
     println!("Address--------------------------------------------------------------------------------------------------------------------------------");
     print_rows_from_query(&conn, "pragma table_info(address);").unwrap();
@@ -80,7 +81,24 @@ pub fn init_database(in_memory: bool) -> Connection {
     print_rows_from_query(&conn, "pragma table_info([order]);").unwrap();
     println!("Order item-----------------------------------------------------------------------------------------------------------------------------");
     print_rows_from_query(&conn, "pragma table_info(order_item);").unwrap();
+    */
+
+    let query = "SELECT * FROM address;";
+    println!("json string:\n{}", crate::database::table::parse_query_to_json(&conn, query));
+    let query = "SELECT * FROM [user];";
+    println!("json string:\n{}", crate::database::table::parse_query_to_json(&conn, query));
+    let query = "SELECT * FROM [product_type];";
+    println!("json string:\n{}", crate::database::table::parse_query_to_json(&conn, query));
+    let query = "SELECT * FROM product;";
+    println!("json string:\n{}", crate::database::table::parse_query_to_json(&conn, query));
+    let query = "SELECT * FROM [order];";
+    println!("json string:\n{}", crate::database::table::parse_query_to_json(&conn, query));
+    let query = "SELECT * FROM [order_item];";
+    println!("json string:\n{}", crate::database::table::parse_query_to_json(&conn, query));
     
+
+    //print_rows_from_query(&conn, query).unwrap();
+    println!("json string:\n{}", crate::database::table::parse_query_to_json(&conn, query));
     
 
 

@@ -91,6 +91,7 @@ pub fn get_query_iterator(conn: &Connection, query: &str) -> Vec<Vec<String>> {
 pub fn print_rows_from_query(conn: &Connection, query: &str) -> Result<()> {
     let stmt = conn.prepare(query)?;
     let column_names = stmt.column_names();    
+    let column_count = stmt.column_count();
     let iterator = get_query_iterator(conn, &query);
 
     for row in iterator {
@@ -98,6 +99,86 @@ pub fn print_rows_from_query(conn: &Connection, query: &str) -> Result<()> {
     }
 
     Ok(())
+}
+
+pub fn parse_query_to_json(conn: &Connection, query: &str) -> String {
+    let stmt = conn.prepare(query).unwrap();
+    let column_names = stmt.column_names(); 
+    let column_count = stmt.column_count();
+
+    let rows = get_query_iterator(conn, &query);
+
+    let row_count = rows.len();
+    println!("Number of rows: {row_count}");
+    println!("Number of columns: {column_count}");
+
+    let mut json_string = String::from(
+        "{\n\"rows\": [\n");
+
+    for row in 0..row_count {
+        json_string.push_str("{");
+        
+        for col in 0..column_count {
+            /* 
+            json_string.push_str("\"");
+            json_string.push_str(column_names[col]);
+            json_string.push_str("\": \"");
+            json_string.push_str(&rows[row][col]);  
+            json_string.push_str("\", ");          
+            */
+            json_string.push_str("\"");
+            json_string.push_str(column_names[col]);
+            json_string.push_str("\": ");
+
+            let mut parse_error = true;            
+
+            for i in 0..3 {
+                match i { 
+                    0 => {
+                        let parse_result = &rows[row][col].parse::<i64>();
+                        if parse_result.is_ok() {
+                            parse_error = false;
+                            break;         
+                        }                        
+                    }, 
+                    1 => {
+                        let parse_result = &rows[row][col].parse::<f64>();
+                        if parse_result.is_ok() {
+                            parse_error = false;
+                            break;         
+                        }                        
+                    }, 
+                    2 => {
+                        let parse_result = &rows[row][col].parse::<bool>();
+                        if parse_result.is_ok() {
+                            parse_error = false;
+                            break;         
+                        }                        
+                    }, 
+                    _=> {},
+                }
+            }
+
+            if parse_error && (&rows[row][col] != "null") {                
+                json_string.push_str("\"");
+                json_string.push_str(&rows[row][col]);
+                json_string.push_str("\"");
+            } else {
+                json_string.push_str(&rows[row][col]);
+            }
+            
+            json_string.push_str(", ");
+        }
+        
+        json_string.remove(json_string.len() - 1);
+        json_string.remove(json_string.len() - 1);
+        json_string.push_str("},\n");
+    }
+    json_string.remove(json_string.len() - 1);
+    json_string.remove(json_string.len() - 1);
+
+    json_string.push_str("\n]\n}");
+    json_string
 }
 
 pub trait Table {
@@ -143,6 +224,4 @@ impl Table for MasterTable {
     fn print_rows(conn: &Connection) -> Result<()> {
         todo!()
     }
-
-
 }

@@ -10,7 +10,11 @@ use rusqlite::Connection;
 #[allow(unused)]
 use server::get_request_line;
 
-use crate::{request_line::RequestLine, database::{product::Product, table::get_query_iterator}};
+use crate::{
+    request_line::RequestLine, 
+    database::{product::Product, table::get_query_iterator}, 
+    fetch_handler::fetch_handler::handle_fetch_request
+};
 
 pub fn handle_get_request_new(request: &String, conn: &Connection) -> String {
     println!("---------------------------------------------------------");
@@ -52,6 +56,10 @@ pub fn handle_get_request_new(request: &String, conn: &Connection) -> String {
         ("HTTP/1.1 200 OK", request_line.get_request_uri_without_first_slash())
     } else {
         if &request_line.to_string() == "GET / HTTP/1.1" {
+            ("HTTP/1.1 200 OK", String::from("index.html"))
+        } else if (&request_line).to_string().contains("api/v") {
+            handle_fetch_request(request, conn);
+
             ("HTTP/1.1 200 OK", String::from("index.html"))
         } else if (&request_line).to_string().contains("something") {
             data_request = true;
