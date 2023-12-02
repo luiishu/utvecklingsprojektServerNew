@@ -112,23 +112,20 @@ pub fn parse_query_to_json(conn: &Connection, query: &str) -> String {
     println!("Number of rows: {row_count}");
     println!("Number of columns: {column_count}");
 
-    let mut json_string = String::from(
-        "{\n\"rows\": [\n");
+    let single_data = row_count == 1 && column_count == 1;
+    
+    let mut json_string = String::from("{");
+
+    if !single_data {json_string.push_str("\n\"rows\": [\n");} 
 
     for row in 0..row_count {
-        json_string.push_str("{");
+        if !single_data {json_string.push_str("{");}
         
         for col in 0..column_count {
-            /* 
-            json_string.push_str("\"");
-            json_string.push_str(column_names[col]);
-            json_string.push_str("\": \"");
-            json_string.push_str(&rows[row][col]);  
-            json_string.push_str("\", ");          
-            */
             json_string.push_str("\"");
             json_string.push_str(column_names[col]);
             json_string.push_str("\": ");
+            if single_data {println!("Curr json string: {json_string}")};
 
             let mut parse_error = true;            
 
@@ -167,18 +164,27 @@ pub fn parse_query_to_json(conn: &Connection, query: &str) -> String {
                 json_string.push_str(&rows[row][col]);
             }
             
-            json_string.push_str(", ");
+            if !single_data {json_string.push_str(", ")};
         }
         
-        json_string.remove(json_string.len() - 1);
-        json_string.remove(json_string.len() - 1);
-        json_string.push_str("},\n");
+        if !single_data {
+            json_string.remove(json_string.len() - 1);
+            json_string.remove(json_string.len() - 1);
+            json_string.push_str("},\n");
+        }
     }
-    json_string.remove(json_string.len() - 1);
-    json_string.remove(json_string.len() - 1);
-
-    json_string.push_str("\n]\n}");
+    
+    if !single_data {
+        json_string.remove(json_string.len() - 1);
+        json_string.remove(json_string.len() - 1);
+        json_string.push_str("\n]");
+    }
+    json_string.push_str("\n}");
     json_string
+}
+
+pub fn get_single_data(conn: &Connection) {
+
 }
 
 pub trait Table {

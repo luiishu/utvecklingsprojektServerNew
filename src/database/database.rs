@@ -4,13 +4,24 @@
 
 use rusqlite::{Connection, params, Result};
 
+//use server::database::table::{print_rows_from_query, parse_query_to_json}; //<--- funkar i fetch_han
+//use crate::{request_line::RequestLine, database::table::get_query_iterator};
+
+//use fetch_handler::fetch_handler;
+use crate::{database::table::get_query_iterator, order_system};
+//use server::fetch_handler::fetch_handler::*;
+
+//use order_system::order_system;
+
 use super::{
     table::{Table, print_rows_from_query}, 
     address::Address, user::User,
     product_type::ProductType, product::Product, 
-    order::Order, order_item::OrderItem};
+    order::Order, order_item::OrderItem, order_position::OrderPosition
+    };
 
 pub fn hello_from_database() {
+    crate::order_system::order_system::hello_from_order_system();
     let var = 1;
 
     println!("Hello from database folder!");
@@ -82,7 +93,7 @@ pub fn init_database(in_memory: bool) -> Connection {
     println!("Order item-----------------------------------------------------------------------------------------------------------------------------");
     print_rows_from_query(&conn, "pragma table_info(order_item);").unwrap();
     */
-
+    /* 
     let query = "SELECT * FROM address;";
     println!("json string:\n{}", crate::database::table::parse_query_to_json(&conn, query));
     let query = "SELECT * FROM [user];";
@@ -95,13 +106,93 @@ pub fn init_database(in_memory: bool) -> Connection {
     println!("json string:\n{}", crate::database::table::parse_query_to_json(&conn, query));
     let query = "SELECT * FROM [order_item];";
     println!("json string:\n{}", crate::database::table::parse_query_to_json(&conn, query));
-    
+    */
 
     //print_rows_from_query(&conn, query).unwrap();
-    println!("json string:\n{}", crate::database::table::parse_query_to_json(&conn, query));
+    //println!("json string:\n{}", crate::database::table::parse_query_to_json(&conn, query));
+
+    OrderPosition::insert_initial_positions(&conn).unwrap();
     
+    /* 
+    let query = "SELECT * FROM [order_position];";
+    print_rows_from_query(&conn, query).unwrap();
+    println!("json string:\n{}", crate::database::table::parse_query_to_json(&conn, query));
+    */
 
 
+    let query = "SELECT * FROM [order];";
+    println!("json string:\n{}", crate::database::table::parse_query_to_json(&conn, query));
+    let id = Order::get_oldest_ready_order_id(&conn).unwrap();
+    println!("Id: {id}");
+
+    
+    print_rows_from_query(&conn, "SELECT * FROM order_item;").unwrap();
+
+    println!("a:");
+    print_rows_from_query(&conn, "SELECT * FROM order_item WHERE order_id = 2").unwrap();
+    println!("a:");
+    Order::get_all_order_items_from_order(&conn, &id).unwrap();
+
+    //let query = "SELECT * FROM [order_item];";
+    //println!("json string:\n{}", crate::database::table::parse_query_to_json(&conn, query));
+
+    println!("HashMap: {:?}\n", Order::get_all_product_type_amounts_from_order(&conn, id));
+
+    //let query = "SELECT id, order_id, product_id, amount FROM order_item WHERE order_id = 2;";
+    let query = "SELECT o.id, o.order_id, o.product_id, p.product_type_id as product_type_id, pt.type, o.amount 
+    FROM order_item o
+    INNER JOIN product p ON p.id = o.product_id
+    INNER JOIN product_type pt ON pt.id = p.product_type_id
+    WHERE o.order_id = 2;";
+    println!("==============================================================================================");
+    print_rows_from_query(&conn, query).unwrap();
+    println!("==============================================================================================");
+    let query = "
+    SELECT o.id as order_id, oi.id as order_item_id, pt.type as product_type, oi.amount as order_item_amount
+    FROM order_item oi
+    INNER JOIN [order] o ON o.id = oi.order_id
+    INNER JOIN product p ON p.id = oi.product_id
+    INNER JOIN product_type pt ON pt.id = p.product_type_id
+    WHERE oi.order_id = 2;
+    ";
+    print_rows_from_query(&conn, query).unwrap();
+    println!("==============================================================================================");
+    println!("Total product amount for an order:");
+    let query = "
+    SELECT o.id as order_id, SUM(oi.amount) as total_product_amount
+    FROM order_item oi
+    INNER JOIN [order] o ON o.id = oi.order_id
+    WHERE oi.order_id = 2;
+    ";
+    print_rows_from_query(&conn, query).unwrap();
+    println!("==============================================================================================");
+    println!("Product amount/product type for an order:");
+    let query = "
+    SELECT o.id as order_id, pt.type as product_type, SUM(oi.amount) as total_product_amount
+    FROM order_item oi
+    INNER JOIN [order] o ON o.id = oi.order_id
+    INNER JOIN product p ON p.id = oi.product_id
+    INNER JOIN product_type pt ON pt.id = p.product_type_id
+    WHERE oi.order_id = 2
+    GROUP BY pt.id;
+    ";
+    print_rows_from_query(&conn, query).unwrap();
+    println!("==============================================================================================");
+    let product_type_amounts = get_query_iterator(&conn, query);
+    println!("{:?}", product_type_amounts);
+    println!("==============================================================================================");
+    println!("{}", Order::create_order_response(&conn, id));
+    println!("==============================================================================================");
+    println!("{}", Order::create_order_response_full(&conn, id));
+    println!("==============================================================================================");
+    println!("Printing all orders:");
+    print_rows_from_query(&conn, "select * from [order];").unwrap();
+    println!("==============================================================================================");
+    println!("Printing oldest order that is ready:");
+    print_rows_from_query(&conn, "SELECT * FROM [order] WHERE status = \"READY\" ORDER BY id ASC LIMIT 1;").unwrap();
+
+    //order_system::order_system::OrderSystem::hello_from_order_system();
+    //order_system::order_system::OrderSystem::hello_from_order_system();
 
     // Return database connection for server to use
     conn
@@ -134,6 +225,7 @@ pub fn create_tables(conn: &Connection) -> Result<()> {
 
         Order::create_table(conn)?;
         OrderItem::create_table(conn)?;
+        OrderPosition::create_table(conn)?;        
 
         Ok(())
 }
@@ -169,14 +261,16 @@ pub fn insert_test_data(conn: &Connection) -> Result<()> {
            (2, \"Bible\", 6, 1, \"A holy book.\"),
            (3, \"Green apple\", 6, 21, \"A green apple.\"),
            (4, \"Blue Man\", 6, 4, \"A blue man (what the-).\"),
-           (5, \"Ble Bikini\", 6, 8, \"A blue bikini.\");
+           (4, \"Ble Bikini\", 6, 8, \"A blue bikini.\");
         
         
-        insert into [order] (user_id)
-        VALUES (1), (1), (2), (2), (1), (2), (1), (3), (1), (1);
+        insert into [order] (user_id, status)
+        VALUES (1, \"New\"), (1, \"READY\"), (2, \"READY\"), (2, \"New\"), (1, \"New\"), 
+               (2, \"New\"), (1, \"READY\"), (3, \"New\"), (1, \"READY\"), (1, \"New\");
         
-        insert into order_item (order_id, product_id)
-        VALUES (1, 1), (2, 2), (3, 3), (4, 1), (5, 7);        
+        insert into order_item (order_id, product_id, amount)
+        VALUES (1, 1, 1), (2, 1, 2), (2, 2, 3), (2, 3, 3), (2, 4, 3), (2, 6, 7), (2, 7, 1), (2, 8, 1),
+               (3, 3, 1), (4, 1, 1), (5, 7, 1);        
     ")?;
 
     Ok(())

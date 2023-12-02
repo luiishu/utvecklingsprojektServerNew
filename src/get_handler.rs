@@ -58,7 +58,8 @@ pub fn handle_get_request_new(request: &String, conn: &Connection) -> String {
         if &request_line.to_string() == "GET / HTTP/1.1" {
             ("HTTP/1.1 200 OK", String::from("index.html"))
         } else if (&request_line).to_string().contains("api/v") {
-            handle_fetch_request(request, conn);
+            data_request = true;
+            data = handle_fetch_request(request, conn);
 
             ("HTTP/1.1 200 OK", String::from("index.html"))
         } else if (&request_line).to_string().contains("something") {

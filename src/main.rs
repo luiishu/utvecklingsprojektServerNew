@@ -13,14 +13,18 @@ use rand::Rng;
 
 #[allow(unused)]
 use rusqlite::{Connection, params, Result};
+#[allow(unused)]
+use server::{database::order, order_system::order_system::*};
 //use server::database::database::hello_from_database;
 
-use crate::{init::*, request_handler::handle_request};
+#[allow(unused)]
+use crate::{init::*, request_handler::handle_request, order_system::order_system::{OrderSystemRequest, OrderSystemRequestApi}};
 use crate::get_handler::*;
 #[allow(unused)]
 use crate::post_handler::*;
 use crate::request_line::*;
 use crate::database::database::*;
+//use crate::order_system::order_system::*;
 
 mod init;
 mod request_handler;
@@ -29,6 +33,7 @@ mod post_handler;
 mod request_line;
 mod database;
 mod fetch_handler;
+pub mod order_system;
 //mod database/hello_from_database;
 //static mut counter: i32 = 0;
 
@@ -45,9 +50,34 @@ const RUST_PORT: u16 = 7878;
 
 //static conn: Connection = Connection::open_in_memory().unwrap();
 
+fn test_order_system() {
+    println!("------------------------------------------------------------------------------------");
+    println!("Testing order system...");
+    println!("Order System Request Line 1: {}\n", OrderSystemRequest::REQUEST_LINE_PROCESS);
+    
+    println!("Order System Request Process Full:\n{}\n", OrderSystemRequest::REQUEST_PROCESS_FULL);
+    println!("Order System Request Report (OK) Full:\n{}\n", OrderSystemRequest::REQUEST_PROCESS_FULL);
+    println!("Order System Request Report (Fail) Full:\n{}\n", OrderSystemRequest::REQUEST_PROCESS_FULL);
+
+    let request_empty = OrderSystemRequest::build_request("", "", "");
+    let request_process = OrderSystemRequest::build_request(
+        OrderSystemApi::METHOD_PROCESS,
+        "orders/latest",
+        OrderSystemApi::VERSION_1_0
+    );
+
+    println!("Order system request builder for process request:\n{}", request_empty);
+    println!("Order system request builder for process request:\n{}", request_process);
+
+
+
+    println!("------------------------------------------------------------------------------------");
+}
+
 fn main() {
-    hello();
-    hello_from_database();
+    //hello();
+    //hello_from_database();    
+
     println!("\nInitializing server...");
 
     let listener = TcpListener::from(if LAN {
@@ -66,6 +96,7 @@ fn main() {
     let conn = init_database(true);
 
     //test_bufReader();
+    test_order_system();
 
     println!("Running server on: {}", listener.local_addr().unwrap());
     //run_server(listener, &conn);
@@ -90,73 +121,6 @@ pub fn run_server(listener: TcpListener, conn: &Connection) {
     }
 }
 
-/* 
-pub fn run_server_new(listener: TcpListener, conn: &Connection) {
-    listener.set_nonblocking(true).expect("Cannot set non-blocking");
-    let mut counter = 0;
-
-    let conn = init_database(true);
-
-    while true {
-        println!("here it comes!");
-        match listener.accept() {
-            Ok((_socket, addr)) => {
-                println!("new client: {addr:?}");
-                counter += 1;
-                if PRINTING {println!("Connection established! Counter {}", counter)};
-
-                thread::spawn(move || {
-                    handle_connection_multithreaded(_socket, counter, &conn);
-                });
-            },
-            Err(ref e) if e.kind() == io::ErrorKind::WouldBlock => {
-                // wait until network socket is ready, typically implemented
-                // via platform-specific APIs such as epoll or IOCP
-                //wait_for_fd();
-                println!("Would block error: {e:?}");
-                listener.set_nonblocking(false).expect("Cannot set non-blocking");
-                continue;
-            },
-            Err(e) => println!("couldn't get client: {e:?}"),
-        }
-    }
-
-    
-
-    /*
-    for stream in listener.incoming() {
-        match stream {
-            Ok(stream) => {
-                counter += 1;
-                if PRINTING {println!("Connection established! Counter {}", counter)};
-                handle_connection(stream, counter, &conn);
-            }
-            Err(error) => {
-                println!("Connection failed:\n{}", error);
-            }
-        }
-    } */
-
-    /*
-    while true {
-        let stream_result = listener.accept();
-        let stream = stream_result.unwrap();
-
-        /*
-        let (stream, socket_address) = match stream_result {
-            Ok((stream, socket_address)) => {
-                counter += 1;
-                if PRINTING {println!("Connection established! Counter {}", counter)};
-                (stream, socket_address)
-                //handle_connection(stream, counter, &conn);
-            },
-            Err(error) => {
-                
-            },
-        }; */
-    }*/
-}*/
-
 #[allow(unused)]
 fn handle_connection(mut stream: TcpStream, mut counter: i32, conn: &Connection) {
     println!("Running handle_connection...");
@@ -170,12 +134,10 @@ fn handle_connection(mut stream: TcpStream, mut counter: i32, conn: &Connection)
         },
     };
     
-    if(request.contains("Client:")) {
-        println!("Received message: {}", request);
-        let response = format!("Latest order data:\n{:?}", 
-        database::table::get_query_iterator(conn, "SELECT * FROM [order] ORDER BY id DESC LIMIT 1;"));
+    // 1.2 Check if request is from Order System and handle it and respond if true 
+    if(!request.contains("HTTP")) {
+        let response = OrderSystem::handle_proccess(&request);
 
-        //stream.write("Server: Hello from server!".as_bytes()).unwrap(); // send response to tcp client
         stream.write(response.as_bytes()).unwrap(); // send response to tcp client
         stream.flush().unwrap();
         
@@ -222,55 +184,3 @@ fn handle_connection(mut stream: TcpStream, mut counter: i32, conn: &Connection)
     //drop(response)
     //stream.shutdown(std::net::Shutdown::Both);
 }
-
-/* 
-#[allow(unused)]
-fn handle_connection_multithreaded(mut stream: TcpStream, mut counter: i32, conn: &Connection) {
-    // check if request is empty:
-
-    // 1. Get request and convert to string
-    let request: String = server::get_request_string(&mut stream);
-    if request.is_empty() || request.len() == 1 {
-        println!("Empty request!");
-        return;
-    }
-    let request_line = RequestLine::new(&request);
-
-    // 2. Response creation
-    let mut response = String::new();
-
-    // 3. determine the type of http request and handle it to generate a suitable response
-    response = handle_request(&request, &conn);
-    
-    // TODO: add contains_resource block to request handler
-    if contains_resource(&request_line.to_string()) {
-        let mut file_content = Vec::new();
-        //let path = Path::new("pogoPartyHatters.png");
-        let file_name = "pogoPartyHatters.png";
-
-        let mut file = File::open(&file_name).expect("Unable to open file");
-        file.read_to_end(&mut file_content).expect("Unable to read");
-
-        //println!("File content:\n{:?}", file_content);
-        println!("aaa");
-
-        let mut response2 = response.to_string().into_bytes();
-        println!("bbb");
-        response2.extend(file_content);
-
-        println!("ccc");
-
-        //stream.write_all(&response2).unwrap(); // send http response to client
-        stream.write(&response2).unwrap(); // send http response to client
-        println!("ddd");
-    } else {
-        stream.write_all(response.as_bytes()).unwrap(); // send http response to client
-    }
-
-    //stream.write_all(response.as_bytes()).unwrap(); // send http response to client
-    //stream.flush().unwrap();
-    println!("eee");
-    stream.take_error().expect("No error was expected...");
-    //drop(response)
-    //stream.shutdown(std::net::Shutdown::Both);
-}*/

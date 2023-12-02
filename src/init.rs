@@ -6,6 +6,7 @@ use std::{
     process,
 };
 
+#[allow(unused)]
 pub fn hello() {
     println!("Hello!");
 }

@@ -1,0 +1,191 @@
+{
+    "id": 2,
+    "amount": [
+        {
+            "product_type": "Red block",
+            "total_product_amount": 5
+        },
+        {
+            "product_type": "Yellow block",
+            "total_product_amount": 6
+        },
+        {
+            "product_type": "Green block",
+            "total_product_amount": 7
+        },
+        {
+            "product_type": "Blue block",
+            "total_product_amount": 2
+        }
+    ],
+    "positions": [
+        {
+            "ID": 1,
+            "position_x": 1,
+            "position_y": 1,
+            "empty": false,
+            "product_type_id": 1
+        },
+        {
+            "ID": 2,
+            "position_x": 1,
+            "position_y": 2,
+            "empty": false,
+            "product_type_id": 1
+        },
+        {
+            "ID": 3,
+            "position_x": 1,
+            "position_y": 3,
+            "empty": false,
+            "product_type_id": 1
+        },
+        {
+            "ID": 4,
+            "position_x": 1,
+            "position_y": 4,
+            "empty": false,
+            "product_type_id": 1
+        },
+        {
+            "ID": 5,
+            "position_x": 1,
+            "position_y": 5,
+            "empty": false,
+            "product_type_id": 1
+        },
+        {
+            "ID": 6,
+            "position_x": 1,
+            "position_y": 6,
+            "empty": false,
+            "product_type_id": 1
+        },
+        {
+            "ID": 7,
+            "position_x": 2,
+            "position_y": 1,
+            "empty": false,
+            "product_type_id": 1
+        },
+        {
+            "ID": 8,
+            "position_x": 2,
+            "position_y": 2,
+            "empty": false,
+            "product_type_id": 1
+        },
+        {
+            "ID": 9,
+            "position_x": 2,
+            "position_y": 3,
+            "empty": false,
+            "product_type_id": 1
+        },
+        {
+            "ID": 10,
+            "position_x": 2,
+            "position_y": 4,
+            "empty": false,
+            "product_type_id": 1
+        },
+        {
+            "ID": 11,
+            "position_x": 2,
+            "position_y": 5,
+            "empty": false,
+            "product_type_id": 1
+        },
+        {
+            "ID": 12,
+            "position_x": 2,
+            "position_y": 6,
+            "empty": false,
+            "product_type_id": 1
+        },
+        {
+            "ID": 13,
+            "position_x": 3,
+            "position_y": 1,
+            "empty": false,
+            "product_type_id": 1
+        },
+        {
+            "ID": 14,
+            "position_x": 3,
+            "position_y": 2,
+            "empty": false,
+            "product_type_id": 1
+        },
+        {
+            "ID": 15,
+            "position_x": 3,
+            "position_y": 3,
+            "empty": false,
+            "product_type_id": 1
+        },
+        {
+            "ID": 16,
+            "position_x": 3,
+            "position_y": 4,
+            "empty": false,
+            "product_type_id": 1
+        },
+        {
+            "ID": 17,
+            "position_x": 3,
+            "position_y": 5,
+            "empty": false,
+            "product_type_id": 1
+        },
+        {
+            "ID": 18,
+            "position_x": 3,
+            "position_y": 6,
+            "empty": false,
+            "product_type_id": 1
+        },
+        {
+            "ID": 19,
+            "position_x": 4,
+            "position_y": 1,
+            "empty": false,
+            "product_type_id": 1
+        },
+        {
+            "ID": 20,
+            "position_x": 4,
+            "position_y": 2,
+            "empty": false,
+            "product_type_id": 1
+        },
+        {
+            "ID": 21,
+            "position_x": 4,
+            "position_y": 3,
+            "empty": false,
+            "product_type_id": 1
+        },
+        {
+            "ID": 22,
+            "position_x": 4,
+            "position_y": 4,
+            "empty": false,
+            "product_type_id": 1
+        },
+        {
+            "ID": 23,
+            "position_x": 4,
+            "position_y": 5,
+            "empty": false,
+            "product_type_id": 1
+        },
+        {
+            "ID": 24,
+            "position_x": 4,
+            "position_y": 6,
+            "empty": false,
+            "product_type_id": 1
+        }
+    ]
+}

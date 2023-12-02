@@ -5,7 +5,7 @@
     <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <body>
-    <h1>Database test using forms!</h1>
+    <h1>Products test using forms!</h1>
     
       <li><a href="../index.html">Home</a></li>
       <li><a href="login.html">Login</a></li>
@@ -14,8 +14,14 @@
 
       <h2>POST</h2>
       <h2>GET</h2>
-      <button onclick="fetch_products()">Get all products</button>
+      <button onclick="fetch_products:fetch_products()">Get all products</button>
       <button onclick="fetch_latest_product()">Get latest product</button>
+
+      <h3>Products</h3>
+      <ul>
+
+      </ul>
+      <br>
 
 
       <h2>PUT</h2>
@@ -28,11 +34,39 @@
       function fetch_products() {
         fetch("api/v1/products")
         .then(res => {
-          return res.text();
+          return res.json();
         })
         .then(data => {
           console.log(data);
+          var length = data.rows.length;
+          console.log("array length: " + length);
+
+          for(var i = 0; i < length; i++) {
+            console.log(i + ". " + data.rows[i].name);
+            const currentData = data.rows[i].name;
+            
+            //const markup = '<li>${currentData}</li>';
+            //document.querySelector('ul').insertAdjacentHTML("beforeend", markup);
+          }
+
+          data.rows.forEach(product => {
+            const markup = `<li>${product.name}</li>`;
+            //const markup = "<li>${product.name}</li>";
+            document.querySelector("ul").insertAdjacentHTML("beforeend", markup);
+          });
+
         });
+      }
+
+      function fetch_products_as_json() {
+        fetch("api/v1/products")
+        .then(res => {
+          return res.json();
+        })
+        .then(data => {
+          console.log(data);
+        })
+        .catch(error => confirm.log(error));
       }
 
       function fetch_latest_product() {

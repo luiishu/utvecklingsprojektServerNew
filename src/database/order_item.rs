@@ -14,7 +14,7 @@ impl Table for OrderItem {
                 id INTEGER PRIMARY KEY,
                 order_id INTEGER NOT NULL,
                 product_id INTEGER NOT NULL,
-                amount INTEGER DEFAULT 0,
+                amount INTEGER DEFAULT 1,
                 cost INTEGER DEFAULT 0,
                 
                 FOREIGN key(order_id) REFERENCES [order](id),

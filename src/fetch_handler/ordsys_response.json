@@ -1,0 +1,23 @@
+{
+    "orderId": 420,
+    "order_positions": [
+        {
+            "position_id": 1,
+            "position_x": 1,
+            "position_y": 2,
+            "product_type_id": 1
+        }, 
+        {
+            "position_id": 4,
+            "x_position": 3,
+            "y_position": 6,
+            "product_type_id": 2
+        },
+        {
+            "position_id": 16,
+            "x_position": 3,
+            "y_position": 6,
+            "product_type_id": 4
+        }
+    ]
+}

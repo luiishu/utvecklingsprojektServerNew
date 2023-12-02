@@ -1,0 +1,24 @@
+{
+    "rows": [
+        {
+            "order_id": 2,
+            "product_type": "Red block",
+            "total_product_amount": 5
+        },
+        {
+            "order_id": 2,
+            "product_type": "Yellow block",
+            "total_product_amount": 6
+        },
+        {
+            "order_id": 2,
+            "product_type": "Green block",
+            "total_product_amount": 7
+        },
+        {
+            "order_id": 2,
+            "product_type": "Blue block",
+            "total_product_amount": 2
+        }
+    ]
+}
