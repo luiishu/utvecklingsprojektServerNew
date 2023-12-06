@@ -119,7 +119,7 @@ pub fn init_database(in_memory: bool) -> Connection {
     println!("json string:\n{}", crate::database::table::parse_query_to_json(&conn, query));
     */
 
-
+    /* 
     let query = "SELECT * FROM [order];";
     println!("json string:\n{}", crate::database::table::parse_query_to_json(&conn, query));
     let id = Order::get_oldest_ready_order_id(&conn).unwrap();
@@ -190,6 +190,7 @@ pub fn init_database(in_memory: bool) -> Connection {
     println!("==============================================================================================");
     println!("Printing oldest order that is ready:");
     print_rows_from_query(&conn, "SELECT * FROM [order] WHERE status = \"READY\" ORDER BY id ASC LIMIT 1;").unwrap();
+    */
 
     //order_system::order_system::OrderSystem::hello_from_order_system();
     //order_system::order_system::OrderSystem::hello_from_order_system();
@@ -270,7 +271,7 @@ pub fn insert_test_data(conn: &Connection) -> Result<()> {
         
         insert into order_item (order_id, product_id, amount)
         VALUES (1, 1, 1), (2, 1, 2), (2, 2, 3), (2, 3, 3), (2, 4, 3), (2, 6, 7), (2, 7, 1), (2, 8, 1),
-               (3, 3, 1), (4, 1, 1), (5, 7, 1);        
+               (3, 3, 1), (4, 1, 1), (5, 7, 1), (6, 3, 1), (7, 8, 2), (8, 3, 1), (9, 7, 3), (10, 3, 1);        
     ")?;
 
     Ok(())

@@ -109,8 +109,8 @@ pub fn parse_query_to_json(conn: &Connection, query: &str) -> String {
     let rows = get_query_iterator(conn, &query);
 
     let row_count = rows.len();
-    println!("Number of rows: {row_count}");
-    println!("Number of columns: {column_count}");
+    //println!("Number of rows: {row_count}");
+    //println!("Number of columns: {column_count}");
 
     let single_data = row_count == 1 && column_count == 1;
     
@@ -125,7 +125,7 @@ pub fn parse_query_to_json(conn: &Connection, query: &str) -> String {
             json_string.push_str("\"");
             json_string.push_str(column_names[col]);
             json_string.push_str("\": ");
-            if single_data {println!("Curr json string: {json_string}")};
+            //if single_data {println!("Curr json string: {json_string}")};
 
             let mut parse_error = true;            
 

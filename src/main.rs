@@ -50,30 +50,6 @@ const RUST_PORT: u16 = 7878;
 
 //static conn: Connection = Connection::open_in_memory().unwrap();
 
-fn test_order_system() {
-    println!("------------------------------------------------------------------------------------");
-    println!("Testing order system...");
-    println!("Order System Request Line 1: {}\n", OrderSystemRequest::REQUEST_LINE_PROCESS);
-    
-    println!("Order System Request Process Full:\n{}\n", OrderSystemRequest::REQUEST_PROCESS_FULL);
-    println!("Order System Request Report (OK) Full:\n{}\n", OrderSystemRequest::REQUEST_PROCESS_FULL);
-    println!("Order System Request Report (Fail) Full:\n{}\n", OrderSystemRequest::REQUEST_PROCESS_FULL);
-
-    let request_empty = OrderSystemRequest::build_request("", "", "");
-    let request_process = OrderSystemRequest::build_request(
-        OrderSystemApi::METHOD_PROCESS,
-        "orders/latest",
-        OrderSystemApi::VERSION_1_0
-    );
-
-    println!("Order system request builder for process request:\n{}", request_empty);
-    println!("Order system request builder for process request:\n{}", request_process);
-
-
-
-    println!("------------------------------------------------------------------------------------");
-}
-
 fn main() {
     //hello();
     //hello_from_database();    
@@ -96,7 +72,7 @@ fn main() {
     let conn = init_database(true);
 
     //test_bufReader();
-    test_order_system();
+    order_system::order_system_testing::test_order_system(&conn, &1);
 
     println!("Running server on: {}", listener.local_addr().unwrap());
     //run_server(listener, &conn);
@@ -136,7 +112,7 @@ fn handle_connection(mut stream: TcpStream, mut counter: i32, conn: &Connection)
     
     // 1.2 Check if request is from Order System and handle it and respond if true 
     if(!request.contains("HTTP")) {
-        let response = OrderSystem::handle_proccess(&request);
+        let response = OrderSystem::handle_request(&request, conn);
 
         stream.write(response.as_bytes()).unwrap(); // send response to tcp client
         stream.flush().unwrap();

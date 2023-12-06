@@ -48,6 +48,9 @@ impl Order {
 
         let data = get_query_iterator(conn, query);        
         println!("{:?}", data);
+        if data.len() == 0 {
+            return Err(String::from("Error: there is no order that is ready for processing."));
+        }
 
         let id = match data[0][0].parse::<i64>() {
             Ok(id) => id,
@@ -104,6 +107,7 @@ impl Order {
         let mut response = String::new();
 
         let query_order_id = r#"SELECT id FROM [order] WHERE status = "READY" ORDER BY id ASC LIMIT 1;"#;
+        println!("query_order_id: {}", query_order_id);
 
         let query_order_amount = &format!("
         SELECT pt.type as product_type, SUM(oi.amount) as total_product_amount
@@ -133,10 +137,14 @@ impl Order {
         order_positions.remove(0);
         let order_positions = order_positions.replace("rows", "positions");
         
-
         response = format!("{order_id}\n{order_amount}\n{order_positions}");
 
         response
+    }
+
+    pub fn update_order_status_to_processing(conn: &Connection, id: &i64) {
+        let query = format!("UPDATE [order] SET status = \"PROCESSING\" WHERE id = {id};");
+        conn.execute(&query,()).unwrap();
     }
 
 
