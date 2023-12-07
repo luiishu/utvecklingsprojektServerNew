@@ -287,7 +287,7 @@ impl OrderSystem {
             println!("y position: {}", order_position["position_y"]);
             println!("product type id: {}\n", order_position["product_type_id"]);
             
-            //OrderPosition::update_product_type_by_id(conn, &order_position_id, &product_type_id);
+            //OrderPosition::update_product_type_by_id(conn, &order_position_id, &product_type_id); // tralala
             OrderPosition::update_product_type_by_coordinates(conn, &x, &y, &product_type_id);
         }
     }
