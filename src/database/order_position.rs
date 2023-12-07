@@ -75,11 +75,22 @@ impl OrderPosition {
         Ok(())
     }
 
-    pub fn update_product_type(conn: &Connection, order_position_id: &i64, product_type_id: &i64) -> Result<()> {
+    pub fn update_product_type_by_id(conn: &Connection, order_position_id: &i64, product_type_id: &i64) -> Result<()> {
         let query = &format!(
             "UPDATE order_position 
             SET product_type_id = {product_type_id} 
             WHERE id = {order_position_id};"
+        );
+
+        conn.execute(query, ())?;
+        Ok(())
+    }
+
+    pub fn update_product_type_by_coordinates(conn: &Connection, x: &i64, y: &i64, product_type_id: &i64) -> Result<()> {
+        let query = &format!(
+            "UPDATE order_position 
+            SET product_type_id = {product_type_id} 
+            WHERE position_x = {x} AND position_y = {y};"
         );
 
         conn.execute(query, ())?;

@@ -8,13 +8,13 @@ pub fn generate_order_request(conn: &Connection, n: &i32) {
     println!("Generating request from Order System...");
     generate_process_request(conn);
 
-    println!("Printing all products BETWEEN generating order requests:");
-    crate::database::table::print_rows_from_query(&conn, "select * from [product];").unwrap();
+    //println!("Printing all products BETWEEN generating order requests:");
+    //crate::database::table::print_rows_from_query(&conn, "select * from [product];").unwrap();
     
     for _i in 0..*n {
         //generate_process_request(conn);
-        //generate_ok_report(conn, &2);
-        generate_fail_report(conn, &2);
+        generate_ok_report(conn, &2);
+        //generate_fail_report(conn, &2);
     }
     
 }
@@ -97,19 +97,19 @@ pub fn test_order_system(conn: &Connection, n: &i32) {
 
     //println!("Printing all orders BEFORE generating order requests:");
     //crate::database::table::print_rows_from_query(&conn, "select * from [order];").unwrap();
-    //println!("Printing all order positions BEFORE generating order requests:");
-    //crate::database::table::print_rows_from_query(&conn, "select * from [order_position];").unwrap();
-    println!("Printing all products BEFORE generating order requests:");
-    crate::database::table::print_rows_from_query(&conn, "select * from [product];").unwrap();
+    println!("Printing all order positions BEFORE generating order requests:");
+    crate::database::table::print_rows_from_query(&conn, "select * from [order_position];").unwrap();
+    //println!("Printing all products BEFORE generating order requests:");
+    //crate::database::table::print_rows_from_query(&conn, "select * from [product];").unwrap();
 
     generate_order_request(conn, n);
 
     //println!("Printing all orders AFTER generating order requests:");
     //crate::database::table::print_rows_from_query(&conn, "select * from [order];").unwrap();
-    //println!("Printing all order positions AFTER generating order requests:");
-    //crate::database::table::print_rows_from_query(&conn, "select * from [order_position];").unwrap();
+    println!("Printing all order positions AFTER generating order requests:");
+    crate::database::table::print_rows_from_query(&conn, "select * from [order_position];").unwrap();
 
-    println!("Printing all products AFTER generating order requests:");
-    crate::database::table::print_rows_from_query(&conn, "select * from [product];").unwrap();
+    //println!("Printing all products AFTER generating order requests:");
+    //crate::database::table::print_rows_from_query(&conn, "select * from [product];").unwrap();
     println!("------------------------------------------------------------------------------------");
 }

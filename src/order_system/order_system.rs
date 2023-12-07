@@ -27,8 +27,8 @@ pub trait OrderSystemApiConstants {
 }
 
 pub trait OrderSystemRequestApi {
-    const REQUEST_PROCESS_FULL: &'static str = "PROCESS orders/latest ORDSYS/1.0\n{”status”: ”processing”}";
-    const REQUEST_LINE_PROCESS: &'static str = "PROCESS orders/latest ORDSYS/1.0";
+    const REQUEST_PROCESS_FULL: &'static str = "PROCESS orders/oldest ORDSYS/1.0\n{”status”: ”processing”}";
+    const REQUEST_LINE_PROCESS: &'static str = "PROCESS orders/oldest ORDSYS/1.0";
     
     const REQUEST_LINE_REPORT: &'static str = "REPORT orders/id ORDSYS/1.0";
     
@@ -277,13 +277,18 @@ impl OrderSystem {
     
         for order_position in updated_positions.into_iter() {
             let order_position_id: i64 = serde_json::from_value(order_position["position_id"].to_owned()).unwrap();
+            let x: i64 = serde_json::from_value(order_position["position_x"].to_owned()).unwrap();
+            let y: i64 = serde_json::from_value(order_position["position_y"].to_owned()).unwrap();
+            
             let product_type_id: i64 = serde_json::from_value(order_position["product_type_id"].to_owned()).unwrap();
             
             println!("order id: {}", order_position["position_id"]);
             println!("x position: {}", order_position["position_x"]);
             println!("y position: {}", order_position["position_y"]);
             println!("product type id: {}\n", order_position["product_type_id"]);
-            OrderPosition::update_product_type(conn, &order_position_id, &product_type_id);
+            
+            //OrderPosition::update_product_type_by_id(conn, &order_position_id, &product_type_id);
+            OrderPosition::update_product_type_by_coordinates(conn, &x, &y, &product_type_id);
         }
     }
 
