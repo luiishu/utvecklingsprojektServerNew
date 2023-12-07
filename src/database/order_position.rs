@@ -2,6 +2,8 @@
 #![allow(unused_imports)]
 #![allow(unused_variables)]
 
+use std::fmt::format;
+
 use super::{table::Table, order::Order};
 use rusqlite::{Connection, params, Result, Row};
 
@@ -29,8 +31,6 @@ impl Table for OrderPosition {
     fn insert(conn: &rusqlite::Connection, data: Vec<Vec<&str>>) -> rusqlite::Result<()> {
         //println!("Trying to insert {} into table {}", data[1][1], data[0][1]);
         
-
-
         let query = format!("INSERT INTO order_position ({}, {}, {}, {}) VALUES (?1, ?2, ?3, ?4)",
          data[0][0], data[1][0], data[2][0], data[3][0]);
         
@@ -72,6 +72,17 @@ impl OrderPosition {
             }
         }
 
+        Ok(())
+    }
+
+    pub fn update_product_type(conn: &Connection, order_position_id: &i64, product_type_id: &i64) -> Result<()> {
+        let query = &format!(
+            "UPDATE order_position 
+            SET product_type_id = {product_type_id} 
+            WHERE id = {order_position_id};"
+        );
+
+        conn.execute(query, ())?;
         Ok(())
     }
 }

@@ -40,6 +40,17 @@ impl Table for Order {
 }
 
 impl Order {
+    pub fn check_if_order_exists(conn: &rusqlite::Connection, id: &i64) -> Result<(), String> { 
+        let query = format!("SELECT * FROM [order] WHERE id = {id};");
+        let number_of_rows_returned = get_query_iterator(conn, &query).len();
+
+        if number_of_rows_returned <= 0 {
+            return Err(format!("Order with id {id} does not exists!"));
+        }
+
+        Ok(())
+    }
+
     pub fn get_oldest_ready_order_id(conn: &rusqlite::Connection) -> Result<i64, String> {
         //let id = 0;
         let query = r#"SELECT id FROM [order] WHERE status = "READY" ORDER BY id ASC LIMIT 1;"#;
@@ -51,7 +62,6 @@ impl Order {
         if data.len() == 0 {
             return Err(String::from("Error: there is no order that is ready for processing."));
         }
-
         let id = match data[0][0].parse::<i64>() {
             Ok(id) => id,
             Err(e) => return Err(e.to_string()),
@@ -144,6 +154,21 @@ impl Order {
 
     pub fn update_order_status_to_processing(conn: &Connection, id: &i64) {
         let query = format!("UPDATE [order] SET status = \"PROCESSING\" WHERE id = {id};");
+        conn.execute(&query,()).unwrap();
+    }
+
+    pub fn update_order_status(conn: &Connection, id: &i64, new_status: &str) {
+        // TODO: Check if received status is valid (contained within a set of defined statuses)
+        let query_current_status = &format!("SELECT status FROM [order] WHERE id = {id};");
+
+        let current_status = &get_query_iterator(conn, query_current_status)[0][0];
+        println!("current status vector: {}", current_status);
+        if (current_status == "READY") && (new_status == "FINISHED") {
+            println!("Order {id} needs to finish processing before being finished");
+            return
+        } 
+        
+        let query = format!(r#"UPDATE [order] SET status = "{new_status}" WHERE id = {id};"#);
         conn.execute(&query,()).unwrap();
     }
 
