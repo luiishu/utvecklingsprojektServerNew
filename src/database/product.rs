@@ -23,7 +23,7 @@ impl Table for Product {
                 amount       INTEGER NOT NULL,
                 description  TEXT,
                 
-                FOREIGN key(product_type_id) REFERENCES product_type(id)              
+                FOREIGN KEY(product_type_id) REFERENCES product_type(id)
                 );",
                 (),
         )?;

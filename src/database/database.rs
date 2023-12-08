@@ -17,7 +17,7 @@ use super::{
     table::{Table, print_rows_from_query}, 
     address::Address, user::User,
     product_type::ProductType, product::Product, 
-    order::Order, order_item::OrderItem, order_position::OrderPosition
+    order::Order, order_item::OrderItem, order_position::OrderPosition, product_image::ProductImage, product_review::ProductReview
     };
 
 pub fn hello_from_database() {
@@ -223,6 +223,8 @@ pub fn create_tables(conn: &Connection) -> Result<()> {
         
         ProductType::create_table(conn)?;
         Product::create_table(conn)?;
+        ProductImage::create_table(conn)?;
+        ProductReview::create_table(conn)?;
 
         Order::create_table(conn)?;
         OrderItem::create_table(conn)?;
