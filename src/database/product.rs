@@ -2,8 +2,6 @@
 #![allow(unused_imports)]
 #![allow(unused_variables)]
 
-use std::os::windows::io::InvalidHandleError;
-
 use rusqlite::{Connection, params, Result, Row};
 
 use crate::database::product_type;

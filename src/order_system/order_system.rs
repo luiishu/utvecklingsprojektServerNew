@@ -147,7 +147,6 @@ impl OrderSystem {
             }
         }
 
-
         println!("Exiting handle_get_request()...\n");
         response
     }
