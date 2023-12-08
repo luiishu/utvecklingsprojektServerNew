@@ -74,8 +74,6 @@ pub fn test(conn: &Connection) -> Result<()> {
 
     //print_rows_from_query(&conn, query).unwrap();
     //println!("json string:\n{}", crate::database::table::parse_query_to_json(&conn, query));
-
-    OrderPosition::insert_initial_positions(&conn)?;
     
     /* 
     let query = "SELECT * FROM [order_position];";

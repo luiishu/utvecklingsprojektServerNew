@@ -10,14 +10,14 @@ pub fn generate_order_request(conn: &Connection, n: &i32) {
     //println!("Printing all products BETWEEN generating order requests:");
     //crate::database::table::print_rows_from_query(&conn, "select * from [product];").unwrap();
 
-    generate_get_request(conn);
+    //generate_get_request(conn);
+    generate_patch_request(conn);
     
     for _i in 0..*n {
         //generate_process_request(conn);
         //generate_ok_report(conn, &2);
         //generate_fail_report(conn, &2);
-    }
-    
+    }    
 }
 
 pub fn generate_get_request(conn: &Connection) {
@@ -26,10 +26,35 @@ pub fn generate_get_request(conn: &Connection) {
     OrderSystem::handle_request(&request, conn);   
 }
 
-pub fn generate_bad_get_request(conn: &Connection) {
+pub fn generate_unknown_get_request(conn: &Connection) {
     println!("Generating bad GET request...");
     let mut request = <OrderSystemRequest as OrderSystemRequestApi>::REQUEST_GET_ORDER_POSITIONS_FULL.to_string();
     request = request.replace("order-positions", "hankey");
+    OrderSystem::handle_request(&request, conn);   
+}
+
+pub fn generate_patch_request(conn: &Connection) {
+    println!("Generating PATCH request...");
+    let mut request = <OrderSystemRequest as OrderSystemRequestApi>::REQUEST_LINE_PATCH_ORDER_POSITIONS.to_string();
+    //request = request.replace("order-positions", "hankey");
+
+    let body = r#"
+    {
+        "updated_positions": [
+            {
+                "position_id": 1,
+                "position_x": 1,
+                "position_y": 1,
+                "empty": null,
+                "product_type_id": 4
+            }
+        ]
+    }
+    "#;
+
+    request.push_str("\n");
+    request.push_str(body);
+
     OrderSystem::handle_request(&request, conn);   
 }
 

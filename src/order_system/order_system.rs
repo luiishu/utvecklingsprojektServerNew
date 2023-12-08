@@ -14,8 +14,11 @@ pub trait OrderSystemApiConstants {
     const VERSION_1_0: &'static str = "1.0";
     
     const METHOD_GET: &'static str = "GET";
+    const METHOD_PATCH: &'static str = "PATCH";
     const METHOD_PROCESS: &'static str = "PROCESS";
     const METHOD_REPORT: &'static str = "REPORT";
+
+    const RESOURCE_ORDER_POSITIONS: &'static str = "order-positions";
 
     const STATUS_OK: &'static str = "OK";
     const STATUS_FAIL: &'static str = "FAIL";
@@ -26,6 +29,8 @@ pub trait OrderSystemRequestApi {
     const REQUEST_LINE_PROCESS: &'static str = "PROCESS orders/oldest ORDSYS/1.0";
 
     const REQUEST_GET_ORDER_POSITIONS_FULL: &'static str = "GET order-positions ORDSYS/1.0";
+
+    const REQUEST_LINE_PATCH_ORDER_POSITIONS: &'static str = "PATCH order-positions ORDSYS/1.0";
     
     const REQUEST_LINE_REPORT: &'static str = "REPORT orders/id ORDSYS/1.0";
     
@@ -88,8 +93,7 @@ impl OrderSystem {
         println!("Running handle_request() in Order System...\n");
         println!("Request received:\n{}\n", request);
 
-        // 1. Create request line
-        //let request_line = RequestLine::new(&request);
+        // 1. Create response and request line
         let mut response = String::new();
         let request_line = request.lines().next().unwrap();
         println!("Request line received:\n{}\n", request_line);
@@ -102,6 +106,10 @@ impl OrderSystem {
             OrderSystemApi::METHOD_GET => {
                 println!("Incoming GET request!");
                 response = Self::handle_get_request(request, conn);
+            },
+            OrderSystemApi::METHOD_PATCH => {
+                println!("Incoming PATCH request!");
+                response = Self::handle_patch_request(request, conn);
             },
             OrderSystemApi::METHOD_PROCESS => {
                 println!("Incoming PROCESS request!");
@@ -132,6 +140,7 @@ impl OrderSystem {
         let resource = Self::get_resource(request);
         println!("Resource requested:\n{resource}");
 
+        // 3. Create response
         match resource.as_str() {
             "order-positions" => {
                 response = OrderSystemResponse::RESPONSE_LINE_REPORT_OK.to_string();
@@ -151,7 +160,35 @@ impl OrderSystem {
         response
     }
 
-    pub fn handle_process_request(request: &str, conn: &Connection) -> String {        
+    pub fn handle_patch_request(request: &str, conn: &Connection) -> String {        
+        println!("Running handle_patch_request()...");
+        // 1. Create response
+        let mut response = String::new();
+
+        // 2. Check resource
+        let resource = Self::get_resource(request);
+        println!("Resource requested:\n{resource}");
+
+        // 3. Create response
+        match resource.as_str() {
+            OrderSystemApi::RESOURCE_ORDER_POSITIONS => {
+                response = OrderSystemResponse::RESPONSE_LINE_REPORT_OK.to_string();
+                // 3.1 Update order position
+                Self::update_order_positions(request, conn);
+            },
+            unknown_resource => {
+                println!("Received an unknown resource: {}", unknown_resource);
+                response = OrderSystemResponse::RESPONSE_LINE_RESOURCE_UNKNOWN.to_string();
+                response.push_str("\n");
+                response += &format!(r#"{{"resource": "{resource}"}}"#);
+            }
+        }
+
+        println!("Exiting handle_patch_request()...");
+        response
+    }
+
+    pub fn handle_process_request(request: &str, conn: &Connection) -> String {
         println!("Running handle_process_request()...");
         // 1. Create response
         let mut response = String::new();

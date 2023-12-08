@@ -28,7 +28,7 @@ pub fn init_database(in_memory: bool) -> Connection {
 
     // Print data (testing)    
     //super::test::database_testing::hello_from_database_testing();
-    //crate::database::test::database_testing::test(&conn).unwrap();
+    crate::database::test::database_testing::test(&conn).unwrap();
 
     // Return database connection for server to use
     conn
