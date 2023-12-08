@@ -23,6 +23,7 @@ use crate::get_handler::*;
 #[allow(unused)]
 use crate::post_handler::*;
 use crate::request_line::*;
+#[allow(unused)]
 use crate::database::database::*;
 //use crate::order_system::order_system::*;
 
@@ -69,7 +70,7 @@ fn main() {
     });
 
     //println!("Initializing database...");
-    let conn = init_database(true);
+    let conn = database::init::init_database(true);
 
     //test_bufReader();
     order_system::order_system_testing::test_order_system(&conn, &1);

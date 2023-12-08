@@ -1,9 +1,3 @@
-//use server::get_request_line;
-//use server::get_request_line;
-//use crate::database::table::{print_rows_from_query, parse_query_to_json}; //<--- funkar i fetch_han
-//use crate::{request_line::RequestLine, database::table::get_query_iterator}; // <--- funkar inte heller
-//use crate::request_line::*;
-
 use std::num::ParseIntError;
 
 use rusqlite::Connection;
@@ -11,7 +5,7 @@ use rusqlite::Connection;
 use serde::{Deserialize, Serialize};
 #[allow(unused)]
 use serde_json::{json, Value};
-use crate::database::{order::Order, order_position::OrderPosition, table::{get_query_iterator, print_rows_from_query}};
+use crate::database::{order::Order, order_position::OrderPosition, table::{get_query_iterator, print_rows_from_query, parse_query_to_json}};
 #[allow(unused)]
 use crate::order_system::order_system_testing::generate_order_request;
 
@@ -19,6 +13,7 @@ pub trait OrderSystemApiConstants {
     const API_IDENTIFIER: &'static str = "ORDSYS";
     const VERSION_1_0: &'static str = "1.0";
     
+    const METHOD_GET: &'static str = "GET";
     const METHOD_PROCESS: &'static str = "PROCESS";
     const METHOD_REPORT: &'static str = "REPORT";
 
@@ -27,8 +22,10 @@ pub trait OrderSystemApiConstants {
 }
 
 pub trait OrderSystemRequestApi {
-    const REQUEST_PROCESS_FULL: &'static str = "PROCESS orders/oldest ORDSYS/1.0\n{”status”: ”processing”}";
+    const REQUEST_PROCESS_FULL: &'static str = r#"PROCESS orders/oldest ORDSYS/1.0\n{"status": "processing"}"#;
     const REQUEST_LINE_PROCESS: &'static str = "PROCESS orders/oldest ORDSYS/1.0";
+
+    const REQUEST_GET_ORDER_POSITIONS_FULL: &'static str = "GET order-positions ORDSYS/1.0";
     
     const REQUEST_LINE_REPORT: &'static str = "REPORT orders/id ORDSYS/1.0";
     
@@ -39,6 +36,7 @@ pub trait OrderSystemRequestApi {
 }
 
 pub trait OrderSystemResponseApi {
+    const RESPONSE_LINE_RESOURCE_UNKNOWN: &'static str = "ORDSYS/1.0 ERROR_RESOURCE_UNKNOWN";
     const RESPONSE_LINE_METHOD_UNKNOWN: &'static str = "ORDSYS/1.0 ERROR_METHOD_UNKNOWN";
     
     const RESPONSE_LINE_PROCESS_INCOMING: &'static str = "ORDSYS/1.0 INCOMING";
@@ -101,11 +99,15 @@ impl OrderSystem {
         println!("Request method received:\n{}\n", request_method);
 
         match request_method {
-            "PROCESS" => {
+            OrderSystemApi::METHOD_GET => {
+                println!("Incoming GET request!");
+                response = Self::handle_get_request(request, conn);
+            },
+            OrderSystemApi::METHOD_PROCESS => {
                 println!("Incoming PROCESS request!");
                 response = Self::handle_process_request(request, conn);
-            },            
-            "REPORT" => {
+            },
+            OrderSystemApi::METHOD_REPORT => {
                 println!("Incoming REPORT request!");
                 response = Self::handle_report_request(request, conn);
             },
@@ -117,6 +119,36 @@ impl OrderSystem {
         
         println!("Sending following response to Order System:\n{}", response);
 
+        response
+    }
+
+    pub fn handle_get_request(request: &str, conn: &Connection) -> String {
+        println!("Running handle_get_request()...");
+
+        // 1. Create response
+        let mut response = String::new();
+
+        // 2. Check resource
+        let resource = Self::get_resource(request);
+        println!("Resource requested:\n{resource}");
+
+        match resource.as_str() {
+            "order-positions" => {
+                response = OrderSystemResponse::RESPONSE_LINE_REPORT_OK.to_string();
+                response.push_str("\n");
+                response.push_str(&parse_query_to_json(conn, "SELECT * FROM order_position;"));
+                response = response.replace("\"rows\":", "\"order-positions\":");
+            },
+            unknown_resource => {
+                println!("Received an unknown resource: {}", unknown_resource);
+                response = OrderSystemResponse::RESPONSE_LINE_RESOURCE_UNKNOWN.to_string();
+                response.push_str("\n");
+                response += &format!(r#"{{"resource": "{resource}"}}"#);
+            }
+        }
+
+
+        println!("Exiting handle_get_request()...\n");
         response
     }
 
@@ -226,6 +258,10 @@ impl OrderSystem {
 
         println!("Exiting handle_report_request()...");
         response
+    }
+
+    fn get_resource(request: &str) -> String {
+        String::from(request.split(" ").collect::<Vec<&str>>()[1])
     }
 
     pub fn get_order_id_from_report(request: &str) -> Result<i64, ParseIntError> {

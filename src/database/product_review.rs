@@ -10,7 +10,7 @@ pub struct ProductReview {}
 impl Table for ProductReview {
     fn create_table(conn: &rusqlite::Connection) -> Result<()> {
         conn.execute(
-            "CREATE TABLE IF NOT EXISTS product_image (
+            "CREATE TABLE IF NOT EXISTS product_review (
                 id         INTEGER PRIMARY KEY,
                 rating INTEGER DEFAULT 0,
                 product_id INTEGER NOT NULL,

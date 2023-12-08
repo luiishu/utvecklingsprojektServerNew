@@ -1,3 +1,6 @@
+pub mod init;
+pub mod test;
+
 pub mod database;
 pub mod table;
 

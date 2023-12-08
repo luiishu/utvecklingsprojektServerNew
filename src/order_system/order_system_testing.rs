@@ -6,17 +6,31 @@ use crate::order_system::order_system::{OrderSystemApi, OrderSystemApiConstants,
 
 pub fn generate_order_request(conn: &Connection, n: &i32) {
     println!("Generating request from Order System...");
-    generate_process_request(conn);
-
+    //generate_process_request(conn);
     //println!("Printing all products BETWEEN generating order requests:");
     //crate::database::table::print_rows_from_query(&conn, "select * from [product];").unwrap();
+
+    generate_get_request(conn);
     
     for _i in 0..*n {
         //generate_process_request(conn);
-        generate_ok_report(conn, &2);
+        //generate_ok_report(conn, &2);
         //generate_fail_report(conn, &2);
     }
     
+}
+
+pub fn generate_get_request(conn: &Connection) {
+    println!("Generating GET request...");
+    let request = <OrderSystemRequest as OrderSystemRequestApi>::REQUEST_GET_ORDER_POSITIONS_FULL.to_string();
+    OrderSystem::handle_request(&request, conn);   
+}
+
+pub fn generate_bad_get_request(conn: &Connection) {
+    println!("Generating bad GET request...");
+    let mut request = <OrderSystemRequest as OrderSystemRequestApi>::REQUEST_GET_ORDER_POSITIONS_FULL.to_string();
+    request = request.replace("order-positions", "hankey");
+    OrderSystem::handle_request(&request, conn);   
 }
 
 pub fn generate_process_request(conn: &Connection) {
@@ -97,7 +111,7 @@ pub fn test_order_system(conn: &Connection, n: &i32) {
 
     //println!("Printing all orders BEFORE generating order requests:");
     //crate::database::table::print_rows_from_query(&conn, "select * from [order];").unwrap();
-    println!("Printing all order positions BEFORE generating order requests:");
+    println!("\nPrinting all order positions BEFORE generating order requests:");
     crate::database::table::print_rows_from_query(&conn, "select * from [order_position];").unwrap();
     //println!("Printing all products BEFORE generating order requests:");
     //crate::database::table::print_rows_from_query(&conn, "select * from [product];").unwrap();
@@ -106,7 +120,7 @@ pub fn test_order_system(conn: &Connection, n: &i32) {
 
     //println!("Printing all orders AFTER generating order requests:");
     //crate::database::table::print_rows_from_query(&conn, "select * from [order];").unwrap();
-    println!("Printing all order positions AFTER generating order requests:");
+    println!("\nPrinting all order positions AFTER generating order requests:");
     crate::database::table::print_rows_from_query(&conn, "select * from [order_position];").unwrap();
 
     //println!("Printing all products AFTER generating order requests:");
