@@ -158,7 +158,7 @@ pub fn test(conn: &Connection) -> Result<()> {
     //order_system::order_system::OrderSystem::hello_from_order_system();
 
 
-    print_meta_data(conn)?;
+    //print_meta_data(conn)?;
 
     Ok(())
 }

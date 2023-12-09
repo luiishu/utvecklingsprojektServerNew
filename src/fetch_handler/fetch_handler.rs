@@ -12,10 +12,28 @@ pub fn handle_fetch_request(request: &String, conn: &Connection) -> String {
     //crate::order_system::order_system::OrderSystem::hello_from_order_system();
     //order_system::order_system::OrderSystem::hello_from_order_system();
 
+    // 1. Get api name
+
+    // 1.1 Check validity of api name
+
+    // 1.2 Proceed if valid, otherwise return
+
+    // 2. Get api version
+
+    // 2.2 Check validity of api version
+
+    // 2.2 Proceed if valid, otherwise return
+
+    // 3. Get resource
+
+    // 3.1 Check validity of resource
+
+    // 3.2 Proceed if valid, otherwise return
+
+
     let request_line = RequestLine::new(&request);
     let request_uri = &request_line.uri;
-    let mut data = String::new();
-
+    let mut data = String::new(); // <-- response? 
 
     println!("Request line received:\n{}", request_line.to_string());
     println!("Request uri received:\n{}", request_uri);

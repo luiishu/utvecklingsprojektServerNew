@@ -73,7 +73,8 @@ fn main() {
     let conn = database::init::init_database(true);
 
     //test_bufReader();
-    order_system::order_system_testing::test_order_system(&conn, &1);
+    //order_system::order_system_testing::test_order_system(&conn, &1);
+    fetch_handler::test::test();
 
     println!("Running server on: {}", listener.local_addr().unwrap());
     //run_server(listener, &conn);
@@ -104,7 +105,7 @@ fn handle_connection(mut stream: TcpStream, mut counter: i32, conn: &Connection)
 
     // 1. Get request and convert to string
     let request = match server::get_request_string(&mut stream) {
-        Ok(a) => a,
+        Ok(request) => request,
         Err(e) => {
             println!("Found error: {e}");
             return

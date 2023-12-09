@@ -66,9 +66,12 @@ pub fn get_request_string(mut stream: & TcpStream) -> Result<String, &'static st
     }
     println!("Bytes read from from stream: {}", bytes_read);
 
-    let request = String::from_utf8_lossy(&buffer[..]).to_string(); /* convert buffer to string
-                                                                             *  use to_string() to convert
-                                                                             * to  String */
+    //convert buffer to string and use to_string() to convert to  String
+    //let request = String::from_utf8_lossy(&buffer[..]).to_string();
+    
+    // Only store the bytes read instead of entire buffer (to remove white space/invisible chars)
+    // changed arised from faulty string comparisons in order system (while comparing order status)
+    let request = String::from_utf8_lossy(&buffer[..bytes_read]).to_string();
     Ok(request)
 }
 

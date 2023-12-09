@@ -25,7 +25,7 @@ pub trait OrderSystemApiConstants {
 }
 
 pub trait OrderSystemRequestApi {
-    const REQUEST_PROCESS_FULL: &'static str = r#"PROCESS orders/oldest ORDSYS/1.0\n{"status": "processing"}"#;
+    const REQUEST_PROCESS_FULL: &'static str = "PROCESS orders/oldest ORDSYS/1.0\n{\"status\": \"processing\"}";
     const REQUEST_LINE_PROCESS: &'static str = "PROCESS orders/oldest ORDSYS/1.0";
 
     const REQUEST_GET_ORDER_POSITIONS_FULL: &'static str = "GET order-positions ORDSYS/1.0";
@@ -257,8 +257,24 @@ impl OrderSystem {
         };
 
         // 4. Check status
-        let status = Self::get_report_status(request);
-        println!("Received status: {status}");
+        let mut status = Self::get_report_status(request);
+        
+        //status = status.trim().to_string();
+        //status.retain(|c| !c.is_whitespace());
+        //println!("Received status length: {}", status.len());
+
+        //status.retain(|s| s as usize != 0);
+        //println!("Received status length: {}", status.len());
+        /* 
+        println!("[{}] vs [{}]", status.trim(), OrderSystemApi::STATUS_FAIL);
+        println!("Are they the same? {}", status.trim() == OrderSystemApi::STATUS_FAIL);
+        println!("[{}] vs [{}]", status, OrderSystemApi::STATUS_FAIL);
+        println!("Are they the same? {}", status == OrderSystemApi::STATUS_FAIL);
+        println!("[{}] vs [{}]", status.as_str(), OrderSystemApi::STATUS_FAIL);
+        println!("Are they the same? {}", status == OrderSystemApi::STATUS_FAIL);
+        println!("[{}] vs [{}]", status.as_str().trim(), OrderSystemApi::STATUS_FAIL);
+        println!("Are they the same? {}", status.trim() == OrderSystemApi::STATUS_FAIL);
+        */
 
         match status.as_str() {
             OrderSystemApi::STATUS_OK => {
@@ -285,8 +301,8 @@ impl OrderSystem {
                 Self::update_product_amounts(&order_id, conn, false);
             },
 
-            _ => {
-                println!("Received unknown status... FAIL!");
+            unknown_status => {
+                println!("Received unknown status: {unknown_status}");
                 return OrderSystemResponse::RESPONSE_LINE_REPORT_FAIL.to_string();
             },
 
