@@ -145,7 +145,9 @@ impl OrderSystem {
             "order-positions" => {
                 response = OrderSystemResponse::RESPONSE_LINE_REPORT_OK.to_string();
                 response.push_str("\n");
-                response.push_str(&parse_query_to_json(conn, "SELECT * FROM order_position;"));
+                
+                let query = "SELECT position_x, position_y, empty, product_type_id FROM [order_position];";
+                response.push_str(&parse_query_to_json(conn, query));
                 response = response.replace("\"rows\":", "\"order-positions\":");
             },
             unknown_resource => {
@@ -364,13 +366,13 @@ impl OrderSystem {
         println!("Number of updated positions: {}", values["updated_positions"].as_array().unwrap().len());
     
         for order_position in updated_positions.into_iter() {
-            let order_position_id: i64 = serde_json::from_value(order_position["position_id"].to_owned()).unwrap();
+            //let order_position_id: i64 = serde_json::from_value(order_position["position_id"].to_owned()).unwrap();
             let x: i64 = serde_json::from_value(order_position["position_x"].to_owned()).unwrap();
             let y: i64 = serde_json::from_value(order_position["position_y"].to_owned()).unwrap();
             
             let product_type_id: i64 = serde_json::from_value(order_position["product_type_id"].to_owned()).unwrap();
             
-            println!("order id: {}", order_position["position_id"]);
+            //println!("order id: {}", order_position["position_id"]);
             println!("x position: {}", order_position["position_x"]);
             println!("y position: {}", order_position["position_y"]);
             println!("product type id: {}\n", order_position["product_type_id"]);

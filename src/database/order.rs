@@ -129,7 +129,8 @@ impl Order {
         GROUP BY pt.id;
         ");
 
-        let query_order_positions = "SELECT * FROM [order_position];";
+        //let query_order_positions = "SELECT * FROM [order_position];";
+        let query_order_positions = "SELECT position_x, position_y, empty, product_type_id FROM [order_position];";
         
         //let product_type_amounts = get_query_iterator(&conn, query_amounts);
         //let order_positions = get_query_iterator(&conn, query_order_positions);
