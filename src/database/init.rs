@@ -11,8 +11,8 @@ pub fn init_database(in_memory: bool) -> Connection {
         println!("\nInitializing database in memory...");
         Connection::open_in_memory().unwrap()
     } else {
-        println!("\nInitializing database...");
-        Connection::open_in_memory().unwrap()// should be open in file
+        println!("\nInitializing database in file...");
+        Connection::open("database.db").unwrap()
     };
 
     // Enables foreign keys for connection

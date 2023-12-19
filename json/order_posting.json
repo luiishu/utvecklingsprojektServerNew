@@ -1,0 +1,21 @@
+{
+    "order": {
+        "id": 2, 
+        "user_id": 1, 
+        "product_amount": 0, 
+        "total_cost": 0, 
+        "order_date": "2023-12-19", 
+        "order_timestamp": "2023-12-19 03:12:56", 
+        "status": "READY"
+    },
+    
+    "order-items": [
+    {"id": 2, "order_id": 2, "product_id": 1, "amount": 2, "cost": 0},
+    {"id": 3, "order_id": 2, "product_id": 2, "amount": 3, "cost": 0},
+    {"id": 4, "order_id": 2, "product_id": 3, "amount": 3, "cost": 0},
+    {"id": 5, "order_id": 2, "product_id": 4, "amount": 3, "cost": 0},
+    {"id": 6, "order_id": 2, "product_id": 6, "amount": 7, "cost": 0},
+    {"id": 7, "order_id": 2, "product_id": 7, "amount": 1, "cost": 0},
+    {"id": 8, "order_id": 2, "product_id": 8, "amount": 1, "cost": 0}
+    ]
+}

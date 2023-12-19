@@ -4,7 +4,7 @@
 
 use rusqlite::{Connection, params, Result};
 
-use crate::database::{order_position::OrderPosition, table::print_rows_from_query};
+use crate::database::{order_position::OrderPosition, table::{print_rows_from_query, parse_query_to_json}};
 
 pub fn hello_from_database_testing() {
     println!("Hello from database_testing!");
@@ -75,11 +75,9 @@ pub fn test(conn: &Connection) -> Result<()> {
     //print_rows_from_query(&conn, query).unwrap();
     //println!("json string:\n{}", crate::database::table::parse_query_to_json(&conn, query));
     
-    /* 
     let query = "SELECT * FROM [order_position];";
     print_rows_from_query(&conn, query).unwrap();
     println!("json string:\n{}", crate::database::table::parse_query_to_json(&conn, query));
-    */
 
     /* 
     let query = "SELECT * FROM [order];";
@@ -156,6 +154,25 @@ pub fn test(conn: &Connection) -> Result<()> {
 
     //order_system::order_system::OrderSystem::hello_from_order_system();
     //order_system::order_system::OrderSystem::hello_from_order_system();
+
+    /* 
+    let query = "
+    SELECT * FROM order_item
+    INNER JOIN [order] ON order_item.order_id = [order].id
+    WHERE [order].id = 2;";
+    */
+
+    //let query = "
+    //SELECT * FROM [order_position];";
+
+    //let query = "SELECT * FROM [order] WHERE id = 2;";
+    //println!("{}", parse_query_to_json(conn, query));
+
+    //let query = "SELECT * FROM [order_item] WHERE order_id = 2;";
+    //println!("{}", parse_query_to_json(conn, query));
+    //print_rows_from_query(conn, query).unwrap();
+
+
 
 
     //print_meta_data(conn)?;

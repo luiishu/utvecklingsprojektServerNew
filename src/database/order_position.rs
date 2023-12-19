@@ -53,11 +53,11 @@ impl OrderPosition {
         let y_max = 6;
         
 
-        for x in 1..(x_max + 1) {
+        for x in 0..(x_max) {
             let data: Vec<Vec<&str>> = vec![vec!["", ""] ];
             let x_str = &x.to_string();
 
-            for y in 1..(y_max + 1) {
+            for y in 0..(y_max) {
                 //println!("Inserting new position with coordinates ({x}, {y})!");
                 let y_str = &y.to_string();
 

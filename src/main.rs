@@ -71,6 +71,7 @@ fn main() {
 
     //println!("Initializing database...");
     let conn = database::init::init_database(true);
+    //database::test::database_testing::test(&conn).unwrap();
 
     //test_bufReader();
     //order_system::order_system_testing::test_order_system(&conn, &1);
