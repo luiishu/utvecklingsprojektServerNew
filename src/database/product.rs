@@ -15,13 +15,20 @@ impl Table for Product {
         conn.execute(
             "CREATE TABLE IF NOT EXISTS product (
                 id INTEGER PRIMARY KEY,
-                name         TEXT NOT NULL,
-                product_type_id TEXT NOT NULL,
-                price        INTEGER NOT NULL,
-                amount       INTEGER NOT NULL,
-                description  TEXT,
+                name                TEXT NOT NULL,
+                product_type_id     INTEGER NOT NULL,
+                product_category_id INTEGER,
+                product_brand_id    INTEGER,
+                product_image_id    INTEGER,
+                product_rating      INTEGER DEFAULT 0,
+                price               INTEGER NOT NULL,
+                amount              INTEGER NOT NULL,
+                description         TEXT,
                 
-                FOREIGN KEY(product_type_id) REFERENCES product_type(id)
+                FOREIGN KEY(product_type_id) REFERENCES product_type(id),
+                FOREIGN KEY(product_category_id) REFERENCES product_category(id),
+                FOREIGN KEY(product_brand_id) REFERENCES product_brand(id)
+                FOREIGN KEY(product_image_id) REFERENCES product_image(id)
                 );",
                 (),
         )?;

@@ -17,7 +17,7 @@ use super::{
     table::{Table, print_rows_from_query}, 
     address::Address, user::User,
     product_type::ProductType, product::Product, 
-    order::Order, order_item::OrderItem, order_position::OrderPosition, product_image::ProductImage, product_review::ProductReview, test::database_testing::hello_from_database_testing
+    order::Order, order_item::OrderItem, order_position::OrderPosition, product_image::ProductImage, product_review::ProductReview, test::database_testing::hello_from_database_testing, product_brand::ProductBrand, product_category::ProductCategory
     };
 
 pub fn hello_from_database() {
@@ -78,6 +78,8 @@ pub fn create_tables(conn: &Connection) -> Result<()> {
         User::create_table(conn)?;
         //create_table_user(conn)?;
         
+        ProductBrand::create_table(conn)?;
+        ProductCategory::create_table(conn)?;
         ProductType::create_table(conn)?;
         Product::create_table(conn)?;
         ProductImage::create_table(conn)?;
@@ -110,19 +112,54 @@ pub fn insert_test_data(conn: &Connection) -> Result<()> {
            (\"Yellow block\"),
            (\"Green block\"),
            (\"Blue block\");
-           
-           
-        INSERT INTO product (product_type_id, name, price, amount, description)
+
+
+        INSERT INTO product_brand (name)
         VALUES
-           (1, \"Red Dress\", 6, 9, \"A red dress.\"),
-           (1, \"Red apple\", 6, 21, \"A red apple.\"),
-           (2, \"Yellow Shoe\", 6, 4, \"A yellow shoe.\"),
-           (2, \"Yellow Stone\", 6, 1, \"A yellow stone. Must be important.\"),
-           (2, \"Bible\", 6, 1, \"A holy book.\"),
-           (3, \"Green apple\", 6, 21, \"A green apple.\"),
-           (4, \"Blue Man\", 6, 4, \"A blue man (what the-).\"),
-           (4, \"Ble Bikini\", 6, 8, \"A blue bikini.\");
+        (\"Grupp4\"),
+        (\"Grupp69\"),
+        (\"Grupp420\"),
+        (\"Grupp1337\");
+
+        INSERT INTO product_category (name)
+        VALUES
+        (\"Hoodie\"),
+        (\"Jeans\");
+
+        INSERT INTO product_image (file_name, product_id)
+        VALUES
+        (\"/img/clothes/hoodie-yellow.png\", 420);
+           
+        INSERT INTO product (product_type_id, product_category_id, product_brand_id, name, product_rating, price, amount, product_image_id, description)
+        VALUES
+           (1, 1, 1, \"Red Dress\", 0, 6, 9, 1, \"A red dress.\"),
+           (1, 1, 1, \"Red apple\", 0, 6, 21, 1, \"A red apple.\"),
+           (2, 1, 1, \"Yellow Shoe\", 0, 6, 4, 1, \"A yellow shoe.\"),
+           (2, 1, 1, \"Yellow Stone\", 0, 6, 1, 1, \"A yellow stone. Must be important.\"),
+           (2, 1, 1, \"Bible\", 0, 6, 1, 1, \"A holy book.\"),
+           (3, 1, 1, \"Green apple\", 0, 6, 21, 1, \"A green apple.\"),
+           (4, 1, 1, \"Blue Man\", 0, 6, 4, 1, \"A blue man (what the-).\"),
+           (4, 1, 1, \"Ble Bikini\", 0, 6, 8, 1, \"A blue bikini.\");
         
+           CREATE VIEW IF NOT EXISTS product_page
+           AS SELECT 
+           product.id AS productId,
+           product.name AS productName,
+           product_type.type AS color,
+           product_category.name AS category,
+           product_brand.name AS brand,
+           product.product_rating AS review,
+           product.price AS price,
+           product.amount AS amount,
+           product_image.file_name AS image
+
+           FROM product
+           INNER JOIN product_type ON product_type.id = product.product_type_id
+           INNER JOIN product_category ON product_category.id = product.product_category_id
+           INNER JOIN product_brand ON product_brand.id = product.product_brand_id
+           INNER JOIN product_image ON product_image.id = product.product_image_id;
+
+
         
         insert into [order] (user_id, status)
         VALUES (1, \"New\"), (1, \"READY\"), (2, \"READY\"), (2, \"New\"), (1, \"New\"), 

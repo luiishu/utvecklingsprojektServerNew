@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fetch Handler Test</title>
+</head>
+<body>
+    <h2>GET</h2>
+    <button onclick="fetch_data:fetch_data(resource)">Send fetch request</button>
+
+    <h3>Fetch results</h3>
+    <ul>
+
+    </ul>
+
+    <script>
+    fetch_arg = "api/v1/products"
+    api = "api/v1/"
+    resources = ["addresses", "users", 
+                 "orders", "order-items", "order-positions", 
+                 "products", "product-images", "product-reviews", "product-types"]
+
+    resource = "product_pages"
+    
+    function fetch_data(uri) {
+        fetch(api + uri)
+        .then(res => {
+            return res.json();
+        })
+        .then(data => {
+          console.log(data);
+          var length = data.rows.length;
+          console.log("array length: " + length);
+
+          for(var i = 0; i < length; i++) {
+            //console.log(i + ". " + Object.values(data.rows[i]));
+            //console.log('[');
+            var j = 0;
+            entry = "["
+            for (const [key, value] of Object.entries(data.rows[i])) {
+                //console.log(`${i}. ${key}: ${value}`);
+                var entryLength = Object.entries(data.rows[i]).length
+
+                entry += `${key}: ${value}`
+                if (j < entryLength - 1) {entry += ", "}
+                j++
+            }
+            
+            entry += "]"
+            console.log(entry);
+          }
+
+          document.querySelector("ul").innerHTML = "";
+
+          data.rows.forEach(product => {
+            const markup = `<li>${Object.entries(product).flat()}</li>`;
+            document.querySelector("ul").insertAdjacentHTML("beforeend", markup);
+          });
+
+        });
+      }
+
+    </script>    
+</body>
+</html>
