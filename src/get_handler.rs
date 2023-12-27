@@ -20,6 +20,8 @@ pub fn handle_get_request_new(request: &String, conn: &Connection) -> String {
     println!("---------------------------------------------------------");
     println!("Hello from handle_get_request_new()!\n");
     println!("Request received:\n{}", request);
+    let mut response = String::new();
+    let mut resource = String::new();
 
     // 1. Get request line
     let request_line = RequestLine::new(&request);
@@ -35,7 +37,7 @@ pub fn handle_get_request_new(request: &String, conn: &Connection) -> String {
 
     // 4. Check if file exists in server
     if Path::new(&request_line.get_request_uri_without_first_slash()).exists() {
-        println!("File path for uri {} exists!", request_line.uri);
+        println!("File path for uri {} exists!", &request_line.get_request_uri_without_first_slash());
     } else {
         println!("File path for uri {} does not exist!", request_line.uri);
         // return error response
@@ -95,7 +97,6 @@ pub fn handle_get_request_new(request: &String, conn: &Connection) -> String {
     println!("Getting file contents...");
     let mut contents = String::new();
     
-    #[allow(unused)]
     let mut length = 0;
 
     if data_request {
@@ -107,22 +108,26 @@ pub fn handle_get_request_new(request: &String, conn: &Connection) -> String {
         return data_response
     }
 
+    let mut file_content = Vec::new();
 
     if !image_request {
         contents = fs::read_to_string(filename).unwrap();
         length = contents.len();
     } else {
-        let mut file_content = Vec::new();
-        //let path = Path::new("pogoPartyHatters.png");
-        let file_name = "pogoPartyHatters.png";
+        let file_name = &request_line.get_request_uri_without_first_slash();
+        resource = file_name.to_string();
+        println!("File name {file_name}");
 
         let mut file = File::open(&file_name).expect("Unable to open file");
         file.read_to_end(&mut file_content).expect("Unable to read");
-        length = file_content.len();
+        length = file_content.len();        
     }
     println!("Got file contents...");
-    //length = contents.len();
-    let response = format!("{status_line}\r\nContent-Length: {length}\r\n\r\n{contents}");
+    response = format!("{status_line}\r\nContent-Length: {length}\r\n\r\n{contents}");
+    if image_request {
+        response.push_str(&resource);
+    }
+
     //println!("Response from helper:\n{}", response);
     println!("---------------------------------------------------------");
     response
@@ -133,7 +138,6 @@ pub fn contains_resource(request_header: &str) -> bool {
     request_header.contains(".png")
 }
 
-#[allow(unused)]
 pub fn is_text(request_line: &str) -> bool {
     request_line.contains(".txt") || request_line.contains(".css") || request_line.contains(".js")
 }

@@ -1,12 +1,13 @@
+#![allow(unused)]
 use std::num::ParseIntError;
 
 use rusqlite::Connection;
-#[allow(unused)]
+
 use serde::{Deserialize, Serialize};
-#[allow(unused)]
+
 use serde_json::{json, Value};
 use crate::database::{order::Order, order_position::OrderPosition, table::{get_query_iterator, print_rows_from_query, parse_query_to_json}};
-#[allow(unused)]
+
 use crate::order_system::order_system_testing::generate_order_request;
 
 pub trait OrderSystemApiConstants {
@@ -82,7 +83,6 @@ pub fn hello_from_order_system() {
     println!("Hello from OrderSystem!");
 }
 
-#[allow(unused)]
 impl OrderSystem {
     pub fn hello() {
         println!("Hello from OrderSystem!");

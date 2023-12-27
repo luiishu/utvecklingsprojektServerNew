@@ -75,9 +75,9 @@ pub fn test(conn: &Connection) -> Result<()> {
     //print_rows_from_query(&conn, query).unwrap();
     //println!("json string:\n{}", crate::database::table::parse_query_to_json(&conn, query));
     
-    let query = "SELECT * FROM [order_position];";
-    print_rows_from_query(&conn, query).unwrap();
-    println!("json string:\n{}", crate::database::table::parse_query_to_json(&conn, query));
+    //let query = "SELECT * FROM [order_position];";
+    //print_rows_from_query(&conn, query).unwrap();
+    //println!("json string:\n{}", crate::database::table::parse_query_to_json(&conn, query));
 
     /* 
     let query = "SELECT * FROM [order];";

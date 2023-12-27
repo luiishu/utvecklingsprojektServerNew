@@ -2,10 +2,18 @@
 #![allow(unused_imports)]
 #![allow(unused_variables)]
 
-use super::table::Table;
+use super::table::{Table, print_rows_from_query};
 use rusqlite::{Connection, params, Result, Row};
+use serde::{Deserialize, Serialize};
 
-pub struct OrderItem {}
+#[derive(Debug, Deserialize, Serialize)]
+pub struct OrderItem {
+    //pub id: i64,
+    pub order_id: i64,
+    pub product_id: i64,
+    pub amount: i64,
+    pub cost: i64,
+}
 
 impl Table for OrderItem {
     fn create_table(conn: &rusqlite::Connection) -> Result<()> {
@@ -31,6 +39,8 @@ impl Table for OrderItem {
     }
 
     fn print_rows(conn: &rusqlite::Connection) -> rusqlite::Result<()> {
-        todo!()
+        let query = &format!("SELECT * FROM [order_item];");
+        print_rows_from_query(conn, query)?;
+        Ok(())
     }
 }

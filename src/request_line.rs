@@ -21,7 +21,7 @@ impl RequestLine {
     }
 
     pub fn get_request_uri(request_line: &str) -> String {
-        println!("Request line from get_request_uri: {}", request_line);
+        //println!("Request line from get_request_uri: {}", request_line);
         let request_line_vector: Vec<_> = request_line.split(" ").collect();
         request_line_vector[1].to_string() // this will panic when an empty request is received
     }

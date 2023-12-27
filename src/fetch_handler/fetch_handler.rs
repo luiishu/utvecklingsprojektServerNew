@@ -1,3 +1,4 @@
+#![allow(unused)]
 #![allow(unused_imports)]
 #![allow(unused_variables)]
 #![allow(dead_code)]
@@ -12,7 +13,6 @@ use crate::{request_line::RequestLine, database::table::{get_query_iterator, sel
 fn is_last_resource(id: usize, resource: Vec<&str>) -> bool {
     (id + 1) == resource.len()
 }
-
 
 fn parse_fetch_resource_to_query(mut resource: String) -> String {
     if resource.contains('-') {

@@ -1,52 +1,44 @@
-#[allow(unused)]
+#![allow(unused)]
 use std::{
     fs,
     io::{self, prelude::*, BufReader},
     net::{IpAddr, Ipv4Addr,SocketAddr,  TcpListener, TcpStream},
-    process,
+    process, str::from_utf8,
 };
 
-#[allow(unused)]
 use std::{fs::File, thread::{self, Thread}};
-#[allow(unused)]
 use rand::Rng;
 
-#[allow(unused)]
 use rusqlite::{Connection, params, Result};
-#[allow(unused)]
+
 use server::{database::order, order_system::order_system::*};
 //use server::database::database::hello_from_database;
 
-#[allow(unused)]
 use crate::{init::*, request_handler::handle_request, order_system::order_system::{OrderSystemRequest, OrderSystemRequestApi}};
 use crate::get_handler::*;
-#[allow(unused)]
 use crate::post_handler::*;
 use crate::request_line::*;
-#[allow(unused)]
 use crate::database::database::*;
 //use crate::order_system::order_system::*;
 
-mod init;
-mod request_handler;
-mod get_handler;
-mod post_handler;
-mod request_line;
 mod database;
+mod init;
 mod fetch_handler;
-pub mod order_system;
+mod get_handler;
+mod order_system;
+mod post_handler;
+mod response;
+mod request_handler;
+mod request_line;
 //mod database/hello_from_database;
 //static mut counter: i32 = 0;
 
 const LAN: bool = false;
 const PRINTING: bool = true;
 
-#[allow(unused)]
 const LOCALHOST_IP_V4: &str = "127.0.0.1";
-#[allow(unused)]
 const SERVER_IP_V4: &str = "192.168.1.178";
 
-#[allow(unused)]
 const RUST_PORT: u16 = 7878;
 
 //static conn: Connection = Connection::open_in_memory().unwrap();
@@ -75,7 +67,10 @@ fn main() {
 
     //test_bufReader();
     //order_system::order_system_testing::test_order_system(&conn, &1);
-    fetch_handler::test::test();
+    //fetch_handler::test::test();
+    post_handler::test::test(&conn);
+    
+    println!();
 
     println!("Running server on: {}", listener.local_addr().unwrap());
     //run_server(listener, &conn);
@@ -100,7 +95,6 @@ pub fn run_server(listener: TcpListener, conn: &Connection) {
     }
 }
 
-#[allow(unused)]
 fn handle_connection(mut stream: TcpStream, mut counter: i32, conn: &Connection) {
     println!("Running handle_connection...");
 
@@ -133,31 +127,35 @@ fn handle_connection(mut stream: TcpStream, mut counter: i32, conn: &Connection)
     
     // TODO: add contains_resource block to request handler
     if contains_resource(&request_line.to_string()) {
-        let mut file_content = Vec::new();
-        //let path = Path::new("pogoPartyHatters.png");
-        let file_name = "pogoPartyHatters.png";
+        let mut file_content: Vec<u8> = Vec::new();
+        let file_name = response.split("\n").last().unwrap();
+        let mut response = response.replace(file_name, "");
+
+        //println!("Response:\n{response}");
+        //println!("Received resource in connection hanlder: {file_name}");
 
         let mut file = File::open(&file_name).expect("Unable to open file");
         file.read_to_end(&mut file_content).expect("Unable to read");
 
         //println!("File content:\n{:?}", file_content);
-        println!("aaa");
+        //println!("aaa");
+        //println!("Response: {response}");
 
         let mut response2 = response.to_string().into_bytes();
-        println!("bbb");
+        //println!("bbb");
         response2.extend(file_content);
 
-        println!("ccc");
+        //println!("ccc");
 
-        //stream.write_all(&response2).unwrap(); // send http response to client
+        //println!("Response:\n{response}");
+
         stream.write(&response2).unwrap(); // send http response to client
-        println!("ddd");
+        //println!("ddd");
+        return
     } else {
         stream.write_all(response.as_bytes()).unwrap(); // send http response to client
     }
 
-    //stream.write_all(response.as_bytes()).unwrap(); // send http response to client
-    //stream.flush().unwrap();
     println!("eee");
     stream.take_error().expect("No error was expected...");
     //drop(response)

@@ -1,14 +1,24 @@
 #![allow(dead_code)]
+#![allow(unused)]
 #![allow(unused_imports)]
 #![allow(unused_variables)]
-
 
 use std::collections::HashMap;
 
 use super::{table::{Table, print_rows_from_query, get_query_iterator, parse_query_to_json}, order_position};
 use rusqlite::{Connection, params, Result, Row};
+use serde::{Deserialize, Serialize};
 
-pub struct Order {}
+#[derive(Debug, Deserialize, Serialize)]
+pub struct Order {
+    //pub id: i64,
+    pub user_id: i64,
+    pub product_amount: i64,
+    pub total_cost: i64,
+    pub order_date: String,
+    pub order_timestamp: String,
+    pub status: String,    
+}
 
 impl Table for Order {
     fn create_table(conn: &rusqlite::Connection) -> Result<()> {
@@ -35,7 +45,9 @@ impl Table for Order {
     }
 
     fn print_rows(conn: &rusqlite::Connection) -> rusqlite::Result<()> {
-        todo!()
+        let query = &format!("SELECT * FROM [order];");
+        print_rows_from_query(conn, query)?;
+        Ok(())
     }
 }
 
@@ -49,6 +61,27 @@ impl Order {
         }
 
         Ok(())
+    }
+
+    pub fn get_newest_order_id(conn: &rusqlite::Connection) -> Result<i64, String> {
+        //let id = 0;
+        let query = r#"SELECT * FROM [order] ORDER BY id DESC LIMIT 1;"#;
+        //print_rows_from_query(conn, query).unwrap();
+        //id = table::q
+
+        let data = get_query_iterator(conn, query);        
+        //println!("{:?}", data);
+        if data.len() == 0 {
+            return Err(String::from("Error: there is no new order."));
+        }
+        let id = match data[0][0].parse::<i64>() {
+            Ok(id) => id,
+            Err(e) => return Err(e.to_string()),
+        };
+
+        //println!("Returning id: {id}");
+        
+        Ok(id)
     }
 
     pub fn get_oldest_ready_order_id(conn: &rusqlite::Connection) -> Result<i64, String> {
@@ -112,7 +145,6 @@ impl Order {
         parse_query_to_json(conn, query)
     }
 
-    #[allow(unused)]
     pub fn create_order_response_full(conn: &Connection, id: i64) -> String {                
         let mut response = String::new();
 
