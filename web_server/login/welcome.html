@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome</title>
+</head>
+<body>
+    <h1>Welcome</h1>    
+    <a href="login.html">Back to Login Page</a><br>
+    <p id = "p1">hello</p>
+
+    <h2>Logout</h2>
+    <button onclick="logout()">Logout</button>
+
+
+    <script>
+        function getCookie(cname) {// taken from https://www.w3schools.com/js/js_cookies.asp
+            let name = cname + "=";
+            let decodedCookie = decodeURIComponent(document.cookie);
+            let ca = decodedCookie.split(';');
+                for(let i = 0; i <ca.length; i++) {
+                    let c = ca[i];
+                    while (c.charAt(0) == ' ') {
+                        c = c.substring(1);
+                    }
+                    if (c.indexOf(name) == 0) {
+                        return c.substring(name.length, c.length);
+                    }
+                }
+                return "";
+        }        
+
+
+        api = "api/v1/"
+        let username = getCookie('username');
+        let password = "";
+        alert('username from cookie: ' + username);
+
+        document.getElementById("p1").innerHTML = "Welcome " + username + "!";
+
+
+
+        function logout() {
+            let request_type = "logout";
+            alert("It's time to logout user with username: " + username);
+            fetch(api + 'users', {
+            method: 'POST',
+            body: JSON.stringify({username, password, request_type}),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        }
+        ).then(res => {
+            console.log(res.headers.getSetCookie());
+            console.log(res.headers);
+            console.log(res);
+            return res;
+        }
+        ).then(data => {
+          console.log(data);
+          //var length = data.rows.length;
+          //console.log("array length: " + length);
+          //const value = `${document.cookie}`;
+          console.log("cookie: " + document.cookie);
+          //console.log(value);
+          //document.cookie = "a_cookie=says_hello";
+          console.log("cookie: " + document.cookie);
+          console.log("From setCookie header: " + data.headers.getSetCookie());
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+    }
+    </script>
+</body>
+</html>

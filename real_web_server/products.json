@@ -1,0 +1,45 @@
+{
+    "data": [
+      {
+        "id": 1,
+        "productName": "Cute Cat",
+        "color": "Yellow",
+        "category": "Hoodie",
+        "brand": "Grupp4",
+        "review": 1,
+        "price": "199",
+        "image": "/img/clothes/hoodie/hoodie-yellow-front.png",
+        "hoverImage": "/img/clothes/hoodie/hoodie-yellow-back.png"
+      },
+      {
+        "id": 2,
+        "productName": "Cute Cat",
+        "color": "Blue",
+        "brand": "Grupp4",
+        "review": 2,
+        "category": "Hoodie",
+        "price": "299",
+        "image": "/img/clothes/hoodie/hoodie-blue-front.png",
+        "hoverImage": "/img/clothes/hoodie/hoodie-blue-back.png"
+      },
+      {
+        "id": 3,
+        "productName": "Cute Cat",
+        "color": "Red",
+        "category": "Hoodie",
+        "brand": "Grupp4",
+        "review": 3,
+        "price": "159",
+        "image": "/img/clothes/hoodie/hoodie-red-front.png",
+        "hoverImage": "/img/clothes/hoodie/hoodie-red-back.png"
+      },
+      {
+        "id": 4,
+        "productName": "Cute Cat",
+        "color": "Green",
+        "brand": "Grupp4",
+        "review": 4,
+        "category": "Hoodie",
+        "price": "399",
+        "image": "/img/clothes/hoodie/hoodie-green-front.png",
+        "hoverIm

@@ -135,7 +135,7 @@ pub fn handle_get_request_new(request: &String, conn: &Connection) -> String {
 
 // placeholder, need to check if resource exists in server first
 pub fn contains_resource(request_header: &str) -> bool {
-    request_header.contains(".png")
+    request_header.contains(".png") || request_header.contains(".jpg") || request_header.contains(".jpeg")
 }
 
 pub fn is_text(request_line: &str) -> bool {
@@ -144,7 +144,7 @@ pub fn is_text(request_line: &str) -> bool {
 
 pub fn is_binary(request_line: &str) -> bool {
     //!is_text(request_line)
-    request_line.contains(".png")
+    request_line.contains(".png") || request_line.contains(".jpg") || request_line.contains(".jpeg")
 }
 
 

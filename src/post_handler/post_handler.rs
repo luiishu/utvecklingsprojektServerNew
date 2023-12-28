@@ -43,7 +43,11 @@ impl PostHandler {
         println!("Request body: {}", body);
 
         let response_code = match resource.as_str() {
-            SupportedResources::USERS => Self::handle_users(&body, conn),
+            SupportedResources::USERS => {
+                let response = Self::handle_users(&body, conn);
+                println!("Sending the following POST response:\n{response}");
+                return response
+            },
             SupportedResources::ORDERS => Self::handle_order(&body, conn),
             _ => {
                 return ResponseLine::get_response_line(HttpResponseCode::NOT_FOUND);
@@ -106,14 +110,15 @@ impl PostHandler {
         HttpResponseCode::CREATED
     }
 
-    fn handle_users(body: &str, conn: &Connection) -> usize {
+    fn handle_users(body: &str, conn: &Connection) -> String {
         User::print_rows(conn).unwrap();
         let json: Value = serde_json::from_str(&body).unwrap();
         let username = json["username"].to_string();
         let password = json["password"].to_string();
         let request_type = serde_json::from_value(json["request_type"].to_owned());
         if request_type.is_err() {
-            return HttpResponseCode::BAD_REQUEST;
+            //return HttpResponseCode::BAD_REQUEST;
+            return ResponseLine::get_response_line(HttpResponseCode::BAD_REQUEST)
         }
         
         let request_type: String = request_type.unwrap();
@@ -126,25 +131,39 @@ impl PostHandler {
         let user = serde_json::from_str(&body);
         if user.is_err() {
             println!("Error parsing user");
-            return HttpResponseCode::BAD_REQUEST;
+            eprintln!("{}", user.unwrap_err());
+            return ResponseLine::get_response_line(HttpResponseCode::BAD_REQUEST)
         }
 
         let user: User = user.unwrap();
 
         // 2. Check if request is for login or registration
         match request_type.as_str() {
-            "login" => return Self::login_user(&user, conn),
+            "login" => {                
+                return Self::login_user(&user, conn)
+            },
+            "logout" => {                
+                return Self::logout_user(&user, conn)
+            },
             "register" => return Self::register_user(&user, conn),
             _ => {
                 println!("Received unknown request type: {request_type}");
-                return HttpResponseCode::BAD_REQUEST;
+                return HttpResponseCode::BAD_REQUEST.to_string();
             }
         }
         
         User::print_rows(conn).unwrap();
     }
 
-    fn login_user(user: &User, conn: &Connection) -> usize {
+    fn logout_user(user: &User, conn: &Connection) -> String {
+        println!("Time to logout user");
+
+        let response_line = ResponseLine::get_response_line(HttpResponseCode::OK);
+        
+        return format!("{response_line}\nSet-Cookie: username=; path=/; expires=Thu, Jan 01 1970 00:00:00 UTC;\nContent-Length: 0");
+    }
+
+    fn login_user(user: &User, conn: &Connection) -> String {
         println!("Time to login user");
 
         // 1. Check if username exists
@@ -155,7 +174,8 @@ impl PostHandler {
 
         if rows.is_empty() {
             println!("Username {} does not exist! Returning error...", &user.username);
-            return HttpResponseCode::NOT_FOUND;
+            //return HttpResponseCode::NOT_FOUND;
+            return ResponseLine::get_response_line(HttpResponseCode::NOT_FOUND)            
         }
 
         // 2. Check if username and password exists
@@ -169,15 +189,20 @@ impl PostHandler {
 
         if rows.is_empty() {
             println!("Username {} with password {} does not exist! Returning error...", &user.username, &user.password);
-            return HttpResponseCode::BAD_REQUEST;
+            //return HttpResponseCode::BAD_REQUEST;
+
+            return ResponseLine::get_response_line(HttpResponseCode::BAD_REQUEST)
         }
 
         // 3. Return OK
         println!("Login was successful!");
-        HttpResponseCode::OK  
+        //HttpResponseCode::OK
+        let response_line = ResponseLine::get_response_line(HttpResponseCode::OK);
+        
+        return format!("{response_line}\nSet-Cookie: username={}; path=/;\nPath: /web_server\nConnection: keep-alive\nContent-Length: 0\nAccess-Control-Allow-Origin: http://localhost:7878\nAccess-Control-Max-Age: 86400\nAccess-Control-Allow-Credentials: true\n", user.username)
     }
     
-    fn register_user(user: &User, conn: &Connection) -> usize {
+    fn register_user(user: &User, conn: &Connection) -> String {
         println!("Time to register user");
         // 1. Try inserting user into database
         let query = "INSERT INTO [user] (username, password) VALUES (?1, ?2);";
@@ -188,25 +213,29 @@ impl PostHandler {
                 match number_of_rows {
                     0 => {
                         println!("No rows were changed. Insertion was NOT successful.");
-                        return HttpResponseCode::BAD_REQUEST;
+                        //return HttpResponseCode::BAD_REQUEST;
+                        return ResponseLine::get_response_line(HttpResponseCode::BAD_REQUEST)
                     },
                     1 => {
                         println!("One row was changed. Insertion was successful!");
                     },
                     n => {
                         println!("{n} rows were changed. Insertion was NOT successful.");
-                        return HttpResponseCode::BAD_REQUEST;
+                        //return HttpResponseCode::BAD_REQUEST;
+                        return ResponseLine::get_response_line(HttpResponseCode::BAD_REQUEST)
                     },
                 }
             },
 
             Err(e) => {
                 eprintln!("Found error inserting user {:?}:\n{e}", &user);
-                return HttpResponseCode::CONFLICT;
+                //return HttpResponseCode::CONFLICT;
+                return ResponseLine::get_response_line(HttpResponseCode::CONFLICT)
             }
         }
 
-        HttpResponseCode::CREATED
+        //HttpResponseCode::CREATED
+        ResponseLine::get_response_line(HttpResponseCode::CREATED)
     }
 
     fn get_post_resource(request_line: &str) -> String {

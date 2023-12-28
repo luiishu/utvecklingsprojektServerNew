@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel='stylesheet' type='text/css' media='screen' href='style.css'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+</head>
+<body>
+    <section id="header" class="maincolorbg">
+        <a href="index.html"><img src="/img/banner/logo.png" class="logo" alt=""></a>
+        <div>
+            <ul id="navbar">
+                <li><a class="active" href="index.html">Home</a></li>
+                <li><a href="products.html">Products</a></li>
+                <li><a href="blog.html">Blog</a></li>
+                <li i><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact Us</a></li>
+                <li id="lg-bag"><a  href="account.html"><i class="fa fa-user" aria-hidden="true"></i></a>
+                    <div class="sub-menu-1">
+                        <ul>
+                            <li><a href="signin.html" class="a-button" class=""><span>Sign In</span></a></li>
+                            <li><a>Click Here for </a><a href="#">Register</a></li>
+                            <li><a href="#">Profile</a></li>
+                            <li><a href="#">Orders</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li id="lg-bag"><a href="liked.html"><i class="fa fa-heart" aria-hidden="true"></i></a></li>
+                <li id="lg-bag"><a href="cart.html"><i class="fa-solid fa-bag-shopping"></i></a>
+                    <div class="sub-menu-1">
+                        <ul>
+                            <li><a>Your Cart</a></li>
+                            <li><a href="#" class="a-button">View Cart</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <a href="#" id="close"><i class="far fa-x"></i></a>
+            </ul>
+        </div>
+        <div id="mobile">
+            <a href="cart.html"><i class="fa-solid fa-bag-shopping"></i></a>
+            <i id="bar" class="fas fa-outdent"></i>
+            
+        </div>
+    </section>
+
+    <section id="order-progress">
+        <div class="progress-container">
+            <div class="step">
+                <i class="fas fa-circle"></i>
+                <p>Cart</p>
+            </div>
+            <div class="line"></div>
+            <div class="step">
+                <i class="fas fa-circle"></i>
+                <p>Order Details</p>
+            </div>
+            <div class="line"></div>
+            <div class="step">
+                <i class="far fa-circle"></i>
+                <p>Payment</p>
+            </div>
+            <div class="line"></div>
+            <div class="step">
+                <i class="far fa-circle"></i>
+                <p>Checkout</p>
+            </div>
+        </div>
+    </section>
+
+
+    <section id="order-details" class="section-p1">
+        <h2>Order Details</h2>
+        <form id="order-details-container">
+            <div id="personal-info">
+                <h3>Contact Info</h3>
+                <input type="text" required placeholder="Email">
+                <div class="duo-input">
+                    <input type="text" required placeholder="First Name">
+                    <input type="text" required placeholder="Last Name">
+                </div>
+                <input type="text" placeholder="Phone Number">
+                <h3>Shipping Details</h3>
+                <div class="shipping-details">
+                    <input type="text" required placeholder="Adress 1">
+                    <div class="duo-input">
+                        <input type="text" placeholder="Adress 2 (Optinal)">
+                        <input type="text" required placeholder="Postal Code">
+                    </div>
+                    <div class="duo-input">
+                        <input type="text" placeholder="City">
+                        <input type="text" required placeholder="Country">
+                    </div>
+                </div>
+            </div>
+            <div id="cart-preview-container">
+                <h3>Order Summary</h3>
+ 

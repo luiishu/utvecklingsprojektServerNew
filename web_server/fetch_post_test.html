@@ -79,11 +79,22 @@
                 "Content-Type": "application/json"
             }
         }
-        ).then(res => {return res;}
+        ).then(res => {
+            console.log(res.headers.getSetCookie());
+            console.log(res.headers);
+            console.log(res);
+            return res;
+        }
         ).then(data => {
           console.log(data);
           //var length = data.rows.length;
           //console.log("array length: " + length);
+          //const value = `${document.cookie}`;
+          console.log("cookie: " + document.cookie);
+          //console.log(value);
+          //document.cookie = "a_cookie=says_hello";
+          console.log("cookie: " + document.cookie);
+          console.log("From setCookie header: " + data.headers.getSetCookie());
         })
         .catch((error) => {
             console.error('Error:', error);
