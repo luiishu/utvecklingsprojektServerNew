@@ -3,20 +3,10 @@ let error_array = [];
 let storage_array = [];
 let input_array = [];
 
-
-<<<<<<< HEAD
-
-
-document.addEventListener("DOMContentLoaded", function () {
-    for (var i = 0; i < color_array.length; i++) {
-        error_array[i] = document.getElementById("error_message_" + color_array[i])
-        storage_array[i] = document.getElementById("storage_text_" + color_array[i]);
-=======
 const api = "api/v1/"
 const resource = "product_pages"
 
 
-console.log(document.cookie);
 if (document.cookie == "") {
     // GO To login
     //http://127.0.0.1:7878/web_server/login/login.html
@@ -33,44 +23,17 @@ document.addEventListener("DOMContentLoaded", function () { // storage_txt_blue
 
         error_array[i] = document.getElementById("error_message_" + color_array[i])
         storage_array[i] = document.getElementById(storage_id);
->>>>>>> c08daf20a958a8da8e6d9463743e27cd1dcf852c
         input_array[i] = document.getElementById("item_yellow_" + color_array[i]);
     }
 
     setTimeout(on_timer, 1000);
 
-<<<<<<< HEAD
 });
 
 /// Periodically updating the lager status
 function on_timer() {
     // TODO GET STORAGE FROM DATABASE
     sync_lager()
-}
-
-function sync_lager(storage_array_new) {
-
-    for (var i = 0; i < storage_array.length; i++) {
-        storage_array[i] = storage_array_new[i];
-    }
-
-}
-
-function on_submit_pressed() {
-    let input_val = [];
-
-    let lager_max = [1, 1, 1, 1]; // TODO, get from database
-=======
-    console.log("loaded\n");
-
-});
-
-/// Periodically updating the lager status
-async function on_timer() {
-    // TODO GET STORAGE FROM DATABASE
-
-
-    await sync_lager()
 }
 
 async function sync_lager() {
@@ -101,7 +64,7 @@ async function sync_lager() {
         if (storage_array[i]) {
             storage_array[i].innerHTML = "Storage: " + lager_array[i]; // Correct the property name to innerHTML
         } else {
-            console.error("Element with ID " + storage_id + " not found.");
+            console.error("Element with ID " + i + " not found.");
         }
 
     }
@@ -112,7 +75,6 @@ async function sync_lager() {
 function on_submit_pressed(lager_max) {
     let input_val = [];
 
->>>>>>> c08daf20a958a8da8e6d9463743e27cd1dcf852c
 
     for (var i = 0; i < input_array.length; i++) {
         let amount = 0;
@@ -129,8 +91,6 @@ function on_submit_pressed(lager_max) {
 
     // input_val
     // FETCH from database
-<<<<<<< HEAD
-=======
 }
 
 async function fetch_data(uri) {
@@ -143,5 +103,4 @@ async function fetch_data(uri) {
         console.error('Error fetching data:', error);
         throw error; // You might want to throw the error for the caller to handle or log it as needed
     }
->>>>>>> c08daf20a958a8da8e6d9463743e27cd1dcf852c
 }
