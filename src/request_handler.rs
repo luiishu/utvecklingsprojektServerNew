@@ -34,7 +34,7 @@ pub fn handle_request(request: &str, conn: &Connection) -> String {
         //response.push_str("FIN");
     }
 
-    println!("Response from request handler:\n{}", response);
+    //println!("Response from request handler:\n{}", response);
     
     response
 }

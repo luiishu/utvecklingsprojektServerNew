@@ -34,6 +34,20 @@ pub fn init_server_on_localhost() -> Result<TcpListener, &'static str> {
         return Err("Fail")
     }
 
+    println!("It begins...");
+
+    match listener.set_nonblocking(true) {
+        Ok(_) => {
+            println!("TCP Listener set to nonblocking!");
+        },
+        Err(e) => {
+            println!("Failed to set TCP Listener to nonblocking!");
+            eprintln!("{e}");
+        },
+    }
+
+    println!("It ends...");
+
     Ok(listener)
 }
 
@@ -51,19 +65,40 @@ pub fn init_server_on_lan() -> Result<TcpListener, &'static str> {
         return Err("Fail")
     }
 
+    println!("It begins...");
+
+    match listener.set_nonblocking(true) {
+        Ok(_) => {
+            println!("TCP Listener set to nonblocking!");
+        },
+        Err(e) => {
+            println!("Failed to set TCP Listener to nonblocking!");
+            eprintln!("{e}");
+        },
+    }
+
+    println!("It ends...");
+
     Ok(listener)
 }
 
-pub fn get_request_string(mut stream: & TcpStream) -> Result<String, &'static str> {
+pub fn get_request_string(mut stream: & TcpStream) -> Result<String, String> {
     let mut buffer = [0u8; 2048]; // store stream bytes
-    //let mut vector: Vec<u8> = Vec::new();
-    //let mut buffer = [0u8; 4096]; // store stream bytes
+    stream.set_read_timeout(Some(std::time::Duration::new(1, 0))).unwrap();
 
-    let bytes_read = stream.read(&mut buffer).unwrap(); // store stream bytes in buffer
-    //let bytes_read = stream.read_to_end(&mut vector).unwrap(); // store stream bytes in buffer
+    //let bytes_read = stream.read(&mut buffer).unwrap(); // store stream bytes in buffer
+    let bytes_read = match stream.read(&mut buffer) {
+        Ok(bytes_read) => bytes_read,
+        Err(error) => {
+            //println!("Received error: {error}");
+            return Err(error.to_string());
+        }
+    };
+
     if bytes_read <= 0 {
-        return Err("Empty request error. Abort current connection.");
+        return Err("Empty request error. Abort current connection.".to_string());
     }
+    
     println!("Bytes read from from stream: {}", bytes_read);
 
     //convert buffer to string and use to_string() to convert to  String

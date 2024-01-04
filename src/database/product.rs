@@ -1,21 +1,22 @@
 #![allow(dead_code)]
+#![allow(unused)]
 #![allow(unused_imports)]
 #![allow(unused_variables)]
 
-use rusqlite::{Connection, params, Result, Row};
+use rusqlite::{Connection, params, Result as RusqliteResult, Row};
 
 use crate::database::product_type;
 
-use super::table::Table;
+use super::table::{Table, print_rows_from_query, get_query_iterator};
 
 pub struct Product {}
 
 impl Table for Product {
-    fn create_table(conn: &Connection) -> Result<()> {
+    fn create_table(conn: &Connection) -> RusqliteResult<()> {
         conn.execute(
             "CREATE TABLE IF NOT EXISTS product (
                 id INTEGER PRIMARY KEY,
-                name                TEXT NOT NULL,
+                name                TEXT UNIQUE NOT NULL,
                 product_type_id     INTEGER NOT NULL,
                 product_category_id INTEGER,
                 product_brand_id    INTEGER,
@@ -36,7 +37,7 @@ impl Table for Product {
         Ok(())
     }
 
-    fn insert(conn: &Connection, data: Vec<Vec<&str>>) -> Result<()> {
+    fn insert(conn: &Connection, data: Vec<Vec<&str>>) -> RusqliteResult<()> {
         println!("Trying to insert {} into table {}", data[1][1], data[0][1]);
         let query = format!("INSERT INTO {} ({}, {}, {}, {}) VALUES (?1, ?2, ?3, ?4)",
                                   data[0][1], data[1][0], data[2][0], data[3][0], data[4][0]);
@@ -51,33 +52,10 @@ impl Table for Product {
         Ok(())        
     }
 
-    fn print_rows(conn: &Connection) -> Result<()> {
+    fn print_rows(conn: &Connection) -> RusqliteResult<()> {
         println!("Running print_rows() from struct Product...");
-
-        let mut stmt = conn.prepare("SELECT * FROM product")?;
-        println!("Statement created!");
-    
-        let product_iter = stmt.query_map([], |row| {
-            let id: i64 = row.get(0)?;
-            let name: String = row.get(1)?;
-            let product_type: String = row.get(2)?;
-            let price: i64 = row.get(3)?;
-            let amount: i64 = row.get(4)?;
-            let description: String = row.get(5)?;
-    
-            let cols = vec![id.to_string(), name, product_type, price.to_string(), amount.to_string(), description];
-    
-            Ok(cols)
-        })?;
-    
-        println!("Iterator created!");
-    
-        for product in product_iter {
-            println!("Found product: [id, name, type, price, amount, description]: {:?}", product.unwrap());
-        }
-    
-        println!("Exiting print_rows() from struct Product...");
-    
+        let query = &format!("SELECT * FROM [product];");
+        print_rows_from_query(conn, query)?;
         Ok(())
     }
 }
@@ -185,11 +163,193 @@ impl Product {
         let product_iter = Product::get_product_iterator(conn, query);
         return format!("{:?}", product_iter.get(0).unwrap());
     }
-    
 
+    pub fn get_all_amounts(conn: &Connection) -> i64 {
+        let query = "
+            SELECT product.id, product_type_id, product_type.type, amount FROM product
+            INNER JOIN product_type ON product_type.id = product.product_type_id;";
+        print_rows_from_query(conn, query).unwrap();
+        0
+    }
+
+    pub fn out_of_stock(conn: &Connection, color: &str) -> bool {
+        Self::get_total_amount_by_color(conn, color) == 0
+    }
+
+    pub fn out_of_stock_product_exists(conn: &Connection) -> bool {
+        let query = "SELECT * FROM product WHERE amount = 0;";
+        let rows = get_query_iterator(conn, query);
+        let length = rows.len();
+        match length {
+            0 => {
+                return false
+            },
+            n => {
+                println!("There is/are currently {n} product(s) that is/are out of stock");
+                return true
+            },
+        }
+    }
+
+    pub fn get_total_amount_by_color(conn: &Connection, color: &str) -> i64 {
+        let id = match color.to_lowercase().as_str() {
+            "red" => 1,
+            "yellow" => 2,
+            "green" => 3,
+            "blue" => 4,
+            unknown_color => {
+                println!("Received unknown color {unknown_color}");
+                return -1
+            }
+        };
+
+        let query = &format!("
+            SELECT SUM(amount) FROM product
+            WHERE product_type_id = {id};
+            "
+        );
+
+        //println!("Query\n{query}");
+        //print_rows_from_query(conn, query).unwrap();
+
+        let rows = get_query_iterator(conn, query);
+        //println!("rows: {:?}", rows);
+        let length = rows.len();
+        match length {
+            0 => {
+                return -1
+            },
+            1 => {
+                let amount = rows[0][0].parse::<i64>();
+                match amount {
+                    Ok(amount) => return amount,
+                    Err(e) => {
+                        eprintln!("{e}");
+                        return -1
+                    }
+                }
+            },
+            n => {
+                return -1
+            },
+        }
+    }
+
+    pub fn get_amount_by_id(conn: &Connection, id: i64) -> i64 {        
+        let query = &format!("
+            SELECT amount FROM product
+            WHERE id = {id};
+            "
+        );
+
+        let rows = get_query_iterator(conn, query);
+        let length = rows.len();
+        match length {
+            0 => {
+                return -1
+            },
+            1 => {
+                let amount = rows[0][0].parse::<i64>();
+                match amount {
+                    Ok(amount) => return amount,
+                    Err(e) => {
+                        eprintln!("{e}");
+                        return -1
+                    }
+                }
+            },
+            n => {
+                return -1
+            },
+        }
+    }
+
+    pub fn get_amount_by_name(conn: &Connection, name: &str) -> i64 {        
+        let query = &format!("
+            SELECT amount FROM product
+            WHERE name = '{name}';
+            "
+        );
+
+        let rows = get_query_iterator(conn, query);
+        let length = rows.len();
+        match length {
+            0 => {
+                return -1
+            },
+            1 => {
+                let amount = rows[0][0].parse::<i64>();
+                match amount {
+                    Ok(amount) => return amount,
+                    Err(e) => {
+                        eprintln!("{e}");
+                        return -1
+                    }
+                }
+            },
+            n => {
+                return -1
+            },
+        }
+    }
+
+    pub fn get_product_count_by_color(conn: &Connection, color: &str) -> i64 {
+        let id = match color.to_lowercase().as_str() {
+            "red" => 1,
+            "yellow" => 2,
+            "green" => 3,
+            "blue" => 4,
+            unknown_color => {
+                println!("Received unknown color {unknown_color}");
+                return -1
+            }
+        };
+
+        let query = &format!("
+            SELECT COUNT(amount) FROM product
+            WHERE product_type_id = {id};
+            "
+        );
+
+        let rows = get_query_iterator(conn, query);
+        let length = rows.len();
+        match length {
+            0 => {
+                return -1
+            },
+            1 => {
+                let amount = rows[0][0].parse::<i64>();
+                match amount {
+                    Ok(amount) => return amount,
+                    Err(e) => {
+                        eprintln!("{e}");
+                        return -1
+                    }
+                }
+            },
+            n => {
+                return -1
+            },
+        }
+    }
+    
     // UPDATE --------------------------------
     pub fn update_product() {
         unimplemented!()
+    }
+
+    pub fn update_product_amount_by_id(conn: &Connection, id: i64, amount: i64) -> RusqliteResult<()> {
+        let mut sign = "";
+        if amount < 0 {sign = "-";}
+        else {sign = "+"};
+
+        let query = &format!("UPDATE product SET amount = amount + {amount} WHERE id = {id}");
+        match conn.execute(&query, ()) {
+            Ok(_) => {},
+            Err(e) => return Err(e)
+        }
+
+        Ok(())
     }
 
     // DELETE --------------------------------

@@ -139,7 +139,8 @@ pub fn insert_test_data(conn: &Connection) -> Result<()> {
            (2, 1, 1, \"Bible\", 0, 6, 1, 1, \"A holy book.\"),
            (3, 1, 1, \"Green apple\", 0, 6, 21, 1, \"A green apple.\"),
            (4, 1, 1, \"Blue Man\", 0, 6, 4, 1, \"A blue man (what the-).\"),
-           (4, 1, 1, \"Ble Bikini\", 0, 6, 8, 1, \"A blue bikini.\");
+           (4, 1, 1, \"Blue Bikini\", 0, 6, 8, 1, \"A blue bikini.\"),
+           (3, 1, 1, \"Pink Pants\", 0, 6, 0, 1, \"A pair of pink pants.\");
         
            CREATE VIEW IF NOT EXISTS product_page
            AS SELECT 

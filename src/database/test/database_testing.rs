@@ -4,7 +4,7 @@
 
 use rusqlite::{Connection, params, Result};
 
-use crate::database::{order_position::OrderPosition, table::{print_rows_from_query, parse_query_to_json}};
+use crate::database::{order_position::OrderPosition, table::{print_rows_from_query, parse_query_to_json}, product::Product};
 
 pub fn hello_from_database_testing() {
     println!("Hello from database_testing!");
@@ -172,10 +172,32 @@ pub fn test(conn: &Connection) -> Result<()> {
     //println!("{}", parse_query_to_json(conn, query));
     //print_rows_from_query(conn, query).unwrap();
 
-
-
-
     //print_meta_data(conn)?;
+    Product::get_all_amounts(conn);
+    let amount_red = Product::get_total_amount_by_color(conn, "red");
+    let amount_yellow = Product::get_total_amount_by_color(conn, "yellow");
+    let amount_green = Product::get_total_amount_by_color(conn, "green");
+    let amount_blue = Product::get_total_amount_by_color(conn, "blue");
+    let amounts = format!("Red: {amount_red}\nYellow: {amount_yellow}\nGreen: {amount_green}\nBlue: {amount_blue}");
+
+    let count_red = Product::get_product_count_by_color(conn, "red");
+    let count_yellow = Product::get_product_count_by_color(conn, "yellow");
+    let count_green = Product::get_product_count_by_color(conn, "green");
+    let count_blue = Product::get_product_count_by_color(conn, "blue");
+    let counts = format!("Red: {count_red}\nYellow: {count_yellow}\nGreen: {count_green}\nBlue: {count_blue}");
+
+    println!("{amounts}\n");
+    println!("{counts}");
+
+    println!("{}", Product::out_of_stock(conn, "red"));
+    println!("{}", Product::out_of_stock(conn, "yellow"));
+    println!("{}", Product::out_of_stock(conn, "green"));
+    println!("{}", Product::out_of_stock(conn, "blue"));
+
+    let product_name = "Blue Man";
+    println!("The amount for product {product_name} is {}", Product::get_amount_by_name(conn, product_name));
+
+    println!("Any products out of stock? {}", Product::out_of_stock_product_exists(conn));
 
     Ok(())
 }
