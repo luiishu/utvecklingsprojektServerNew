@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Form</title>
+    <script src="ordersite.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input {
+            margin-bottom: 10px;
+        }
+
+        button {
+            padding: 10px;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .storage-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .storage-label {
+            margin-right: 10px;
+        }
+
+        .error-message {
+            color: red;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+
+<body>
+
+
+    <form id="orderForm">
+        <label style="font-size: 30px;" for="item_red">Red Kub</label>
+        <label for="quanity_red">Quantity:</label>
+        <label for="errorMessage" class="error-message" id="error_message_red">Test</label>
+        <input type="number" id="item_red" name="item_red" required>
+        <label class="storage-container" for="storage1" id="storage_txt_red">Current Storage: 100</label>
+
+        <label style="font-size: 30px;" for="item_green">Green Kub</label>
+        <label for="item1">Quantity:</label>
+        <label for="errorMessage" class="error-message" id="error_message_green">Test</label>
+        <input type="number" id="item_green" name="item_green" required>
+        <label class="storage-container" for="storage1" id="storage_txt_green">Current Storage: 100</label>
+
+        <label style="font-size: 30px;" for="item_blue">Blue Kub</label>
+        <label for="item1">Quantity:</label>
+        <label for="errorMessage" class="error-message" id="error_message_blue">Test</label>
+        <input type="number" id="item_blue" name="item_blue" required>
+        <label class="storage-container" for="storage1" id="storage_txt_blue">Current Storage: 100</label>
+
+        <label style="font-size: 30px;" for="item_yellow">Yellow Kub</label>
+        <label for="item1">Quantity:</label>
+        <label for="errorMessage" class="error-message" id="error_message_yellow">Test</label>
+        <input type="number" id="item_yellow" name="item_yellow" required>
+        <label class="storage-container" for="storage1" id="storage_txt_yellow">Current Storage: 100</label>
+
+        <button type="button" onclick="submitOrder()">Submit Order</button>
+    </form>
+
+    <script>
+        function submitOrder() {
+            // You can add your logic here to handle the order submission
+            alert("Order submitted successfully!");
+        }
+    </script>
+
+</body>
+
+</html>
