@@ -111,7 +111,14 @@ pub fn handle_get_request_new(request: &String, conn: &Connection) -> String {
     let mut file_content = Vec::new();
 
     if !image_request {
-        contents = fs::read_to_string(filename).unwrap();
+        //contents = fs::read_to_string(filename).unwrap();
+        contents = match fs::read_to_string(filename) {
+            Ok(contents) => contents,
+            Err(e) => {
+                eprintln!("e");
+                fs::read_to_string("error.html").unwrap()
+            }
+        };
         length = contents.len();
     } else {
         let file_name = &request_line.get_request_uri_without_first_slash();
