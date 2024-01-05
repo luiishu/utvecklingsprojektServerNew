@@ -259,7 +259,7 @@ async function init() {
 
 async function fetchProducts_as_json() {
     try {
-        const response = await fetch("/web_server/api/v1/products");
+        const response = await fetch('api/v1/detailed_products');
         const data = await response.json();
         return data;
     } catch (error) {
@@ -270,7 +270,7 @@ async function fetchProducts_as_json() {
 
 async function fetchProducts() {
     try {
-        const response = await fetch('api/v1/detailed_products');
+        const response = await fetch('api/v1/products');
         const data = await response.json();
         return data;
     } catch (error) {
