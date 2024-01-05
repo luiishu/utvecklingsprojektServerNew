@@ -1,7 +1,6 @@
+#![allow(unused)]
 use rusqlite::Connection;
-
 use crate::order_system::order_system::OrderSystem;
-#[allow(unused)]
 use crate::order_system::order_system::{OrderSystemApi, OrderSystemApiConstants, OrderSystemRequestApi, OrderSystemRequest};
 
 pub fn generate_order_request(conn: &Connection, n: &i32) {
@@ -11,7 +10,8 @@ pub fn generate_order_request(conn: &Connection, n: &i32) {
     //crate::database::table::print_rows_from_query(&conn, "select * from [product];").unwrap();
 
     //generate_get_request(conn);
-    generate_patch_request(conn);
+    //generate_patch_request(conn);
+    generate_process_request(conn);
     
     for _i in 0..*n {
         //generate_process_request(conn);
