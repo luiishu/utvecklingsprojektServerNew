@@ -2,43 +2,52 @@
 use std::{
     fs,
     io::{self, prelude::*, BufReader},
-    net::{IpAddr, Ipv4Addr,SocketAddr,  TcpListener, TcpStream},
-    process, str::from_utf8,
-    time::{Duration, SystemTime}
+    net::{IpAddr, Ipv4Addr, SocketAddr, TcpListener, TcpStream},
+    process,
+    str::from_utf8,
+    time::{Duration, SystemTime},
 };
 
-use std::{fs::File, thread::{self, Thread}};
 use rand::Rng;
+use std::{
+    fs::File,
+    thread::{self, Thread},
+};
 
-use rusqlite::{Connection, params, Result};
+use rusqlite::{params, Connection, Result};
 
 use server::{database::order, order_system::order_system::*};
 //use server::database::database::hello_from_database;
 
-use crate::{init::*, request_handler::handle_request, order_system::order_system::{OrderSystemRequest, OrderSystemRequestApi}, response::response::{HttpResponseCode, HttpResponseCodes, ResponseLine}};
+use crate::database::database::*;
 use crate::get_handler::*;
 use crate::post_handler::*;
 use crate::request_line::*;
-use crate::database::database::*;
+use crate::{
+    init::*,
+    order_system::order_system::{OrderSystemRequest, OrderSystemRequestApi},
+    request_handler::handle_request,
+    response::response::{HttpResponseCode, HttpResponseCodes, ResponseLine},
+};
 //use crate::order_system::order_system::*;
 
 mod database;
-mod init;
 mod fetch_handler;
 mod get_handler;
+mod init;
 mod order_system;
 mod post_handler;
-mod response;
 mod request_handler;
 mod request_line;
+mod response;
 //mod database/hello_from_database;
 //static mut counter: i32 = 0;
 
-const LAN: bool = false;
+const LAN: bool = true;
 const PRINTING: bool = true;
 
 const LOCALHOST_IP_V4: &str = "127.0.0.1";
-const SERVER_IP_V4: &str = "192.168.1.178";
+const SERVER_IP_V4: &str = "192.168.88.221"; //
 
 const RUST_PORT: u16 = 7878;
 
@@ -48,12 +57,11 @@ pub const BLOCKING: bool = !NONBLOCKING;
 pub const SLEEP_DURATION_IN_MILLISECONDS: u64 = 1000;
 pub const SLEEP_DURATION: Duration = Duration::from_millis(SLEEP_DURATION_IN_MILLISECONDS);
 
-
 //static conn: Connection = Connection::open_in_memory().unwrap();
 
 fn main() {
     //hello();
-    //hello_from_database();    
+    //hello_from_database();
 
     println!("\nInitializing server...");
 
@@ -77,7 +85,7 @@ fn main() {
     //order_system::order_system_testing::test_order_system(&conn, &1);
     //fetch_handler::test::test();
     post_handler::test::test(&conn);
-    
+
     println!();
 
     println!("Running server on: {}", listener.local_addr().unwrap());
@@ -89,28 +97,31 @@ fn main() {
 pub fn run_server(listener: TcpListener, conn: &Connection) {
     let mut counter = 0;
 
-    for stream in listener.incoming() { // seems like it gets stuck here on accept (in tcp-lib assembly code)
+    for stream in listener.incoming() {
+        // seems like it gets stuck here on accept (in tcp-lib assembly code)
         //if PRINTING {println!("f")};
         match stream {
             Ok(stream) => {
                 counter += 1;
-                if PRINTING {println!("Connection established! Counter {}", counter)};
+                if PRINTING {
+                    println!("Connection established! Counter {}", counter)
+                };
                 handle_connection(stream, counter, conn);
                 println!("g");
                 continue;
-            },
+            }
 
             Err(ref e) if e.kind() == std::io::ErrorKind::WouldBlock => {
                 //eprintln!("Expected: {e}");
                 //println!("No connection received, so I sleep...");
                 std::thread::sleep(SLEEP_DURATION);
                 continue;
-            },
+            }
 
             Err(e) => {
                 eprintln!("Received a different error: {e}");
                 continue;
-            },
+            }
         }
 
         println!("What am I doing here?");
@@ -125,30 +136,30 @@ fn handle_connection(mut stream: TcpStream, mut counter: i32, conn: &Connection)
         Ok(request) => request,
         Err(e) => {
             println!("Found error: {e}");
-            return
-        },
+            return;
+        }
     };
-    
-    // 1.2 Check if request is from Order System and handle it and respond if true 
-    if(!request.contains("HTTP")) {
+
+    // 1.2 Check if request is from Order System and handle it and respond if true
+    if (!request.contains("HTTP")) {
         let response = OrderSystem::handle_request(&request, conn);
 
         //stream.write(response.as_bytes()).unwrap(); // send response to tcp client
         match stream.write(response.as_bytes()) {
-            Ok(_) => {},
+            Ok(_) => {}
             Err(e) => {
                 println!("Failed to write response to Order System...");
                 eprintln!("{e}");
-            },
-        } 
-        
+            }
+        }
+
         match stream.flush() {
-            Ok(_) => {},
+            Ok(_) => {}
             Err(e) => {
                 eprintln!("{e}");
             }
         }
-        
+
         return;
     }
 
@@ -159,7 +170,7 @@ fn handle_connection(mut stream: TcpStream, mut counter: i32, conn: &Connection)
 
     // 3. determine the type of http request and handle it to generate a suitable response
     response = handle_request(&request, conn);
-    
+
     // TODO: add contains_resource block to request handler
     if contains_resource(&request_line.to_string()) {
         let mut file_content: Vec<u8> = Vec::new();
@@ -172,7 +183,7 @@ fn handle_connection(mut stream: TcpStream, mut counter: i32, conn: &Connection)
                 response = ResponseLine::get_response_line(HttpResponseCode::NOT_FOUND);
                 stream.write(response.as_bytes()).unwrap();
                 return;
-            },
+            }
         };
 
         let mut response = response.replace(file_name, "");
@@ -188,18 +199,18 @@ fn handle_connection(mut stream: TcpStream, mut counter: i32, conn: &Connection)
                 response = ResponseLine::get_response_line(HttpResponseCode::INTERNAL_SERVER_ERROR);
                 stream.write(response.as_bytes()).unwrap();
                 return;
-            },
+            }
         };
-        
+
         //file.read_to_end(&mut file_content).expect("Unable to read");
         match file.read_to_end(&mut file_content) {
-            Ok(_) => {},
+            Ok(_) => {}
             Err(e) => {
                 eprintln!("{e}");
                 response = ResponseLine::get_response_line(HttpResponseCode::INTERNAL_SERVER_ERROR);
                 stream.write(response.as_bytes()).unwrap();
                 return;
-            },
+            }
         }
 
         //println!("File content:\n{:?}", file_content);
@@ -214,8 +225,8 @@ fn handle_connection(mut stream: TcpStream, mut counter: i32, conn: &Connection)
         //println!("Response:\n{response}");
 
         stream.write(&response2).unwrap(); // send http response to client
-        //println!("ddd");
-        return
+                                           //println!("ddd");
+        return;
     } else {
         stream.write_all(response.as_bytes()).unwrap(); // send http response to client
     }
@@ -223,10 +234,10 @@ fn handle_connection(mut stream: TcpStream, mut counter: i32, conn: &Connection)
     println!("eee");
     //stream.take_error().expect("No error was expected...");
     match stream.take_error() {
-        Ok(_) => {},
+        Ok(_) => {}
         Err(e) => {
             eprintln!("{e}");
-        },
+        }
     }
 
     //drop(response)
