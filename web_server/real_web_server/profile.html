@@ -12,12 +12,13 @@
         <a href="index.html"><img src="/img/banner/logo.png" class="logo" alt=""></a>
         <div>
             <ul id="navbar">
-                <li><a class="active" href="index.html">Home</a></li>
+                <li><a href="index.html">Home</a></li>
                 <li><a href="products.html">Products</a></li>
                 <li><a href="blog.html">Blog</a></li>
                 <li i><a href="about.html">About</a></li>
                 <li><a href="contact.html">Contact Us</a></li>
-                <li id="lg-bag"><a  href="account.html"><i class="fa fa-user" aria-hidden="true"></i></a>
+                <li id="lg-bag"><a  href="signin.html"><i class="fa fa-user" aria-hidden="true" style="color: #FC4A1A"></i></a>
+                    <!-- 
                     <div class="sub-menu-1">
                         <ul>
                             <li><a href="signin.html" class="a-button" class=""><span>Sign In</span></a></li>
@@ -26,15 +27,18 @@
                             <li><a href="#">Orders</a></li>
                         </ul>
                     </div>
+                    -->
                 </li>
-                <li id="lg-bag"><a href="liked.html"><i class="fa fa-heart" aria-hidden="true"></i></a></li>
+                <!-- <li id="lg-bag"><a href="liked.html"><i class="fa fa-heart" aria-hidden="true"></i></a></li> -->
                 <li id="lg-bag"><a href="cart.html"><i class="fa-solid fa-bag-shopping"></i></a>
+                    <!-- 
                     <div class="sub-menu-1">
                         <ul>
                             <li><a>Your Cart</a></li>
                             <li><a href="#" class="a-button">View Cart</a></li>
                         </ul>
                     </div>
+                    -->
                 </li>
                 <a href="#" id="close"><i class="far fa-x"></i></a>
             </ul>
@@ -46,74 +50,20 @@
         </div>
     </section>
 
-    <section id="order-progress">
-        <div class="progress-container">
-            <div class="step">
-                <i class="fas fa-circle"></i>
-                <p>Cart</p>
-            </div>
-            <div class="line"></div>
-            <div class="step">
-                <i class="fas fa-circle"></i>
-                <p>Order Details</p>
-            </div>
-            <div class="line"></div>
-            <div class="step">
-                <i class="fas fa-circle"></i>
-                <p>Payment</p>
-            </div>
-            <div class="line"></div>
-            <div class="step">
-                <i class="far fa-circle"></i>
-                <p>Checkout</p>
-            </div>
-        </div>
+
+    <section>
+        <h1>This is the profile page</h1>
     </section>
 
-
-    <section id="order-details" class="section-p1">
-        <h2>Payment Details</h2>
-        <form id="order-details-container">
-            <div id="personal-info">
-                <h3>Contact Info</h3>
-                <input type="text" required placeholder="Email">
-                <div class="duo-input">
-                    <input type="text" required placeholder="First Name">
-                    <input type="text" required placeholder="Last Name">
-                </div>
-                <input type="number" placeholder="Phone Number">
-                <h3>Shipping Details</h3>
-                <div class="shipping-details">
-                    <input type="text" required placeholder="Adress 1">
-                    <div class="duo-input">
-                        <input type="text" placeholder="Adress 2 (Optinal)">
-                        <input type="number" required placeholder="Postal Code" class="">
-                    </div>
-                    <div class="duo-input">
-                        <input type="text" placeholder="City">
-                        <input type="text" required placeholder="Country">
-                    </div>
-                </div>
-            </div>
-            <div id="cart-preview-container">
-                <h3>Order Summary</h3>
-                <table>
-                    <tr>
-                        <td>2 Items</td>
-                        <td>1497 kr</td>
-                    </tr>
-                    <tr>
-                        <td>Shipping</td>
-                        <td>Free</td>
-                    </tr>
-                    <tr>
-                        <td><b>Total</b></td>
-                        <td><b>1497 kr</b></td>
-                    </tr>
-                </table>
-                <button type="submit" class="normal" onclick="location.href='payment.html'">Proceed to Payment</button>
-            </div>
-        </form>
+    <section id="newletter" class="section-p1 section-m1">
+        <div class="newstext">
+            <h4>Sign Up For Newletters</h4>
+            <p>Get E-mail updates about our latest shop and <span>special offers.</span></p>
+        </div>
+        <div class="form">
+            <input type="text" placeholder="Your E-mail Adress">
+            <button class="normal">Sign Up</button>
+        </div>
     </section>
 
     <footer class="section-p1">
@@ -164,6 +114,7 @@
             <p>©2023, Grupp4 etc - Ecommerce</p>
         </div>
     </footer>
-    <script src="cart.js"></script>
+
+    <script src="signin.js"></script>
 </body>
 </html>
