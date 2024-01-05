@@ -162,11 +162,104 @@ let productCards = [];
 let products;
 
 
-async function fetchProducts() {
+
+
+
+// Teeeemp render for products
+function renderProducts_temp(product, targetContainerId) {
+    const productContainer = document.getElementById(targetContainerId);
+
+    if (!productContainer) {
+        console.error(`Container with ID ${targetContainerId} not found.`);
+        return;
+    }
+
+    var length = product.rows.length;
+
+    console.log("Before Loop " + length);
+    for(var i = 0; i < length; i++) {
+        const productCard = document.createElement("div");
+        productCard.classList.add("pro");  // Add the 'pro' class
+
+        // Add a unique class based on the index
+        productCard.classList.add(`product-${i + 1}`);
+
+        productCard.dataset.category = product.rows[i].product_category_id;
+        productCard.dataset.color = product.rows[i].product_type_id;
+
+        // Rest of the code remains the same
+        const productImage = document.createElement("img");
+        productImage.src = product.rows[i].product_image_id;
+        productImage.alt = product.rows[i].name;
+
+        const productDescription = document.createElement("div");
+        productDescription.classList.add("des");
+
+        const productBrand = document.createElement("span");
+        productBrand.textContent = product.rows[i].product_brand_id;
+
+        const productTitle = document.createElement("h5");
+        productTitle.textContent = `${product.rows[i].name} ${product.rows[i].product_category_id} - ${product.rows[i].porduct_type_id}`;
+
+        const starContainer = document.createElement("div");
+        starContainer.classList.add("star");
+
+        for (let i = 0; i < product.rows[i].product_rating; i++) {
+            const star = document.createElement("i");
+            star.classList.add("fas", "fa-star");
+            starContainer.appendChild(star);
+        }
+
+        const productPrice = document.createElement("h4");
+        productPrice.textContent = `${product.rows[i].price} kr`;
+
+        const id = product.rows[i].id;
+
+        // Cart icon
+        const cartIcon = document.createElement("button");
+        cartIcon.addEventListener("click", () => addToCart(id));
+        const cartIconElement = document.createElement("i");
+        cartIconElement.classList.add("fa-solid", "fa-shopping-cart", "cart");
+
+        cartIcon.appendChild(cartIconElement);
+
+        // Append elements to the product card
+        productCard.appendChild(productImage);
+        productCard.appendChild(productDescription);
+        productCard.appendChild(cartIcon);
+
+        productDescription.appendChild(productBrand);
+        productDescription.appendChild(productTitle);
+        productDescription.appendChild(starContainer);
+        productDescription.appendChild(productPrice);
+
+        // Add the product card to the container
+        productContainer.appendChild(productCard);
+
+        productCards.push(productCard);
+        console.log(`Item render ${i}`);
+    }
+}
+
+//temp init
+async function init() {
+    const products = await fetchProducts_as_json();
+    console.log("Before console Product");
+    console.log(products);
+    console.log("After console Product");
+    if (products) {
+        //Add here what you want to be rendered
+        renderProducts_temp(products, "product-container");
+       // renderProducts(products, "product-container-homepage");
+    }
+    else {
+        console.error('Failed to fetch products. RenderProducts_Temp will not be called.');
+      }
+}
+
+async function fetchProducts_as_json() {
     try {
-        //const response = await fetch('/products.json');
-        //const response = await fetch('detailed_products.json');
-        const response = await fetch('api/v1/detailed_products');
+        const response = await fetch("/web_server/api/v1/products");
         const data = await response.json();
         return data;
     } catch (error) {
@@ -175,9 +268,22 @@ async function fetchProducts() {
     }
 }
 
+async function fetchProducts() {
+    try {
+        const response = await fetch('api/v1/detailed_products');
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error fetching products:', error);
+        return null;
+    }
+}
+/*
 async function init() {
     const products = await fetchProducts();
 
+    console.log(products);
+   
     if (products) {
         //Add here what you want to be rendered
         renderProducts(products, "product-container");
@@ -187,6 +293,7 @@ async function init() {
         console.error('Failed to fetch products. RenderProducts will not be called.');
       }
 }
+*/
 
 init();
 
@@ -198,7 +305,7 @@ function saveCartToLocalStorage() {
   }
 
 // Function to add a product to the cart
-function addToCart(products, id) {
+function addToCart(id) {
   // Find the product in the 'products' array based on the productId
  // const product = products.find(p => p.id === productId);
 

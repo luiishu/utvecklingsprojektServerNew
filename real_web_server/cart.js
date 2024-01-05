@@ -17,11 +17,23 @@ document.addEventListener('DOMContentLoaded', function () {
 let allProducts =[];
 
 
+async function fetchProducts_as_json_forCart() {
+    try {
+        const response = await fetch("/web_server/api/v1/products")
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error fetching products:', error);
+        return null;
+    }
+}
+
+
 async function fetchProductsForCart() {
     try {
         const response = await fetch('/products.json'); // change to "api/v1/products"
         const allProducts = await response.json();
-
+        
         return allProducts;
 
     } catch (error) {
@@ -42,7 +54,8 @@ async function init() {
     //const cartProductIds = cart.map(item => item.productId);
 
     // Fetch products for the cart
-    allProduct = await fetchProductsForCart();
+    allProduct = await fetchProducts_as_json_forCart();
+    console.log("All products: ", allProduct);
 
     //const cartProducts = await fetchProductsForCart();
   
@@ -68,19 +81,20 @@ function renderCart(allProducts) {
     let totalAmount = 0;
     // Clear existing cart items
     cartBody.innerHTML = '';
-
+    console.log("cart length: ", cart.length);
     // Loop through each item in the cart and render it
-    cart.forEach(cartItem => {
-        const product = allProducts.data.find(p => p.id === cartItem.id);
+    for(var i = 0; i < cart.length; i++) {
+        console.log("cart item id: ", cart[i].id);
+        const product = allProducts.rows.find(p => p.id === cart[i].id);
         if(product){ 
             const row = document.createElement('tr');
             row.innerHTML = `
                 <td><button class="remove-item" data-product-id="${product.id}">Remove</button></td>
-                <td><img src="${product.image}" alt="${product.productName}" width="50"></td>
-                <td>${product.productName}</td>
+                <td><img src="${product.product_image_id}" alt="${product.name}" width="50"></td>
+                <td>${product.name}</td>
                 <td>${product.price} kr</td>
-                <td><input name="quantity" type="number" value="${cartItem.quantity}" data-product-id="${product.id}"></td>
-                <td>${cartItem.quantity * product.price} kr</td>
+                <td><input name="quantity" type="number" value="${cart[i].quantity}" data-product-id="${product.id}"></td>
+                <td>${cart[i].quantity * product.price} kr</td>
                 `;
           
             cartBody.appendChild(row);
@@ -89,12 +103,12 @@ function renderCart(allProducts) {
             quantityInput.addEventListener('input', function () {
                 updateCartQuantity(product.id, parseInt(this.value, 10));
             });
-            totalAmount += cartItem.quantity * product.price;
+            totalAmount += cart[i].quantity * product.price;
         }
         else{
             console.error("Product not found for ID ${cartItem.id}");
         }
-    });
+    }
 
     storeTotalCost(totalAmount);
     console.log("Total cost: ", totalAmount);
