@@ -164,7 +164,9 @@ let products;
 
 async function fetchProducts() {
     try {
-        const response = await fetch('/products.json');
+        //const response = await fetch('/products.json');
+        //const response = await fetch('detailed_products.json');
+        const response = await fetch('api/v1/detailed_products');
         const data = await response.json();
         return data;
     } catch (error) {
