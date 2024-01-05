@@ -1,0 +1,48 @@
+{
+  "data": [
+      {
+        "id": 1,
+        "productName": "Red Hoodie",
+        "color": "Red",
+        "category": "Hoodie",
+        "brand": "Grupp4",
+        "review": 3,
+        "price": "159",
+        "image": "/img/clothes/hoodie/hoodie-red-front.png",
+        "hoverImage": "/img/clothes/hoodie/hoodie-red-back.png"
+      },
+      {
+        "id": 2,
+        "productName": "Yellow Hoodie",
+        "color": "Yellow",
+        "category": "Hoodie",
+        "brand": "Grupp4",
+        "review": 1,
+        "price": "199",
+        "image": "/img/clothes/hoodie/hoodie-yellow-front.png",
+        "hoverImage": "/img/clothes/hoodie/hoodie-yellow-back.png"
+      },
+      {
+        "id": 3,
+        "productName": "Green Hoodie",
+        "color": "Green",
+        "brand": "Grupp4",
+        "review": 4,
+        "category": "Hoodie",
+        "price": "399",
+        "image": "/img/clothes/hoodie/hoodie-green-front.png",
+        "hoverImage": "/img/clothes/hoodie/hoodie-green-back.png"
+      },
+      {
+        "id": 4,
+        "productName": "Blue Shirt",
+        "color": "Blue",
+        "category": "T-shirt",
+        "brand": "Grupp4",
+        "review": 3,
+        "price": "699",
+        "image": "/img/clothes/tshirt/tshirt-blue-front.png",
+        "hoverImage": "/img/clothes/tshirt/tshirt-blue-back.png"
+      }
+    ]
+} 
