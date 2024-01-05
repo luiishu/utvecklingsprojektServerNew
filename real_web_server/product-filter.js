@@ -165,7 +165,8 @@ let products;
 
 
 
-// Teeeemp render for products
+
+/*// Teeeemp render for products
 function renderProducts_temp(product, targetContainerId) {
     const productContainer = document.getElementById(targetContainerId);
 
@@ -240,7 +241,7 @@ function renderProducts_temp(product, targetContainerId) {
         console.log(`Item render ${i}`);
     }
 }
-
+*/
 //temp init
 async function init() {
     const products = await fetchProducts_as_json();
@@ -350,9 +351,17 @@ function renderProducts(product, targetContainerId) {
         productCard.dataset.color = product.color;
 
         // Rest of the code remains the same
+        const outOfStock = document.createElement("h3");
+        outOfStock.classList.add("outOfStocktxt");
         const productImage = document.createElement("img");
         productImage.src = product.image;
         productImage.alt = product.productName;
+        outOfStock.textContent = "Out Of Stock";
+
+        if(product.amount == 0){
+            productImage.classList.add("blur-img");
+            outOfStock.classList.add("outOfStockDisplay");
+        }
 
         const productDescription = document.createElement("div");
         productDescription.classList.add("des");
@@ -385,6 +394,7 @@ function renderProducts(product, targetContainerId) {
 
         // Append elements to the product card
         productCard.appendChild(productImage);
+        productCard.appendChild(outOfStock);
         productCard.appendChild(productDescription);
         productCard.appendChild(cartIcon);
 
