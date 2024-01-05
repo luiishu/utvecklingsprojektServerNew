@@ -327,6 +327,26 @@ Products
 
 */
 
+
+
+.blur-img {
+    -webkit-filter: blur(5px); /* Safari 6.0 - 9.0 */
+    filter: blur(5px);
+}
+
+.outOfStocktxt{
+    display: none;
+    position: absolute;
+    color: white;
+    top: 35%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.outOfStockDisplay{
+    display: block;
+}
+
 #product1{
     text-align: center;
     padding-top: 50px;
