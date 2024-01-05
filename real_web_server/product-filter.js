@@ -249,7 +249,7 @@ async function init() {
     console.log("After console Product");
     if (products) {
         //Add here what you want to be rendered
-        renderProducts_temp(products, "product-container");
+        renderProducts(products, "product-container");
        // renderProducts(products, "product-container-homepage");
     }
     else {
@@ -259,7 +259,7 @@ async function init() {
 
 async function fetchProducts_as_json() {
     try {
-        const response = await fetch("/web_server/api/v1/products");
+        const response = await fetch("api/v1/detailed_products");
         const data = await response.json();
         return data;
     } catch (error) {

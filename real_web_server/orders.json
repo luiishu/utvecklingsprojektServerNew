@@ -1,0 +1,233 @@
+{
+  "orders": [
+    {
+      "order_id": 1702992147,
+      "products_order_id": 1702992147063,
+      "user_id": 1702779104,
+      "total_cost": 3594,
+      "order_date": "2023-12-19",
+      "time_stamp": "14:22:27",
+      "status": "READY",
+      "id": 1
+    },
+    {
+      "order_id": 1703170408,
+      "products_order_id": 1703170408036,
+      "user_id": 1702779104,
+      "total_cost": 4051,
+      "order_date": "2023-12-21",
+      "time_stamp": "15:53:28",
+      "status": "READY",
+      "id": 2
+    },
+    {
+      "order_id": 1703170476,
+      "products_order_id": 1703170476251,
+      "user_id": 6127560954,
+      "total_cost": 1995,
+      "order_date": "2023-12-21",
+      "time_stamp": "15:54:36",
+      "status": "READY",
+      "id": 3
+    },
+    {
+      "order_id": 1703171781,
+      "products_order_id": 1703171781297,
+      "user_id": 1702779104,
+      "total_cost": 5390,
+      "order_date": "2023-12-21",
+      "time_stamp": "16:16:21",
+      "status": "READY",
+      "id": 4
+    }
+  ],
+  "order_items": [
+    [
+      {
+        "id": 1,
+        "products_order_id": 1702992147063,
+        "product_id": 4,
+        "amount": 2,
+        "cost": 0
+      },
+      {
+        "id": 2,
+        "products_order_id": 1702992147063,
+        "product_id": 7,
+        "amount": 1,
+        "cost": 0
+      },
+      {
+        "id": 3,
+        "products_order_id": 1702992147063,
+        "product_id": 6,
+        "amount": 2,
+        "cost": 0
+      },
+      {
+        "id": 4,
+        "products_order_id": 1702992147063,
+        "product_id": 5,
+        "amount": 1,
+        "cost": 0
+      }
+    ],
+    [
+      {
+        "id": 1,
+        "products_order_id": 1703170408036,
+        "product_id": 1,
+        "amount": 4,
+        "cost": 0
+      },
+      {
+        "id": 2,
+        "products_order_id": 1703170408036,
+        "product_id": 3,
+        "amount": 1,
+        "cost": 0
+      },
+      {
+        "id": 3,
+        "products_order_id": 1703170408036,
+        "product_id": 6,
+        "amount": 1,
+        "cost": 0
+      },
+      {
+        "id": 4,
+        "products_order_id": 1703170408036,
+        "product_id": 7,
+        "amount": 3,
+        "cost": 0
+      }
+    ],
+    [
+      {
+        "id": 1,
+        "products_order_id": 1703170476251,
+        "product_id": 2,
+        "amount": 1,
+        "cost": 0
+      },
+      {
+        "id": 2,
+        "products_order_id": 1703170476251,
+        "product_id": 1,
+        "amount": 2,
+        "cost": 0
+      },
+      {
+        "id": 3,
+        "products_order_id": 1703170476251,
+        "product_id": 5,
+        "amount": 1,
+        "cost": 0
+      },
+      {
+        "id": 4,
+        "products_order_id": 1703170476251,
+        "product_id": 6,
+        "amount": 1,
+        "cost": 0
+      }
+    ],
+    [
+      {
+        "id": 1,
+        "products_order_id": 1703171781297,
+        "product_id": 1,
+        "amount": 4,
+        "cost": 0
+      },
+      {
+        "id": 2,
+        "products_order_id": 1703171781297,
+        "product_id": 5,
+        "amount": 1,
+        "cost": 0
+      },
+      {
+        "id": 3,
+        "products_order_id": 1703171781297,
+        "product_id": 6,
+        "amount": 1,
+        "cost": 0
+      },
+      {
+        "id": 4,
+        "products_order_id": 1703171781297,
+        "product_id": 10,
+        "amount": 3,
+        "cost": 0
+      },
+      {
+        "id": 5,
+        "products_order_id": 1703171781297,
+        "product_id": 11,
+        "amount": 1,
+        "cost": 0
+      }
+    ]
+  ],
+  "contact_info": [
+    {
+      "order_id": 0,
+      "user_id": 1702779104,
+      "email": "filip_vikstrom00@hotmail.com",
+      "firstName": "Filip",
+      "lastName": "Vikström",
+      "phoneNumber": "723876947",
+      "address1": "dsadadf",
+      "address2": "",
+      "postalCode": "43264",
+      "city": "Bua",
+      "country": "swed",
+      "orderId": 1702992147,
+      "id": 1
+    },
+    {
+      "order_id": 0,
+      "user_id": 1702779104,
+      "email": "filip_vikstrom00@hotmail.com",
+      "firstName": "Filip",
+      "lastName": "Vikström",
+      "phoneNumber": "723876947",
+      "address1": "Bolmensgatan 7",
+      "address2": "",
+      "postalCode": "43264",
+      "city": "Bua",
+      "country": "Sweden",
+      "orderId": 1703170408,
+      "id": 2
+    },
+    {
+      "order_id": 0,
+      "user_id": 6127560954,
+      "email": "baasjdiasjdoa",
+      "firstName": "Hej",
+      "lastName": "Då",
+      "phoneNumber": "31237891923",
+      "address1": "adasfag",
+      "address2": "dasdasga",
+      "postalCode": "12312312",
+      "city": "fasfasf",
+      "country": "asddawf",
+      "orderId": 1703170476,
+      "id": 3
+    },
+    {
+      "user_id": 1702779104,
+      "email": "filip_vikstrom00@hotmail.com",
+      "firstName": "Filip",
+      "lastName": "Vikström",
+      "phoneNumber": "723876947",
+      "address1": "fasfaf",
+      "address2": "",
+      "postalCode": "43264",
+      "city": "Bua",
+      "country": "asfawfa",
+      "id": 4
+    }
+  ]
+}
