@@ -4,10 +4,21 @@ use std::{
     io::{self, prelude::*, BufReader},
 };
 
-use crate::{request_line::RequestLine, database::{database::{register_user, print_rows_from_user}, product::Product, table::{Table, get_query_iterator}, order::Order, order_item::OrderItem, user::User}, response::response::{ResponseLine, HttpResponseMessages, HttpResponseCode, HttpResponseCodes}};
+use crate::{
+    database::{
+        database::{print_rows_from_user, register_user},
+        order::Order,
+        order_item::OrderItem,
+        product::Product,
+        table::{get_query_iterator, Table},
+        user::User,
+    },
+    request_line::RequestLine,
+    response::response::{HttpResponseCode, HttpResponseCodes, HttpResponseMessages, ResponseLine},
+};
 
 extern crate bcrypt;
-use bcrypt::{DEFAULT_COST, hash, verify, hash_with_salt};
+use bcrypt::{hash, hash_with_salt, verify, DEFAULT_COST};
 use rusqlite::Connection;
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
@@ -20,14 +31,14 @@ pub struct PostHandler;
 #[derive(Debug, Deserialize, Serialize)]
 pub struct NewOrder {
     pub order: Order,
-    pub order_items: Vec<OrderItem>
+    pub order_items: Vec<OrderItem>,
 }
 
 impl PostHandler {
     pub fn handle_post_request(request: &str, conn: &Connection) -> String {
         let mut response = String::new();
         let request_line = RequestLine::new(&request);
-    
+
         println!("Hello from handle_post_request_new!");
         //println!("Request received:\n{}", request);
         println!("Request line received:\n{}", request_line.to_string());
@@ -48,8 +59,8 @@ impl PostHandler {
             SupportedResources::USERS => {
                 let response = Self::handle_users(&body, conn);
                 println!("Sending the following POST response:\n{response}");
-                return response
-            },
+                return response;
+            }
 
             SupportedResources::ORDERS => Self::handle_order(&body, conn),
 
@@ -67,6 +78,7 @@ impl PostHandler {
     fn handle_order(body: &str, conn: &Connection) -> usize {
         // 1. Converting body to NewOrder struct
         let body = body.replace("order-items", "order_items");
+        println!("\n{}\n", body);
         let new_order: NewOrder = serde_json::from_str(&body).unwrap();
 
         println!("Received the following order:\n{:?}", &new_order.order);
@@ -81,19 +93,30 @@ impl PostHandler {
         // 2. Validate amounts
         println!("Validating order amounts...");
         for order_item in &new_order.order_items {
-            println!("Order item ID: {}, order item amount: {}", newest_order_id, order_item.amount);
-            println!("Product ID: {}, product amount: {}", order_item.product_id, Product::get_amount_by_id(conn, order_item.product_id));
+            println!(
+                "Order item ID: {}, order item amount: {}",
+                newest_order_id, order_item.amount
+            );
+            println!(
+                "Product ID: {}, product amount: {}",
+                order_item.product_id,
+                Product::get_amount_by_id(conn, order_item.product_id)
+            );
 
             if order_item.amount > Product::get_amount_by_id(conn, order_item.product_id) {
                 println!("Not enough products!");
-                return HttpResponseCode::CONFLICT
+                return HttpResponseCode::CONFLICT;
             }
         }
 
         println!("Validating passed!");
 
         for order_item in &new_order.order_items {
-            Product::update_product_amount_by_id(conn, order_item.product_id, order_item.amount * -1);
+            Product::update_product_amount_by_id(
+                conn,
+                order_item.product_id,
+                order_item.amount * -1,
+            );
         }
 
         // 2. Inserting new order in database
@@ -102,14 +125,18 @@ impl PostHandler {
         VALUES (?1, ?2, ?3, ?4, ?5, ?6);
         ";
 
-        conn.execute(query, (
-            new_order.order.user_id, 
-            new_order.order.product_amount,
-            new_order.order.total_cost,
-            new_order.order.order_date,
-            new_order.order.order_timestamp,
-            new_order.order.status)
-        ).unwrap();
+        conn.execute(
+            query,
+            (
+                new_order.order.user_id,
+                new_order.order.product_amount,
+                new_order.order.total_cost,
+                new_order.order.order_date,
+                new_order.order.order_timestamp,
+                new_order.order.status,
+            ),
+        )
+        .unwrap();
 
         // 3. Inserting order items in database
         let newest_order_id = Order::get_newest_order_id(conn).unwrap();
@@ -121,12 +148,16 @@ impl PostHandler {
         ";
 
         for order_item in &new_order.order_items {
-            conn.execute(query, (
-                newest_order_id, 
-                order_item.product_id, 
-                order_item.amount, 
-                order_item.cost)
-            ).unwrap();
+            conn.execute(
+                query,
+                (
+                    newest_order_id,
+                    order_item.product_id,
+                    order_item.amount,
+                    order_item.cost,
+                ),
+            )
+            .unwrap();
         }
 
         HttpResponseCode::CREATED
@@ -140,9 +171,9 @@ impl PostHandler {
         let request_type = serde_json::from_value(json["request_type"].to_owned());
         if request_type.is_err() {
             //return HttpResponseCode::BAD_REQUEST;
-            return ResponseLine::get_response_line(HttpResponseCode::BAD_REQUEST)
+            return ResponseLine::get_response_line(HttpResponseCode::BAD_REQUEST);
         }
-        
+
         let request_type: String = request_type.unwrap();
 
         println!("Received username: {username}");
@@ -160,26 +191,22 @@ impl PostHandler {
         if user.is_err() {
             println!("Error parsing user");
             eprintln!("{}", user.unwrap_err());
-            return ResponseLine::get_response_line(HttpResponseCode::BAD_REQUEST)
+            return ResponseLine::get_response_line(HttpResponseCode::BAD_REQUEST);
         }
 
         let user: User = user.unwrap();
 
         // 2. Check if request is for login or registration
         match request_type.as_str() {
-            "login" => {                
-                return Self::login_user(&user, conn)
-            },
-            "logout" => {                
-                return Self::logout_user(&user, conn)
-            },
+            "login" => return Self::login_user(&user, conn),
+            "logout" => return Self::logout_user(&user, conn),
             "register" => return Self::register_user(&user, conn),
             _ => {
                 println!("Received unknown request type: {request_type}");
                 return HttpResponseCode::BAD_REQUEST.to_string();
             }
         }
-        
+
         User::print_rows(conn).unwrap();
     }
 
@@ -187,7 +214,7 @@ impl PostHandler {
         println!("Time to logout user");
 
         let response_line = ResponseLine::get_response_line(HttpResponseCode::OK);
-        
+
         return format!("{response_line}\nSet-Cookie: username=; path=/; expires=Thu, Jan 01 1970 00:00:00 UTC;\nContent-Length: 0");
     }
 
@@ -195,72 +222,85 @@ impl PostHandler {
         println!("Time to login user");
 
         // 1. Check if username exists
-        let query = &format!("SELECT username FROM [user] WHERE username = '{}';", &user.username);
+        let query = &format!(
+            "SELECT username FROM [user] WHERE username = '{}';",
+            &user.username
+        );
         let rows = get_query_iterator(conn, query);
         let length = rows.len();
         println!("Rows: {:?}", rows);
 
         if rows.is_empty() {
-            println!("Username {} does not exist! Returning error...", &user.username);
+            println!(
+                "Username {} does not exist! Returning error...",
+                &user.username
+            );
             //return HttpResponseCode::NOT_FOUND;
-            return ResponseLine::get_response_line(HttpResponseCode::NOT_FOUND)            
+            return ResponseLine::get_response_line(HttpResponseCode::NOT_FOUND);
         }
 
         let hashed_password = Self::get_hashed_password(&user.password);
 
         // 2. Check if username and password exists
-        let query = &format!("
+        let query = &format!(
+            "
         SELECT username, password FROM [user] 
-        WHERE username = '{}' AND password = '{}';", 
-        &user.username, hashed_password
+        WHERE username = '{}' AND password = '{}';",
+            &user.username, hashed_password
         );
         let rows = get_query_iterator(conn, query);
         println!("Rows: {:?}", rows);
 
         if rows.is_empty() {
-            println!("Username {} with password {} does not exist! Returning error...", &user.username, hashed_password);
+            println!(
+                "Username {} with password {} does not exist! Returning error...",
+                &user.username, hashed_password
+            );
             //return HttpResponseCode::BAD_REQUEST;
 
-            return ResponseLine::get_response_line(HttpResponseCode::BAD_REQUEST)
+            return ResponseLine::get_response_line(HttpResponseCode::BAD_REQUEST);
         }
 
         // 3. Return OK
         println!("Login was successful!");
         //HttpResponseCode::OK
         let response_line = ResponseLine::get_response_line(HttpResponseCode::OK);
-        
-        return format!("{response_line}\nSet-Cookie: username={}; path=/;\nPath: /web_server\nConnection: keep-alive\nContent-Length: 0\nAccess-Control-Allow-Origin: http://localhost:7878\nAccess-Control-Max-Age: 86400\nAccess-Control-Allow-Credentials: true\n", user.username)
+
+        return format!("{response_line}\nSet-Cookie: username={}; path=/;\nPath: /web_server\nConnection: keep-alive\nContent-Length: 0\nAccess-Control-Allow-Origin: http://localhost:7878\nAccess-Control-Max-Age: 86400\nAccess-Control-Allow-Credentials: true\n", user.username);
     }
-    
+
     fn register_user(user: &User, conn: &Connection) -> String {
         println!("Time to register user");
         // 1. Try inserting user into database
         let query = "INSERT INTO [user] (username, password) VALUES (?1, ?2);";
 
-        let insertion = conn.execute(query, (&user.username, Self::get_hashed_password(&user.password)));
+        let insertion = conn.execute(
+            query,
+            (&user.username, Self::get_hashed_password(&user.password)),
+        );
         match insertion {
             Ok(number_of_rows) => {
                 match number_of_rows {
                     0 => {
                         println!("No rows were changed. Insertion was NOT successful.");
                         //return HttpResponseCode::BAD_REQUEST;
-                        return ResponseLine::get_response_line(HttpResponseCode::BAD_REQUEST)
-                    },
+                        return ResponseLine::get_response_line(HttpResponseCode::BAD_REQUEST);
+                    }
                     1 => {
                         println!("One row was changed. Insertion was successful!");
-                    },
+                    }
                     n => {
                         println!("{n} rows were changed. Insertion was NOT successful.");
                         //return HttpResponseCode::BAD_REQUEST;
-                        return ResponseLine::get_response_line(HttpResponseCode::BAD_REQUEST)
-                    },
+                        return ResponseLine::get_response_line(HttpResponseCode::BAD_REQUEST);
+                    }
                 }
-            },
+            }
 
             Err(e) => {
                 eprintln!("Found error inserting user {:?}:\n{e}", &user);
                 //return HttpResponseCode::CONFLICT;
-                return ResponseLine::get_response_line(HttpResponseCode::CONFLICT)
+                return ResponseLine::get_response_line(HttpResponseCode::CONFLICT);
             }
         }
 
@@ -271,7 +311,9 @@ impl PostHandler {
     fn get_hashed_password(password: &str) -> String {
         println!("Received password: {password}");
         let salt = [0u8; 16];
-        hash_with_salt(password, DEFAULT_COST, salt).unwrap().to_string()
+        hash_with_salt(password, DEFAULT_COST, salt)
+            .unwrap()
+            .to_string()
     }
 
     fn get_post_resource(request_line: &str) -> String {
@@ -281,13 +323,10 @@ impl PostHandler {
 
     fn supported_resource(resource: &str) -> bool {
         match resource {
-            SupportedResources::USERS | SupportedResources::ORDERS => {},
-            _ => {
-                return false
-            }
+            SupportedResources::USERS | SupportedResources::ORDERS => {}
+            _ => return false,
         }
 
         true
     }
 }
-
