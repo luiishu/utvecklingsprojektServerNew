@@ -112,7 +112,7 @@ async function fetch_data(uri) {
     }
 }
 
-async function create_order(user_id, product_amount, total_cost, order_items) {
+async function create_order(user_id, product_amount, order_items) {
 
     const order_request = "POST /web_server/api/v1/orders HTTP/1.1"
 

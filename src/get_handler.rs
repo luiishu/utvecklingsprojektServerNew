@@ -59,9 +59,9 @@ pub fn handle_get_request_new(request: &String, conn: &Connection) -> String {
 
     let mut content_type = "";
     if request_line.to_string() == "GET / HTTP/1.1" || request_line.uri_file_type == "text/html" {
-        content_type = "text/html";
+        content_type = "Content-Type: text/html";
     } else if (request_line.uri_file_type == "js") {
-        content_type = "application/javascript";
+        content_type = "Content-Type: application/javascript";
     }
 
     let (status_line, filename) =
@@ -134,8 +134,7 @@ pub fn handle_get_request_new(request: &String, conn: &Connection) -> String {
         contents = data;
 
         length = contents.len();
-        let data_response = format!("{status_line}\r\nContent-Length: {length}\r\n{content_type}\r\n\r\n{contents}");
-        println!("Data respnse: \n{}", data_response);
+        let data_response = format!("{status_line}\r\nContent-Length: {length}\r\n\r\n{contents}");
         return data_response;
     }
 
@@ -161,10 +160,12 @@ pub fn handle_get_request_new(request: &String, conn: &Connection) -> String {
         length = file_content.len();
     }
     println!("Got file contents...");
-    response = format!("{status_line}\r\nContent-Length: {length}\r\n\r\n{contents}");
+    response =
+        format!("{status_line}\n{content_type}\r\nContent-Length: {length}\r\n\r\n{contents}");
     if image_request {
         response.push_str(&resource);
     }
+    println!("\n\nRESPONSE\n{}\n: ", response);
 
     println!("Response from helper:\n{}", response);
     println!("---------------------------------------------------------");
