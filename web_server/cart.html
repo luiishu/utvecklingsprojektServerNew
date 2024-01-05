@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart</title>
+    <style>
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #333;
+        }
+
+        li {
+            float: left;
+        }
+
+        li a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+
+        /* Change the link color to #111 (black) on hover */
+        li a:hover {
+            background-color: #111;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            justify-content: center;
+            align-items: center;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+        }
+
+        main {
+            width: 500px;
+            height: 500px;
+            margin-left: calc(50% - 250px);
+            margin-top: calc(150px);
+            overflow: auto;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+
+        .cart-item {
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin-bottom: 10px;
+            background-color: #fff;
+            display: flex;
+            align-items: center;
+            width: 100%;
+            /* 100% width relative to the container */
+        }
+
+        .cart-item img {
+            max-width: 60px;
+            max-height: 60px;
+            margin-right: 10px;
+        }
+
+        .cart-item-details {
+            flex: 1;
+        }
+
+        .cart-item button {
+            background-color: #dc3545;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+
+        .cart-total {
+            margin-top: 20px;
+            text-align: right;
+        }
+    </style>
+</head>
+
+<body>
+    <ul>
+        <li><a class="active" href="#home">Home</a></li>
+        <li><a href="#news">News</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li style="float:right"><a href="#about">About</a></li>
+    </ul>
+    <div>
+        <main>
+            <div class="cart-item">
+                <div class="cart-item-details">
+                    <h3>Product 1</h3>
+                    <p>Price: $19.99</p>
+                    <p>Quantity: 2</p>
+                </div>
+                <button>Remove</button>
+            </div>
+
+            <div class="cart-item">
+                <div class="cart-item-details">
+                    <h3>Product 2</h3>
+                    <p>Price: $29.99</p>
+                    <p>Quantity: 1</p>
+                </div>
+                <button>Remove</button>
+            </div>
+            Add more cart items as needed
+
+            <div class="cart-total">
+                <p>Total: $69.97</p>
+                <button>Checkout</button>
+            </div>
+        </main>
+    </div>
+
+</body>
+
+</html>
