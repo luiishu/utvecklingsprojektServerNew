@@ -7,20 +7,22 @@
 </head>
 <body>
     <h2>GET</h2>
-    <button onclick="fetch_data:fetch_data(resource)">Send fetch request</button>
-
+    <!--<button onclick="fetch_data:fetch_data(resource)">Send fetch request</button>-->
+    <button onclick="fetch_data:fetch_data('addresses')">Fetch Addresses</button>
+    <button onclick="fetch_data:fetch_data('users')">Fetch Users</button>
+    <button onclick="fetch_data:fetch_data('orders')">Fetch Orders</button>
+    <button onclick="fetch_data:fetch_data('order-items')">Fetch Order Items</button>
+    <button onclick="fetch_data:fetch_data('order-positions')">Fetch Order Positions</button>
+    <button onclick="fetch_data:fetch_data('products')">Fetch Products</button>
+    <button onclick="fetch_data:fetch_data('product-images')">Fetch Product Images</button>
+    <button onclick="fetch_data:fetch_data('product-reviews')">Fetch Product Reviews</button>
+    <button onclick="fetch_data:fetch_data('product-types')">Fetch Product Types</button>
+    
     <h3>Fetch results</h3>
     <ul>
 
     </ul>
-
-    <form action="" id="loginForm">
-      <h1>Login</h1>
-      <input type="text" id="username" class="form-control" placeholder="Enter your Username...">
-      <input type="password" id="password" class="form-control" placeholder="Enter your Password...">
-      <button type="submit">Submit</button>
-    </form>
-
+    
     <script>
     fetch_arg = "api/v1/products"
     api = "api/v1/"

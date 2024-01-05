@@ -9,7 +9,7 @@ use serde::{Deserialize, Serialize};
 #[derive(Debug, Deserialize, Serialize)]
 pub struct OrderItem {
     //pub id: i64,
-    pub order_id: i64,
+    //pub order_id: i64,
     pub product_id: i64,
     pub amount: i64,
     pub cost: i64,

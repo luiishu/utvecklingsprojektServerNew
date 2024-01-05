@@ -24,10 +24,10 @@ fn test_orders(conn: &Connection) {
     println!("Printing all order items BEFORE test:");
     println!("ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo");
     OrderItem::print_rows(conn).unwrap();
-    println!("ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo");
-    println!("Printing all products BEFORE test:");
-    println!("ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo");
-    Product::print_rows(conn).unwrap();
+    //println!("ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo");
+    //println!("Printing all products BEFORE test:");
+    //println!("ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo");
+    //Product::print_rows(conn).unwrap();
     println!("ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo");
 
     test_orders2(conn);
@@ -40,10 +40,10 @@ fn test_orders(conn: &Connection) {
     println!("Printing all order items AFTER test:");
     println!("ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo");
     OrderItem::print_rows(conn).unwrap();
-    println!("ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo");
-    println!("Printing all products AFTER test:");
-    println!("ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo");
-    Product::print_rows(conn).unwrap();
+    //println!("ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo");
+    //println!("Printing all products AFTER test:");
+    //println!("ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo");
+    //Product::print_rows(conn).unwrap();
     println!("ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo");
 }
 

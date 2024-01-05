@@ -81,7 +81,7 @@ impl PostHandler {
         // 2. Validate amounts
         println!("Validating order amounts...");
         for order_item in &new_order.order_items {
-            println!("Order item ID: {}, order item amount: {}", order_item.product_id, order_item.amount);
+            println!("Order item ID: {}, order item amount: {}", newest_order_id, order_item.amount);
             println!("Product ID: {}, product amount: {}", order_item.product_id, Product::get_amount_by_id(conn, order_item.product_id));
 
             if order_item.amount > Product::get_amount_by_id(conn, order_item.product_id) {
@@ -122,7 +122,7 @@ impl PostHandler {
 
         for order_item in &new_order.order_items {
             conn.execute(query, (
-                order_item.order_id, 
+                newest_order_id, 
                 order_item.product_id, 
                 order_item.amount, 
                 order_item.cost)
