@@ -145,17 +145,17 @@ pub fn insert_test_data(conn: &Connection) -> Result<()> {
         --(\"/img/clothes/pants/pants-green-front.png\", \"/img/clothes/pants/pants-green-back.png\", 21);
         --(\"/img/.png\", \"/img/.png\", 20);
            
-        INSERT INTO product (product_type_id, product_category_id, product_brand_id, name, product_rating, price, amount, product_image_id, description)
-        VALUES
-           (1, 1, 1, \"Red Dress\", 0, 6, 9, 1, \"A red dress.\"),
-           (1, 1, 1, \"Red apple\", 0, 6, 21, 1, \"A red apple.\"),
-           (2, 1, 1, \"Yellow Shoe\", 0, 6, 4, 1, \"A yellow shoe.\"),
-           (2, 1, 1, \"Yellow Stone\", 0, 6, 1, 1, \"A yellow stone. Must be important.\"),
-           (2, 1, 1, \"Bible\", 0, 6, 1, 1, \"A holy book.\"),
-           (3, 1, 1, \"Green apple\", 0, 6, 21, 1, \"A green apple.\"),
-           (4, 1, 1, \"Blue Man\", 0, 6, 4, 1, \"A blue man (what the-).\"),
-           (4, 1, 1, \"Blue Bikini\", 0, 6, 8, 1, \"A blue bikini.\"),
-           (3, 1, 1, \"Pink Pants\", 0, 6, 0, 1, \"A pair of pink pants.\");
+        --INSERT INTO product (product_type_id, product_category_id, product_brand_id, name, product_rating, price, amount, product_image_id, description)
+        --VALUES
+           --(1, 1, 1, \"Red Dress\", 0, 6, 9, 1, \"A red dress.\"),
+           --(1, 1, 1, \"Red apple\", 0, 6, 21, 1, \"A red apple.\"),
+           --(2, 1, 1, \"Yellow Shoe\", 0, 6, 4, 1, \"A yellow shoe.\"),
+           --(2, 1, 1, \"Yellow Stone\", 0, 6, 1, 1, \"A yellow stone. Must be important.\"),
+           --(2, 1, 1, \"Bible\", 0, 6, 1, 1, \"A holy book.\"),
+           --(3, 1, 1, \"Green apple\", 0, 6, 21, 1, \"A green apple.\"),
+           --(4, 1, 1, \"Blue Man\", 0, 6, 4, 1, \"A blue man (what the-).\"),
+           --(4, 1, 1, \"Blue Bikini\", 0, 6, 8, 1, \"A blue bikini.\"),
+           --(3, 1, 1, \"Pink Pants\", 0, 6, 0, 1, \"A pair of pink pants.\");
 
         --INSERT INTO product (name, product_type_id, product_category_id, product_brand_id, product_rating, price, amount, product_image_id)        
         --VALUES
