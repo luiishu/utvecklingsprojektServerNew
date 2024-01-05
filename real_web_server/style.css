@@ -1121,4 +1121,139 @@ Product Page
 }
 
 
-#
+#categories-container .categories{
+    display: flex;
+    flex-direction: column;
+    padding-top: 20px;
+}
+
+#categories-container .categories h5{
+    padding: 0 60px 10px 10px;
+    color: var(--2nd-txt-color);
+}
+
+
+#product {
+    width: 70%;
+}
+
+#product .product-filter {
+    display:flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#product .product-filter .filter-buttons{
+    position:relative;
+}
+
+
+#product .product-filter .product-sorting{
+}
+
+
+#product-container {
+    display: grid;
+    grid-template-columns:auto auto auto auto;
+}
+
+
+
+/*
+
+*****************
+
+Responsive 
+
+*****************
+
+*/
+
+@media (max-width:829px){
+    .section-p1{
+       padding: 40px 40px;
+    }
+
+    .section-m1{
+        margin: 20px 0;
+    }
+ 
+    #navbar {
+       display: flex;
+       flex-direction: column;
+       align-items: flex-start;
+       justify-content: flex-start;
+       position: fixed;
+       top: 0;
+       right: -300px;
+       height: 100vh;
+       width: 300px;
+       background-color: #E3E6F3;
+       box-shadow: 0 40px 60px rgba(0, 0, 0, 0.1);
+       padding: 80px 0 0 10px;
+       transition: 0.3s;
+    }
+
+    #mobile {
+        display: flex;
+        align-items: center;
+    }
+
+    #mobile i{
+        color: #1a1a1a;
+        font-size:24px;
+        padding-left: 20px;
+    }
+
+    #product1 .pro-container{
+        grid-template-columns: repeat(6, 50%);
+    }
+
+    #banner {
+        height: 35vh;
+        padding-left: 30%;
+        
+    }
+    #banner button{
+
+    }
+}
+
+@media (max-width:477px){
+
+    .section-p1{
+        padding:20px;
+    } 
+   
+    #header {
+        padding: 10px 30px;
+    }
+
+    #feature{
+
+    }
+
+    h2 {
+        font-size: 32px;
+    }
+
+    h1 {
+        font-size: 38px;
+    }
+
+    h3{
+        font-size: 15px; 
+    }
+    #hero {
+        padding: 0 20px;
+        background-position: 55%;
+     }
+
+    #product1 .pro-container{
+        grid-template-columns: repeat(6, 100%);
+        justify-content: space-between;
+        padding-bottom: 20px;
+    }
+
+}
+

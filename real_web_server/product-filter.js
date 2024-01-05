@@ -284,4 +284,183 @@ function renderProducts(product, targetContainerId) {
         productCard.appendChild(cartIcon);
 
         productDescription.appendChild(productBrand);
-        pro
+        productDescription.appendChild(productTitle);
+        productDescription.appendChild(starContainer);
+        productDescription.appendChild(productPrice);
+
+        // Add the product card to the container
+        productContainer.appendChild(productCard);
+
+        productCards.push(productCard);
+    });
+}
+
+
+
+/*
+
+Other way of dispalying the cards, however the filter and sort doesnt work.
+
+function renderProducts(products, targetContainerId) {
+    const productContainer = document.getElementById(targetContainerId);
+
+    if (!productContainer) {
+        console.error(`Container with ID ${targetContainerId} not found.`);
+        return;
+    }
+
+    products.data.forEach(products => {
+        const productCard = createProductCard(products);
+        productContainer.appendChild(productCard);
+    });
+}
+
+function createProductCard(products) {
+    const productCard = document.createElement("div");
+    productCard.classList.add("pro");  // Add the 'pro' class
+    productCard.dataset.productId = products.id; // Set product ID
+
+    productCard.addEventListener("mouseover", () => changeImage(productCard, products.hoverImage));
+    productCard.addEventListener("mouseout", () => restoreImage(productCard, products.image));
+
+
+    const filledStars = Array.from({ length: product.review }, (_, index) =>
+        `<i class="fas fa-star"></i>`
+    ).join('');
+
+    // Calculate the number of empty stars
+    const emptyStars = Array.from({ length: 5 - product.review }, (_, index) =>
+        `<i class="far fa-star"></i>`
+    ).join('');
+
+    // Example:
+    productCard.innerHTML = `
+        <img src="${products.image}">
+        <div class="des">
+            <span>${products.category} - ${products.brand}</span>
+            <h5>${products.productName} - ${products.color}</h5>
+            <div class="star">
+                ${filledStars}${emptyStars}
+            </div>
+            <h4>${products.price} kr</h4>
+            <a href="#"><i class="fa-solid fa-shopping-cart cart"></i></a>
+        </div>
+    `;
+
+    return productCard;
+}
+*/
+function changeImage(productCard, hoverImage) {
+    const imgElement = productCard.querySelector("img");
+    imgElement.src = hoverImage;
+}
+
+// Function to restore the original image on mouseout
+function restoreImage(productCard, originalImage) {
+    const imgElement = productCard.querySelector("img");
+    imgElement.src = originalImage;
+}
+
+function filterProducts(filterValue, filterType) {
+
+    //console.log('Filtering by', filterType, 'with value', filterValue);
+    const productCards = document.querySelectorAll('.pro');
+
+    productCards.forEach(card => {
+        const category = card.dataset.category;
+        const color = card.dataset.color;
+
+        // Check if the card matches the filter criteria
+        const showCard = (
+            (filterType === 'category' && (filterValue === 'all' || category === filterValue)) ||
+            (filterType === 'color' && (filterValue === 'all' || color === filterValue))
+        );
+        // Toggle the visibility of the card
+        card.style.display = showCard ? 'block' : 'none';
+        card.classList.toggle('hidden', !showCard);
+    });
+    //console.log('Filtered products:', productCards);
+}
+
+
+/*Error checking*/
+/*
+function filterProducts(filterValue, filterType) {
+    console.log('Filtering by', filterType, 'with value', filterValue);
+
+    // Rest of the code...
+
+    console.log('Filtered products:', productCards);
+}*/
+
+function sortProducts(sortType) {
+    const productContainer = document.getElementById("product-container");
+    const productCards = Array.from(productContainer.querySelectorAll('.pro'));
+
+    switch (sortType) {
+        case "reviewsHighToLow":
+            // Sort by reviews high to low
+            productCards.sort((a, b) => {
+                const reviewsA = getReviews(a);
+                const reviewsB = getReviews(b);
+                return reviewsB - reviewsA;
+            });
+            break;
+
+        case "priceHighToLow":
+            // Sort by price high to low
+            productCards.sort((a, b) => {
+                const priceA = getPrice(a);
+                const priceB = getPrice(b);
+                return priceB - priceA;
+            });
+            break;
+
+        case "priceLowToHigh":
+            // Sort by price low to high
+            productCards.sort((a, b) => {
+                const priceA = getPrice(a);
+                const priceB = getPrice(b);
+                return priceA - priceB;
+            });
+            break;
+
+        case "default":
+        default:
+            // Default sorting (reset to original order)
+            productCards.sort((a, b) => {
+                return Array.from(productContainer.children).indexOf(a) - Array.from(productContainer.children).indexOf(b);
+            });
+            break;
+    }
+
+    // Adds the sorted cards to the container
+    productCards.forEach(card => productContainer.appendChild(card));
+
+    productCards.forEach(card => card.classList.add('hidden'));
+    setTimeout(() => {
+        productCards.forEach(card => card.classList.remove('hidden'));
+    }, 0);
+}
+
+
+
+function getReviews(card) {
+    const starElement = card.querySelector('.star');
+    const numberOfReviews = starElement ? starElement.children.length : 0;
+    return numberOfReviews;
+}
+
+function getPrice(card) {
+    const priceElement = card.querySelector('.des h4');
+    const priceText = priceElement ? priceElement.textContent.trim() : '0 kr';
+
+    const priceValue = parseFloat(priceText.replace(/\D/g, '')) || 0;
+    return priceValue;
+}
+
+/*
+init();
+renderProducts(product, "product-container");
+renderProducts(product, "product-container-homepage");
+*/

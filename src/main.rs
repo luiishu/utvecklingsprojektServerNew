@@ -84,7 +84,7 @@ fn main() {
     //test_bufReader();
     //order_system::order_system_testing::test_order_system(&conn, &1);
     //fetch_handler::test::test();
-    post_handler::test::test(&conn);
+    //post_handler::test::test(&conn);
 
     println!();
 

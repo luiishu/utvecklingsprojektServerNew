@@ -170,7 +170,7 @@ pub fn handle_get_request_new(request: &String, conn: &Connection) -> String {
     if image_request {
         response.push_str(&resource);
     }
-    println!("\n\nRESPONSE\n{}\n: ", response);
+    //println!("\n\nRESPONSE\n{}\n: ", response);
 
     //println!("Response from helper:\n{}", response);
     println!("---------------------------------------------------------");
@@ -185,7 +185,7 @@ pub fn contains_resource(request_header: &str) -> bool {
 }
 
 pub fn is_text(request_line: &str) -> bool {
-    request_line.contains(".txt") || request_line.contains(".css") || request_line.contains(".js")
+    request_line.contains(".txt") || request_line.contains(".css") || request_line.contains(".js") || request_line.contains(".json")
 }
 
 pub fn is_binary(request_line: &str) -> bool {

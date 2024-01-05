@@ -3,27 +3,40 @@
 #![allow(unused_imports)]
 #![allow(unused_variables)]
 
+use std::fs;
 use rusqlite::{Connection, params, Result as RusqliteResult, Row};
-
+use serde::{Deserialize, Serialize};
+use serde_json::Value as SerdeJsonValue;
+use crate::database::{product_image::ProductImage, table::parse_query_to_json};
 use crate::database::product_type;
-
 use super::table::{Table, print_rows_from_query, get_query_iterator};
 
-pub struct Product {}
+#[derive(Serialize, Deserialize, Debug)]
+pub struct Product {
+    pub name: String,
+    pub product_type_id: i64,
+    pub product_category_id: i64,
+    pub product_brand_id: i64,
+    pub product_image_id: i64,
+    pub product_rating: i64,
+    pub price: i64,
+    pub amount: i64,
+    pub description: String,
+}
 
 impl Table for Product {
     fn create_table(conn: &Connection) -> RusqliteResult<()> {
         conn.execute(
             "CREATE TABLE IF NOT EXISTS product (
                 id INTEGER PRIMARY KEY,
-                name                TEXT UNIQUE NOT NULL,
+                name                TEXT NOT NULL,
                 product_type_id     INTEGER NOT NULL,
                 product_category_id INTEGER,
                 product_brand_id    INTEGER,
                 product_image_id    INTEGER,
                 product_rating      INTEGER DEFAULT 0,
                 price               INTEGER NOT NULL,
-                amount              INTEGER NOT NULL,
+                amount              INTEGER DEFAULT 0,
                 description         TEXT,
                 
                 FOREIGN KEY(product_type_id) REFERENCES product_type(id),
@@ -62,7 +75,8 @@ impl Table for Product {
 
 impl Product {
     pub fn new() -> Product {
-        Product {}
+        todo!()
+        //Product {}
     }
 
     // CREATE --------------------------------
@@ -72,6 +86,89 @@ impl Product {
 
     pub fn insert_product(&self) {
         todo!()
+    }
+
+    pub fn insert_product_from_json(conn: &Connection, json_file: &str) {
+        let query = "
+            INSERT INTO product (
+                name, 
+                product_type_id, 
+                product_category_id, 
+                product_brand_id, 
+                product_rating, 
+                price, 
+                product_image_id
+            )        
+            VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7);";
+
+            let file_contents = match fs::read_to_string(json_file) {
+                Ok(file_contents) => file_contents,
+                Err(e) => {
+                    eprint!("{e}");
+                    return
+                }
+            };
+
+            //println!("JSON File:\n{file_contents}");
+            let json: SerdeJsonValue = serde_json::from_str(&file_contents).unwrap();
+
+            for product in json["data"].as_array().unwrap() {
+                //println!("Value:\n{product}");
+                let name = product["productName"].as_str().unwrap();
+                
+                let color = product["color"].as_str().unwrap();
+                let product_type_id = match color {
+                    "Red" => 1,
+                    "Yellow" => 2,
+                    "Green" => 3,
+                    "Blue" => 4,
+                    _ => -1
+                };
+
+                let category = product["category"].as_str().unwrap();                
+                let product_category_id = match category {
+                    "Hoodie" => 1,
+                    "T-shirt" => 2,
+                    "Pants" => 3,
+                    _ => 1,
+                };
+
+                let brand = product["brand"].as_str().unwrap();
+                let product_brand_id = match brand {
+                    _ => 1
+                };
+
+                let product_rating = product["review"].as_i64().unwrap();
+                let price = product["price"].as_str().unwrap().parse::<i64>().unwrap();
+
+                let product_id = product["id"].as_i64().unwrap();
+                
+                let image_file_name = product["image"].as_str().unwrap();
+                let image_hover_file_name = product["hoverImage"].as_str().unwrap();                
+                ProductImage::insert_product_image(conn, image_file_name, image_hover_file_name, product_id).unwrap();
+                let image_id = ProductImage::get_latest_id(conn).unwrap();
+
+                //println!("Product id: {product_id}");
+                //println!("Image file name: {image_file_name}\nHover Image file name: {image_hover_file_name}");                
+                //println!("Image ID: {image_id}");
+
+                //println!("Color: {color}\tProduct type ID: {product_type_id}");
+                conn.execute(query, (
+                    name, 
+                    product_type_id,
+                    product_category_id, 
+                    product_brand_id, 
+                    product_rating, 
+                    price, 
+                    image_id
+                )).unwrap();
+            }
+
+            //ProductImage::print_rows(conn);
+            //Self::print_rows(conn);
+            Self::print_detailed_products_json(conn);
+
+            //println!("{}", json["data"][0]["id"]);
     }
 
     // READ --------------------------------
@@ -331,6 +428,20 @@ impl Product {
                 return -1
             },
         }
+    }
+
+    fn print_detailed_products(conn: &Connection) -> RusqliteResult<()> {
+        println!("Running print_detailed_products() from struct Product...");
+        let query = &format!("SELECT * FROM detailed_product;");
+        print_rows_from_query(conn, query)?;
+        Ok(())
+    }
+
+    fn print_detailed_products_json(conn: &Connection) -> RusqliteResult<()> {
+        println!("Running print_detailed_products() from struct Product...");
+        let query = &format!("SELECT * FROM detailed_product;");
+        println!("{}", parse_query_to_json(conn, query));
+        Ok(())
     }
     
     // UPDATE --------------------------------
