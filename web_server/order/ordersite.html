@@ -42,50 +42,81 @@
             color: red;
             margin-top: 5px;
         }
+
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #333;
+        }
+
+        li {
+            float: left;
+        }
+
+        li a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+
+        li a:hover {
+            background-color: #111;
+        }
+
+        .cart-icon {
+            font-size: 20px;
+            float: right;
+            background: none;
+            display: flex;
+
+        }
     </style>
 </head>
 
 <body>
-
+    <ul>
+        <div class="cart-icon ">
+            <button id="cartbtn" style="margin-right: 10px; background: none; font-size: 20px;">&#128722;</button>
+            <div id="carttotal" style="color: red; font-size: 25px; margin-top: 9px;">1</div>
+        </div>
+        <li><a class="active" href="/../index.html">Home</a></li>
+    </ul>
 
     <form id="orderForm">
         <label style="font-size: 30px;" for="item_red">Red Kub</label>
         <label>Pris: 10 kr</label>
-        <label for="quanity_red">Quantity:</label>
-        <label for="errorMessage" class="error-message" id="error_message_red">Test</label>
-        <input type="number" id="item_red" name="item_red" required>
+        <label for="errorMessage" class="error-message" id="errormessagered"></label>
         <label class="storage-container" for="storage1" id="storagetxtred"></label>
+        <button id="btnred">Buy</button>
+
+        <div style="margin-top: 20px;"></div>
 
         <label style="font-size: 30px;" for="item_green">Green Kub</label>
         <label>Pris: 20 kr</label>
-        <label for="item1">Quantity:</label>
-        <label for="errorMessage" class="error-message" id="error_message_green">Test</label>
-        <input type="number" id="item_green" name="item_green" required>
+        <label for="errorMessage" class="error-message" id="errormessagegreen"></label>
         <label class="storage-container" for="storage1" id="storagetxtgreen"></label>
+        <button id="btngreen">Buy</button>
+
+        <div style="margin-top: 20px;"></div>
 
         <label style="font-size: 30px;" for="item_blue">Blue Kub</label>
         <label>Pris: 30 kr</label>
-        <label for="item1">Quantity:</label>
-        <label for="errorMessage" class="error-message" id="error_message_blue">Test</label>
-        <input type="number" id="item_blue" name="item_blue" required>
+        <label for="errorMessage" class="error-message" id="errormessageblue"></label>
         <label class="storage-container" for="storage1" id="storagetxtblue"></label>
+        <button id="btnblue">Buy</button>
+
+        <div style="margin-top: 20px;"></div>
 
         <label style="font-size: 30px;" for="item_yellow">Yellow Kub</label>
         <label>Pris: 40 kr</label>
-        <label for="item1">Quantity:</label>
-        <label for="errorMessage" class="error-message" id="error_message_yellow">Test</label>
-        <input type="number" id="item_yellow" name="item_yellow" required>
+        <label for="errorMessage" class="error-message" id="errormessageyellow"></label>
         <label class="storage-container" for="storage1" id="storagetxtyellow"></label>
-
-        <button type="button" onclick="submitOrder()">Submit Order</button>
+        <button id="btnyellow">Buy</button>
     </form>
-
-    <script>
-        function submitOrder() {
-            // You can add your logic here to handle the order submission
-            alert("Order submitted successfully!");
-        }
-    </script>
 
 </body>
 

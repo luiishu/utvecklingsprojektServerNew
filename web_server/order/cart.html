@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart</title>
+    <script type="module" src="cart.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+        }
+
+        main {
+            width: 500px;
+            height: 350px;
+            margin-top: 100px;
+            margin-left: calc(50% - 250px);
+            background-color: #fff;
+            border: 1px solid #ddd;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .scrollable {
+            overflow-y: scroll;
+            /* Set the vertical overflow to scroll for the scrollable content */
+            max-height: 100%;
+        }
+
+        .cart-item {
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin-bottom: 10px;
+            background-color: #fff;
+            display: flex;
+            align-items: center;
+        }
+
+        .cart-item img {
+            max-width: 60px;
+            max-height: 60px;
+            margin-right: 10px;
+        }
+
+        .cart-item-details {
+            flex: 1;
+        }
+
+        .cart-item button {
+            background-color: #dc3545;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+
+        .cart-total {
+            margin-top: 20px;
+            text-align: right;
+        }
+
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #333;
+        }
+
+        li {
+            float: left;
+        }
+
+        li a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+
+        li a:hover {
+            background-color: #111;
+        }
+
+        .cart-icon {
+            font-size: 30px;
+            float: right;
+
+        }
+    </style>
+</head>
+
+<body>
+    <button class="cart-icon">&#128722;</button>
+    <ul>
+        <li><a class="active" href="/../index.html">Home</a></li>
+        <li><a href="ordersite.html">Products</a></li>
+    </ul>
+    <main id="main">
+        <div id="scrollable" class="scrollable">
+            <div id="append_id"></div>
+            
+            <div style="visibility: hidden;" id="checkout" class="cart-total">
+                <p id="checkouttxt">0</p>
+                <button id="checkoutbtn">Checkout</button>
+            </div>
+
+        </div>
+
+
+
+        <!-- Add more cart items as needed -->
+
+    </main>
+</body>
+
+</html>
