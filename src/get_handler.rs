@@ -170,9 +170,9 @@ pub fn handle_get_request_new(request: &String, conn: &Connection) -> String {
     if image_request {
         response.push_str(&resource);
     }
-    println!("\n\nRESPONSE\n{}\n: ", response);
+    //println!("\n\nRESPONSE\n{}\n: ", response);
 
-    println!("Response from helper:\n{}", response);
+    //println!("Response from helper:\n{}", response);
     println!("---------------------------------------------------------");
     response
 }
