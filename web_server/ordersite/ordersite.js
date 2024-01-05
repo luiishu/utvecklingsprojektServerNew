@@ -1,11 +1,13 @@
+import {product_pages} from "../server.js"
+
+
 const color_array = ["red", "green", "blue", "yellow"];
 let error_array = [];
 let storage_array = [];
 let input_array = [];
 let price_array = [10, 20, 30, 40];
 
-const api = "api/v1/"
-const resource = "product_pages"
+
 const user_id = 0; // TODO FIX
 
 const sync_time_in_millie = 1000;
@@ -42,7 +44,7 @@ async function on_timer() {
 
 async function sync_lager() {
 
-    let data = await fetch_data(resource);
+    let data = await product_pages();
     let lager_array = [0, 0, 0, 0];
     data.rows.forEach(element => {
         switch (element.color) {
@@ -100,17 +102,7 @@ function on_submit_pressed(lager_max) {
     // FETCH from database
 }
 
-async function fetch_data(uri) {
-    try {
-        const response = await fetch(api + uri);
-        const data = await response.json();
-        return data;
-    } catch (error) {
-        // Handle errors here
-        console.error('Error fetching data:', error);
-        throw error; // You might want to throw the error for the caller to handle or log it as needed
-    }
-}
+
 
 async function create_order(user_id, product_amount, order_items) {
 

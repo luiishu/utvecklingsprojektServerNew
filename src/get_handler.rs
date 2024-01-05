@@ -62,6 +62,7 @@ pub fn handle_get_request_new(request: &String, conn: &Connection) -> String {
         content_type = "Content-Type: text/html";
     } else if (request_line.uri_file_type == "js") {
         content_type = "Content-Type: application/javascript";
+        println!("DOES IT COME HERE\n\n");
     }
 
     let (status_line, filename) =
@@ -160,8 +161,12 @@ pub fn handle_get_request_new(request: &String, conn: &Connection) -> String {
         length = file_content.len();
     }
     println!("Got file contents...");
-    response =
-        format!("{status_line}\n{content_type}\r\nContent-Length: {length}\r\n\r\n{contents}");
+    response = format!("{status_line}\r\nContent-Length: {length}\r\n\r\n{contents}");
+    if (content_type != "") {
+        response =
+            format!("{status_line}\n{content_type}\r\nContent-Length: {length}\r\n\r\n{contents}");
+    }
+
     if image_request {
         response.push_str(&resource);
     }
