@@ -29,18 +29,7 @@ async function fetchProducts_as_json_forCart() {
 }
 
 
-async function fetchProductsForCart() {
-    try {
-        const response = await fetch('/products.json'); // change to "api/v1/products"
-        const allProducts = await response.json();
-        
-        return allProducts;
-
-    } catch (error) {
-      console.error('Error fetching products for cart:', error);
-      return [];
-    }
-}  
+ 
 
 function saveCartToLocalStorage() {
     localStorage.setItem('cart', JSON.stringify(cart));
@@ -84,7 +73,7 @@ function renderCart(allProducts) {
 
     // Loop through each item in the cart and render it
     cart.forEach(cartItem => {
-        const product = allProducts.data.find(p => p.id === cartItem.id.id);
+        const product = allProducts.data.find(p => p.id === cartItem.id);
         if(product){ 
             const row = document.createElement('tr');
             row.innerHTML = `
@@ -100,7 +89,13 @@ function renderCart(allProducts) {
             //Eventlistener for input quantity
             const quantityInput = row.querySelector('input[name="quantity"]');
             quantityInput.addEventListener('input', function () {
-                updateCartQuantity(product.id, parseInt(this.value, 10));
+                if(parseInt(this.value, 10) < product.amount){ 
+                    updateCartQuantity(product.id, parseInt(this.value, 10));
+                }
+                else{
+                    updateCartQuantity(product.id, product.amount);
+                    alert("Not enought in stock");
+                }
             });
             totalAmount += cartItem.quantity * product.price;
         }
@@ -173,6 +168,7 @@ function updateCartQuantity(productId, newQuantity) {
     const cartItem = cart.find(item => item.id === productId);
     if (cartItem) {
         cartItem.quantity = newQuantity;
+        if(cartItem.quantity == 0){removeFromCart(cartItem.id)}
         updateLocalStorage();
         init();
     }

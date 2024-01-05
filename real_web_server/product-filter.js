@@ -244,6 +244,7 @@ function renderProducts_temp(product, targetContainerId) {
 */
 //temp init
 async function init() {
+
     const products = await fetchProducts_as_json();
     console.log("Before console Product");
     console.log(products);
@@ -312,14 +313,20 @@ function addToCart(amount, id) {
         alert("Product is out of stock");
     }
     else{ 
-        const existingItemIndex = cart.findIndex(item => item.id === product.id);
+        const existingItemIndex = cart.findIndex(item => item.id === id);
 
         if (existingItemIndex !== -1) {
         // If the product is already in the cart, increase the quantity
-        cart[existingItemIndex].quantity++;
+            if(cart[existingItemIndex].quantity < amount){
+                cart[existingItemIndex].quantity++;
+            }
+            else{ 
+                alert("No more in stock");
+            }
+        
         } else {
         // If the product is not in the cart, add it with quantity 1
-        cart.push({id, quantity: 1 });
+            cart.push({id, quantity: 1});
         }
         saveCartToLocalStorage();
         console.log("Updated cart:", cart);
