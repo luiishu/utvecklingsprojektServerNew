@@ -13,7 +13,6 @@ impl RequestLine {
         let method = RequestLine::get_request_method(&request_line);
         let uri = RequestLine::get_request_uri(&request_line);
         let uri_file_type = RequestLine::get_request_uri_file_type(&uri);
-        println!("\n\nFILETYPE: {}\n\n", uri_file_type);    
         RequestLine {request_line, method, uri, uri_file_type}
     }
 
