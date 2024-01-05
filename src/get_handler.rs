@@ -134,7 +134,7 @@ pub fn handle_get_request_new(request: &String, conn: &Connection) -> String {
         contents = data;
 
         length = contents.len();
-        let data_response = format!("{status_line}\r\nContent-Length: {length}\r\n{content_type}\r\n\r\n{contents}");
+        let data_response = format!("{status_line}\r\nContent-Length: {length}\r\n\r\n{contents}");
         println!("Data respnse: \n{}", data_response);
         return data_response;
     }
