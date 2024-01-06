@@ -94,6 +94,9 @@ pub fn handle_fetch_request(request: &String, conn: &Connection) -> String {
 
         let mut json_string = parse_query_to_json(conn, &query);
         //json_string = json_string.replace("\"rows\":", "\"data\":");
+        if location == "real_web_server" {
+            json_string = json_string.replace("\"rows\":", "\"data\":");
+        }
         println!("JSON string:\n{}", json_string);
         data = json_string;   
     }

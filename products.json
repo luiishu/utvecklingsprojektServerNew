@@ -1,0 +1,136 @@
+{
+    "data": [
+      {
+        "id": 1,
+        "productName": "Cute Cat",
+        "color": "Yellow",
+        "category": "Hoodie",
+        "brand": "Grupp4",
+        "review": 1,
+        "price": "199",
+        "image": "/img/clothes/hoodie/hoodie-yellow-front.png",
+        "hoverImage": "/img/clothes/hoodie/hoodie-yellow-back.png"
+      },
+      {
+        "id": 2,
+        "productName": "Cute Cat",
+        "color": "Blue",
+        "brand": "Grupp4",
+        "review": 2,
+        "category": "Hoodie",
+        "price": "299",
+        "image": "/img/clothes/hoodie/hoodie-blue-front.png",
+        "hoverImage": "/img/clothes/hoodie/hoodie-blue-back.png"
+      },
+      {
+        "id": 3,
+        "productName": "Cute Cat",
+        "color": "Red",
+        "category": "Hoodie",
+        "brand": "Grupp4",
+        "review": 3,
+        "price": "159",
+        "image": "/img/clothes/hoodie/hoodie-red-front.png",
+        "hoverImage": "/img/clothes/hoodie/hoodie-red-back.png"
+      },
+      {
+        "id": 4,
+        "productName": "Cute Cat",
+        "color": "Green",
+        "brand": "Grupp4",
+        "review": 4,
+        "category": "Hoodie",
+        "price": "399",
+        "image": "/img/clothes/hoodie/hoodie-green-front.png",
+        "hoverImage": "/img/clothes/hoodie/hoodie-green-back.png"
+      },
+      {
+        "id": 5,
+        "productName": "Cute Cat",
+        "color": "Green",
+        "brand": "Grupp4",
+        "review": 5,
+        "category": "T-shirt",
+        "price": "599",
+        "image": "/img/clothes/tshirt/tshirt-green-front.png",
+        "hoverImage": "/img/clothes/tshirt/tshirt-green-back.png"
+      },
+      {
+        "id": 6,
+        "productName": "Cute Cat",
+        "color": "Blue",
+        "category": "T-shirt",
+        "brand": "Grupp4",
+        "review": 3,
+        "price": "699",
+        "image": "/img/clothes/tshirt/tshirt-blue-front.png",
+        "hoverImage": "/img/clothes/tshirt/tshirt-blue-back.png"
+      },
+      {
+        "id": 7,
+        "productName": "Cute Cat",
+        "color": "Yellow",
+        "brand": "Grupp4",
+        "review": 2,
+        "category": "T-shirt",
+        "price": "799",
+        "image": "/img/clothes/tshirt/tshirt-yellow-front.png",
+        "hoverImage": "/img/clothes/tshirt/tshirt-yellow-back.png"
+      },
+      {
+        "id": 8,
+        "productName": "Cute Cat",
+        "color": "Red",
+        "category": "T-shirt",
+        "brand": "Grupp4",
+        "review": 1,
+        "price": "899",
+        "image": "/img/clothes/tshirt/tshirt-red-front.png",
+        "hoverImage": "/img/clothes/tshirt/tshirt-red-back.png"
+      },
+      {
+        "id": 9,
+        "productName": "Cute Cat",
+        "color": "Yellow",
+        "category": "Pants",
+        "brand": "Grupp4",
+        "review": 1,
+        "price": "799",
+        "image": "/img/clothes/pants/pants-yellow-front.png",
+        "hoverImage": "/img/clothes/pants/pants-yellow-back.png"
+      },
+      {
+        "id": 10,
+        "productName": "Cute Cat",
+        "color": "Red",
+        "category": "Pants",
+        "brand": "Grupp4",
+        "review": 5,
+        "price": "899",
+        "image": "/img/clothes/pants/pants-red-front.png",
+        "hoverImage": "/img/clothes/pants/pants-red-back.png"
+      },
+      {
+        "id": 11,
+        "productName": "Cute Cat",
+        "color": "Blue",
+        "category": "Pants",
+        "brand": "Grupp4",
+        "review": 3,
+        "price": "599",
+        "image": "/img/clothes/pants/pants-blue-front.png",
+        "hoverImage": "/img/clothes/pants/pants-blue-back.png"
+      },
+      {
+        "id": 12,
+        "productName": "Cute Cat",
+        "color": "Green",
+        "category": "Pants",
+        "brand": "Grupp4",
+        "review": 4,
+        "price": "699",
+        "image": "/img/clothes/pants/pants-green-front.png",
+        "hoverImage": "/img/clothes/pants/pants-green-back.png"
+      }
+    ]
+  } 

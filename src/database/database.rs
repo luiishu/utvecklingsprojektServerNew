@@ -124,24 +124,54 @@ pub fn insert_test_data(conn: &Connection) -> Result<()> {
         INSERT INTO product_category (name)
         VALUES
         (\"Hoodie\"),
+        (\"T-shirt\"),
+        (\"Pants\"),
         (\"Jeans\");
 
-        INSERT INTO product_image (file_name, product_id)
-        VALUES
-        (\"/img/clothes/hoodie-yellow.png\", 420);
+        --INSERT INTO product_image (file_name, file_name_hover, product_id)
+        --VALUES
+        --(\"/img/clothes/hoodie-yellow.png\", 420);
+        --(\"/img/clothes/hoodie/hoodie-yellow-front.png\", \"/img/clothes/hoodie/hoodie-yellow-back.png\", 10),
+        --(\"/img/clothes/hoodie/hoodie-blue-front.png\", \"/img/clothes/hoodie/hoodie-blue-back.png\", 11),
+        --(\"/img/clothes/hoodie/hoodie-red-front.png\", \"/img/clothes/hoodie/hoodie-red-back.png\", 12),
+        --(\"/img/clothes/hoodie/hoodie-green-front.png\", \"/img/clothes/hoodie/hoodie-green-back.png\", 13),
+        --(\"/img/clothes/tshirt/tshirt-green-front.png\", \"/img/clothes/tshirt/tshirt-green-back.png\", 14),
+        --(\"/img/clothes/tshirt/tshirt-blue-front.png\", \"/img/clothes/tshirt/tshirt-blue-back.png\", 15),
+        --(\"/img/clothes/tshirt/tshirt-yellow-front.png\", \"/img/clothes/tshirt/tshirt-yellow-back.png\", 16),
+        --(\"/img/clothes/tshirt/tshirt-red-front.png\", \"/img/clothes/tshirt/tshirt-red-back.png\", 17),
+        --(\"/img/clothes/pants/pants-yellow-front.png\", \"/img/clothes/pants/pants-yellow-back.png\", 18),
+        --(\"/img/clothes/pants/pants-red-front.png\", \"/img/clothes/pants/pants-red-back.png\", 19),
+        --(\"/img/clothes/pants/pants-blue-front.png\", \"/img/clothes/pants/pants-blue-back.png\", 20),
+        --(\"/img/clothes/pants/pants-green-front.png\", \"/img/clothes/pants/pants-green-back.png\", 21);
+        --(\"/img/.png\", \"/img/.png\", 20);
            
-        INSERT INTO product (product_type_id, product_category_id, product_brand_id, name, product_rating, price, amount, product_image_id, description)
-        VALUES
-           (1, 1, 1, \"Red Dress\", 0, 6, 9, 1, \"A red dress.\"),
-           (1, 1, 1, \"Red apple\", 0, 6, 21, 1, \"A red apple.\"),
-           (2, 1, 1, \"Yellow Shoe\", 0, 6, 4, 1, \"A yellow shoe.\"),
-           (2, 1, 1, \"Yellow Stone\", 0, 6, 1, 1, \"A yellow stone. Must be important.\"),
-           (2, 1, 1, \"Bible\", 0, 6, 1, 1, \"A holy book.\"),
-           (3, 1, 1, \"Green apple\", 0, 6, 21, 1, \"A green apple.\"),
-           (4, 1, 1, \"Blue Man\", 0, 6, 4, 1, \"A blue man (what the-).\"),
-           (4, 1, 1, \"Blue Bikini\", 0, 6, 8, 1, \"A blue bikini.\"),
-           (3, 1, 1, \"Pink Pants\", 0, 6, 0, 1, \"A pair of pink pants.\");
-        
+        --INSERT INTO product (product_type_id, product_category_id, product_brand_id, name, product_rating, price, amount, product_image_id, description)
+        --VALUES
+           --(1, 1, 1, \"Red Dress\", 0, 6, 9, 1, \"A red dress.\"),
+           --(1, 1, 1, \"Red apple\", 0, 6, 21, 1, \"A red apple.\"),
+           --(2, 1, 1, \"Yellow Shoe\", 0, 6, 4, 1, \"A yellow shoe.\"),
+           --(2, 1, 1, \"Yellow Stone\", 0, 6, 1, 1, \"A yellow stone. Must be important.\"),
+           --(2, 1, 1, \"Bible\", 0, 6, 1, 1, \"A holy book.\"),
+           --(3, 1, 1, \"Green apple\", 0, 6, 21, 1, \"A green apple.\"),
+           --(4, 1, 1, \"Blue Man\", 0, 6, 4, 1, \"A blue man (what the-).\"),
+           --(4, 1, 1, \"Blue Bikini\", 0, 6, 8, 1, \"A blue bikini.\"),
+           --(3, 1, 1, \"Pink Pants\", 0, 6, 0, 1, \"A pair of pink pants.\");
+
+        --INSERT INTO product (name, product_type_id, product_category_id, product_brand_id, product_rating, price, amount, product_image_id)        
+        --VALUES
+            --(\"Cute Cat\", 2, 1, 1, 0, 199, 1, 1),
+            --(\"Cute Cat\", 4, 1, 1, 0, 199, 1, 2),
+            --(\"Cute Cat\", 2, 1, 1, 0, 199, 1, 3),
+            --(\"Cute Cat\", 2, 1, 1, 0, 199, 1, 4),
+            --(\"Cute Cat\", 2, 1, 1, 0, 199, 1, 5),
+            --(\"Cute Cat\", 2, 1, 1, 0, 199, 1, 6),
+            --(\"Cute Cat\", 2, 1, 1, 0, 199, 1, 7),
+            --(\"Cute Cat\", 2, 1, 1, 0, 199, 1, 8),
+            --(\"Cute Cat\", 2, 1, 1, 0, 199, 1, 9),
+            --(\"Cute Cat\", 2, 1, 1, 0, 199, 1, 10),
+            --(\"Cute Cat\", 2, 1, 1, 0, 199, 1, 11),
+            --(\"Cute Cat\", 2, 1, 1, 0, 199, 1, 12);
+
            CREATE VIEW IF NOT EXISTS product_page
            AS SELECT 
            product.id AS productId,
@@ -160,15 +190,33 @@ pub fn insert_test_data(conn: &Connection) -> Result<()> {
            INNER JOIN product_brand ON product_brand.id = product.product_brand_id
            INNER JOIN product_image ON product_image.id = product.product_image_id;
 
+           CREATE VIEW IF NOT EXISTS detailed_product
+           AS SELECT 
+           product.id AS id,
+           product.name AS productName,
+           product_type.type AS color,
+           product_category.name AS category,
+           product_brand.name AS brand,
+           product.product_rating AS review,
+           product.price AS price,
+           product.amount AS amount,
+           product_image.file_name AS image,
+           product_image.file_name_hover AS hoverImage
+
+           FROM product
+           INNER JOIN product_type ON product_type.id = product.product_type_id
+           INNER JOIN product_category ON product_category.id = product.product_category_id
+           INNER JOIN product_brand ON product_brand.id = product.product_brand_id
+           INNER JOIN product_image ON product_image.id = product.product_image_id;   
 
         
-        insert into [order] (user_id, status)
-        VALUES (1, \"New\"), (1, \"READY\"), (2, \"READY\"), (2, \"New\"), (1, \"New\"), 
-               (2, \"New\"), (1, \"READY\"), (3, \"New\"), (1, \"READY\"), (1, \"New\");
+        --INSERT into [order] (user_id, status)
+        --VALUES (1, \"New\"), (1, \"READY\"), (2, \"READY\"), (2, \"New\"), (1, \"New\"), 
+               --(2, \"New\"), (1, \"READY\"), (3, \"New\"), (1, \"READY\"), (1, \"New\");
         
-        insert into order_item (order_id, product_id, amount)
-        VALUES (1, 1, 1), (2, 1, 2), (2, 2, 3), (2, 3, 3), (2, 4, 3), (2, 6, 7), (2, 7, 1), (2, 8, 1),
-               (3, 3, 1), (4, 1, 1), (5, 7, 1), (6, 3, 1), (7, 8, 2), (8, 3, 1), (9, 7, 3), (10, 3, 1);        
+        --insert into order_item (order_id, product_id, amount)
+        --VALUES (1, 1, 1), (2, 1, 2), (2, 2, 3), (2, 3, 3), (2, 4, 3), (2, 6, 7), (2, 7, 1), (2, 8, 1),
+               --(3, 3, 1), (4, 1, 1), (5, 7, 1), (6, 3, 1), (7, 8, 2), (8, 3, 1), (9, 7, 3), (10, 3, 1);        
     ")?;
 
     Ok(())

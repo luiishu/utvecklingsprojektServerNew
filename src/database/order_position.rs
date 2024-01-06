@@ -65,7 +65,7 @@ impl OrderPosition {
                     vec!["position_x", x_str],
                     vec!["position_y", y_str],
                     vec!["empty", "false"],
-                    vec!["product_type_id", "1"]
+                    vec!["product_type_id", "0"]
                     ];
                 
                 OrderPosition::insert(conn, data)?;

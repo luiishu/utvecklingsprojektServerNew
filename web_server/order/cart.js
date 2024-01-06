@@ -84,8 +84,12 @@ function add_order_item(product_id, amount, cost) {
 async function on_checkout() {
     let array_cart = share.get_cart_total();
     let i = 0;
+    let items = 0;
     array_cart.forEach((element) => {
-        add_order_item(i, element, share.price_array[i]);
+        if (element > 0) {
+            add_order_item(i, element, share.price_array[i]);
+            items += 1;
+        }
         i += 1;
     })
     // add_order_item(2, 1, 2, 0);
@@ -97,7 +101,7 @@ async function on_checkout() {
     const order_data = {
         order: {
             user_id: 1, // TODO
-            product_amount: order.length,
+            product_amount: items,
             total_cost: get_total_price(),
             order_date: get_year_month_day(),
             order_timestamp: get_year_month_day_hour_minute_second(),
@@ -108,6 +112,10 @@ async function on_checkout() {
     };
     console.log(JSON.stringify(order_data));
     await console.log(server.send_order(order_data));
+
+    share.reset_cart_total();
+    document.getElementById('append_id').innerHTML = "";
+
 }
 function get_total_price() {
     let i = 0;

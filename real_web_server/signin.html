@@ -12,12 +12,13 @@
         <a href="index.html"><img src="/img/banner/logo.png" class="logo" alt=""></a>
         <div>
             <ul id="navbar">
-                <li><a class="active" href="index.html">Home</a></li>
+                <li><a href="index.html">Home</a></li>
                 <li><a href="products.html">Products</a></li>
                 <li><a href="blog.html">Blog</a></li>
                 <li i><a href="about.html">About</a></li>
                 <li><a href="contact.html">Contact Us</a></li>
-                <li id="lg-bag"><a  href="account.html"><i class="fa fa-user" aria-hidden="true"></i></a>
+                <li id="lg-bag"><a  href="signin.html"><i class="fa fa-user" aria-hidden="true" style="color: #FC4A1A"></i></a>
+                    <!-- 
                     <div class="sub-menu-1">
                         <ul>
                             <li><a href="signin.html" class="a-button" class=""><span>Sign In</span></a></li>
@@ -26,15 +27,18 @@
                             <li><a href="#">Orders</a></li>
                         </ul>
                     </div>
+                    -->
                 </li>
-                <li id="lg-bag"><a href="liked.html"><i class="fa fa-heart" aria-hidden="true"></i></a></li>
+                <!-- <li id="lg-bag"><a href="liked.html"><i class="fa fa-heart" aria-hidden="true"></i></a></li> -->
                 <li id="lg-bag"><a href="cart.html"><i class="fa-solid fa-bag-shopping"></i></a>
+                    <!-- 
                     <div class="sub-menu-1">
                         <ul>
                             <li><a>Your Cart</a></li>
                             <li><a href="#" class="a-button">View Cart</a></li>
                         </ul>
                     </div>
+                    -->
                 </li>
                 <a href="#" id="close"><i class="far fa-x"></i></a>
             </ul>
@@ -48,29 +52,49 @@
 
 
     <section id="login-form">
-        <form>
-            <h3>Sign In</h3>
-            <div class="container inputbox">
-                <span>E-mail</span>
-                <input type="text" required placeholder="Enter E-mail">
+        <div id="login-form-container">
+            <form action="http://localhost:7878/web_server/real_web_server/signin.html" method="post" id="login_form">
+                <h3>Sign In</h3>
+                <div class="container inputbox">
+                    <span>E-mail</span>
+                    <input type="text" id="username_login" class="form-control" required placeholder="Enter E-mail">
 
-                <span>Password</span>
-                <input type="password" required placeholder="Enter Password">
+                    <span>Password</span>
+                    <input type="password" id="password_login" class="form-control" required placeholder="Enter Password">
 
-                <button type="submit">Login</button>
+                    <button type="submit">Login</button>
 
-                <label>
-                    <input type="checkbox" checked="checked" name="remember"> Remember Me
-                </label>
-                <a href="index.html">Forgot Password</a>
-            </div>
+                    <label>
+                        <input type="checkbox" checked="checked" name="remember"> Remember Me
+                    </label>
+                    <a href="index.html">Forgot Password</a>
+                </div>
+                
+            </form>
             
-        </form>
-        
-        <div class="container registerbox">
-            <h4>Im new</h4>
-            <button type="button"><a href="#">Register</a></button>
+            <div class="container registerbox">
+                <h4>Im new</h4>
+                <button type="button" id="registerButton">Register</button>
+            </div>
         </div>
+        <div id="register-form-container" style="display: none;">
+            <form action="" id="register_form">
+                <h3>Register</h3>
+                <div class="container inputbox">
+                    <span>E-mail</span>
+                    <input type="text" id="username_register" class="form-control" name="username" required placeholder="Enter E-mail">
+
+                    <span>Password</span>
+                    <input type="password" id="password_register" class="form-control" name="password" required placeholder="Enter Password">
+
+                    <button type="submit">Register</button>
+                </div>
+            </form>  
+            <div class="container registerbox">
+                <h4>Im Alreay a User</h4>
+                <button type="button" id="loginButton"><a href="#" style="text-decoration: none; color: black ;">Login</a></button>
+            </div>
+        </div>  
     </section>
 
     <section id="newletter" class="section-p1 section-m1">
@@ -132,5 +156,7 @@
             <p>©2023, Grupp4 etc - Ecommerce</p>
         </div>
     </footer>
+
+    <script src="signin.js"></script>
 </body>
 </html>

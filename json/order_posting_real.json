@@ -1,0 +1,16 @@
+{
+    "order": { 
+        "user_id": 1, 
+        "product_amount": 8, 
+        "total_cost": 420, 
+        "order_date": "2023-12-19", 
+        "order_timestamp": "2023-12-19 13:37:00", 
+        "status": "READY"
+    },
+    
+    "order-items": [
+    {"product_id": 1, "amount": 2, "cost": 0},
+    {"product_id": 2, "amount": 3, "cost": 0},
+    {"product_id": 3, "amount": 3, "cost": 0}
+    ]
+}

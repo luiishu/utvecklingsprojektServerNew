@@ -24,7 +24,9 @@ pub fn init_database(in_memory: bool) -> Connection {
 
     // Insert test data
     super::database::insert_test_data(&conn).unwrap();
-    super::order_position::OrderPosition::insert_initial_positions(&conn).unwrap();
+    super::order_position::OrderPosition::insert_initial_positions(&conn).unwrap();    
+    super::product::Product::insert_product_from_json(&conn, "simple_products.json");
+    super::product::Product::insert_product_from_json(&conn, "products.json");
 
     // Print data (testing)    
     //super::test::database_testing::hello_from_database_testing();
