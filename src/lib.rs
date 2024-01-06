@@ -52,7 +52,7 @@ pub fn init_server_on_localhost() -> Result<TcpListener, &'static str> {
 }
 
 pub fn init_server_on_lan() -> Result<TcpListener, &'static str> {
-    let ip_v4 = IpAddr::V4(Ipv4Addr::new(192, 168, 88, 221)); // 192.168.88.221
+    let ip_v4 = IpAddr::V4(Ipv4Addr::new(192, 168, 0, 109)); // 192.168.88.221
     let port = RUST_PORT;
     let socket_address = SocketAddr::new(ip_v4, port);
 

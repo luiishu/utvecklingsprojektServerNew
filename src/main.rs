@@ -43,11 +43,11 @@ mod response;
 //mod database/hello_from_database;
 //static mut counter: i32 = 0;
 
-const LAN: bool = false;
+const LAN: bool = true;
 const PRINTING: bool = true;
 
 const LOCALHOST_IP_V4: &str = "127.0.0.1";
-const SERVER_IP_V4: &str = "192.168.88.221"; //
+const SERVER_IP_V4: &str = "192.168.0.109"; //
 
 const RUST_PORT: u16 = 7878;
 
