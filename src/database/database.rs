@@ -210,13 +210,13 @@ pub fn insert_test_data(conn: &Connection) -> Result<()> {
            INNER JOIN product_image ON product_image.id = product.product_image_id;   
 
         
-        insert into [order] (user_id, status)
-        VALUES (1, \"New\"), (1, \"READY\"), (2, \"READY\"), (2, \"New\"), (1, \"New\"), 
-               (2, \"New\"), (1, \"READY\"), (3, \"New\"), (1, \"READY\"), (1, \"New\");
+        --INSERT into [order] (user_id, status)
+        --VALUES (1, \"New\"), (1, \"READY\"), (2, \"READY\"), (2, \"New\"), (1, \"New\"), 
+               --(2, \"New\"), (1, \"READY\"), (3, \"New\"), (1, \"READY\"), (1, \"New\");
         
-        insert into order_item (order_id, product_id, amount)
-        VALUES (1, 1, 1), (2, 1, 2), (2, 2, 3), (2, 3, 3), (2, 4, 3), (2, 6, 7), (2, 7, 1), (2, 8, 1),
-               (3, 3, 1), (4, 1, 1), (5, 7, 1), (6, 3, 1), (7, 8, 2), (8, 3, 1), (9, 7, 3), (10, 3, 1);        
+        --insert into order_item (order_id, product_id, amount)
+        --VALUES (1, 1, 1), (2, 1, 2), (2, 2, 3), (2, 3, 3), (2, 4, 3), (2, 6, 7), (2, 7, 1), (2, 8, 1),
+               --(3, 3, 1), (4, 1, 1), (5, 7, 1), (6, 3, 1), (7, 8, 2), (8, 3, 1), (9, 7, 3), (10, 3, 1);        
     ")?;
 
     Ok(())

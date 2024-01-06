@@ -72,7 +72,9 @@ impl Order {
         let data = get_query_iterator(conn, query);        
         //println!("{:?}", data);
         if data.len() == 0 {
-            return Err(String::from("Error: there is no new order."));
+            //return Err(String::from("Error: there is no new order."));
+            println!("Error: there is no new order.");
+            return Ok(1)
         }
         let id = match data[0][0].parse::<i64>() {
             Ok(id) => id,
