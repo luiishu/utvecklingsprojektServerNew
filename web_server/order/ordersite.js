@@ -82,29 +82,30 @@ async function sync_lager() {
     let data = await server.get_product_pages();
     let lager = [0, 0, 0, 0];
     for (let i = 0; i < 4; i++) {
+        lager[i] = data.rows[i].amount;
     }
-    data.rows.forEach(element => {
-        switch (element.color) {
+    // data.rows.forEach(element => {
+    //     switch (element.color) {
 
-            case "Red block":
-                lager[0] += 1;
-                break;
+    //         case "Red block":
+    //             lager[0] += 1;
+    //             break;
 
-            case "Green block":
-                lager[1] += 1;
-                break;
+    //         case "Green block":
+    //             lager[1] += 1;
+    //             break;
 
-            case "Blue block":
-                lager[2] += 1;
-                break;
+    //         case "Blue block":
+    //             lager[2] += 1;
+    //             break;
 
-            case "Yellow block":
-                lager[3] += 1;
-                break;
+    //         case "Yellow block":
+    //             lager[3] += 1;
+    //             break;
 
-            default:
-        }
-    });
+    //         default:
+    //     }
+    // });
     for (let i = 0; i < lager_array.length; i++) {
         lager_array[i] = lager[i];
         if (storage_array[i]) {
