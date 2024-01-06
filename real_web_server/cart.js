@@ -70,3 +70,4 @@ function renderCart(allProducts) {
     cartBody.innerHTML = '';
 
     // Loop through each
+}

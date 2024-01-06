@@ -81,6 +81,8 @@ async function sync_lager() {
 
     let data = await server.get_product_pages();
     let lager = [0, 0, 0, 0];
+    for (let i = 0; i < 4; i++) {
+    }
     data.rows.forEach(element => {
         switch (element.color) {
 
