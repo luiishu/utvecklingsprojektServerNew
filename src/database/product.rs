@@ -344,8 +344,8 @@ impl Product {
         let length = rows.len();
         match length {
             0 => {
-                println!("Amount is zero stop!!!!!!!!!!!!!!!!!!!!!!!!");
-                return 0
+                println!("Product with id {id} does not exist!");
+                return -1
             },
             1 => {
                 let amount = rows[0][0].parse::<i64>();

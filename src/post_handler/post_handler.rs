@@ -87,7 +87,13 @@ impl PostHandler {
             println!("{:?}", order_item);
         }
 
-        let newest_order_id = Order::get_newest_order_id(conn).unwrap();
+        let newest_order_id = match Order::get_newest_order_id(conn) {//ska fixa
+            Ok(id) => id,
+            Err(e) => {
+                eprintln!("{}", e.as_str());
+                return HttpResponseCode::INTERNAL_SERVER_ERROR;
+            },
+        };
         println!("Newest order id: {newest_order_id}");
 
         // 2. Validate amounts

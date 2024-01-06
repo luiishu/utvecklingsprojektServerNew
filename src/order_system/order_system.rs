@@ -216,7 +216,7 @@ impl OrderSystem {
                 crate::database::table::print_rows_from_query(conn, &format!("select * from [order] WHERE id = {id};"));
 
                 // 3.3 Update product amounts
-                Self::update_product_amounts(&id, conn, true);
+                //Self::update_product_amounts(&id, conn, true);
 
                 //response = Order::create_order_response_full(conn, id);
                 id
@@ -358,6 +358,7 @@ impl OrderSystem {
         body
     }
 
+    // this should increment amount as well
     pub fn update_order_positions(request: &str, conn: &Connection) {
         let body = &Self::get_report_body(request);
         let values: Value = serde_json::from_str(body).unwrap();
@@ -378,7 +379,10 @@ impl OrderSystem {
             println!("product type id: {}\n", order_position["product_type_id"]);
             
             //OrderPosition::update_product_type_by_id(conn, &order_position_id, &product_type_id); // tralala
-            OrderPosition::update_product_type_by_coordinates(conn, &x, &y, &product_type_id);
+            OrderPosition::update_product_type_by_coordinates(conn, &x, &y, &product_type_id);            
+            crate::database::product::Product::update_product_amount_by_id(conn, product_type_id, 1);
+            println!("Amount incremented for type: {product_type_id}");
+            // increment amount
         }
     }
 
