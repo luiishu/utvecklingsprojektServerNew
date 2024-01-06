@@ -78,6 +78,7 @@ function add_order_item(product_id, amount, cost) {
     console.log("product_id: " + product_id);
     console.log("amount: " + amount);
     console.log("cost: " + cost);
+    product_id += 1;
     order.push({ product_id, amount, cost });
 }
 
@@ -92,11 +93,6 @@ async function on_checkout() {
         }
         i += 1;
     })
-    // add_order_item(2, 1, 2, 0);
-    // add_order_item(2, 1, 2, 0);
-    // add_order_item(2, 1, 2, 0);
-
-    //     {"order_id": 2, "product_id": 3, "amount": 3, "cost": 0}
 
     const order_data = {
         order: {

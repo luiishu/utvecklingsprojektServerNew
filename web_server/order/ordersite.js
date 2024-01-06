@@ -121,37 +121,6 @@ async function sync_lager() {
 
 
 
-async function create_order(user_id, product_amount, order_items) {
-
-    const order_request = "POST /web_server/api/v1/orders HTTP/1.1"
-
-    let total_cost;
-
-    order_items.forEach(
-        item => {
-            total_cost += item.amount * price_array[item.product_id];
-        }
-    )
-
-    const requestBody = {
-        order: {
-            user_id: user_id,
-            product_amount: 0,
-            total_cost: total_cost,
-            order_date: get_year_month_day(),
-            order_timestamp: get_year_month_day_hour_minute_second(),
-            status: 'READY'
-        },
-        'order-items': [
-            order_items
-        ]
-    };
-
-}
-
-
-
-
 
 // POST /web_server/api/v1/orders HTTP/1.1
 
