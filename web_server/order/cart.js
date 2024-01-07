@@ -7,7 +7,7 @@ let checkout_txt;
 let order = [];
 
 document.addEventListener("DOMContentLoaded", async function () {
-
+    await share.init_price();
     checkout = document.getElementById("checkout");
     checkout_btn = document.getElementById("checkoutbtn");
     checkout_txt = document.getElementById("checkouttxt");
