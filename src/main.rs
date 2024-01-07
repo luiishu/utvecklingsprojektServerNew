@@ -43,7 +43,7 @@ mod response;
 //mod database/hello_from_database;
 //static mut counter: i32 = 0;
 
-const LAN: bool = true;
+const LAN: bool = false;
 const PRINTING: bool = true;
 
 const LOCALHOST_IP_V4: &str = "127.0.0.1";
