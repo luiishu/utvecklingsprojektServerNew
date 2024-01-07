@@ -34,8 +34,9 @@
 
         api = "api/v1/"
         let username = getCookie('username');
+        let userId = getCookie('userId');
         let password = "";
-        alert('username from cookie: ' + username);
+        alert('username from cookie: ' + username + ' with userId from cookie: ' + userId);
 
         document.getElementById("p1").innerHTML = "Welcome " + username + "!";
 
