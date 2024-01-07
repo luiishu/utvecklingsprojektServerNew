@@ -16,12 +16,12 @@ let cart_btn;
 const sync_time_in_millie = 10000;
 
 
-
-
+console.log("HEY??");
+share.update_price_array();
 
 
 document.addEventListener("DOMContentLoaded", async function () { // storage_txt_blue
-
+    console.log("HEY??");
 
     for (let i = 0; i < share.color_array.length; i++) {
 

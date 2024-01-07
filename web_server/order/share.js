@@ -1,3 +1,5 @@
+import * as server from "../server.js"
+export let price_array = [];
 export function set_cart_items(cart_items) {
 
     localStorage.setItem('cartitems', JSON.stringify(cart_items));
@@ -16,4 +18,13 @@ export function reset_cart_total() {
 }
 
 export const color_array = ["red", "green", "blue", "yellow"];
-export const price_array = [10, 20, 30, 40];
+
+export async function update_price_array() {
+    let data = await server.get_product_pages();
+    for (let i = 0; i < 4; i++) {
+        console.log(data.rows[i].price);
+        price_array[i] = data.rows[i].price;
+    }
+
+    console.log("hello");
+}
