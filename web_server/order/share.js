@@ -11,9 +11,11 @@ export function get_cart_total() {
     return c;
 }
 
+
 export function reset_cart_total() {
 
     localStorage.setItem('cartitems', JSON.stringify([0, 0, 0, 0]));
+    
 }
 
 export const color_array = ["red", "green", "blue", "yellow"];

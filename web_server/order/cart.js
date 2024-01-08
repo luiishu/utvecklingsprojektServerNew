@@ -7,7 +7,7 @@ let checkout_txt;
 let order = [];
 
 document.addEventListener("DOMContentLoaded", async function () {
-    await share.init_price();
+    await share.update_price_array();
     checkout = document.getElementById("checkout");
     checkout_btn = document.getElementById("checkoutbtn");
     checkout_txt = document.getElementById("checkouttxt");
@@ -34,7 +34,30 @@ document.addEventListener("DOMContentLoaded", async function () {
         })
 
     }
+
 });
+
+function update_total_text() {
+    let price = 0;
+    let i = 0;
+    let array_cart = share.get_cart_total();
+    array_cart.forEach((element) => {
+        price += share.price_array[i] * parseInt(element);
+        i += 1;
+    })
+    if (price == 0) {
+        checkout.style.visibility = "hidden";
+    }
+    else {
+        checkout.style.visibility = "visible";
+        checkout_txt.innerHTML = "Total: " + price + " sek";
+        checkout_btn.visibility = "visible"
+        checkout_btn.addEventListener('click', async function () {
+            await on_checkout();
+        })
+
+    }
+}
 
 function create_cart_item(productName, price, quantity, itemId) {
     const cartItem = document.createElement('div');
@@ -60,6 +83,7 @@ function create_cart_item(productName, price, quantity, itemId) {
         let array = share.get_cart_total();
         array[itemId] = 0;
         share.set_cart_items(array);
+        update_total_text();
     };
 
     cartItemDetails.appendChild(heading);
@@ -96,7 +120,7 @@ async function on_checkout() {
 
     const order_data = {
         order: {
-            user_id: 1, // TODO
+            user_id: server.get_user_id(), // TODO
             product_amount: items,
             total_cost: get_total_price(),
             order_date: get_year_month_day(),
@@ -107,9 +131,9 @@ async function on_checkout() {
         'order-items': order,
     };
     console.log(JSON.stringify(order_data));
-    await console.log(server.send_order(order_data));
-
+    await server.send_order(order_data);
     share.reset_cart_total();
+    update_total_text();
     document.getElementById('append_id').innerHTML = "";
 
 }

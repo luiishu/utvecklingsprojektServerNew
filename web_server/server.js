@@ -25,7 +25,7 @@ export async function send_order(body) {
         return await data;
     } catch (error) {
         // Handle errors here
-        console.log("does it come here insted? " + JSON.stringify(error));
+        console.log("does it come here instead? " + JSON.stringify(error));
         return error;
     }
 }
@@ -43,4 +43,8 @@ async function fetch_data(uri) {
         console.error('Error fetching data:', error);
         throw error; // You might want to throw the error for the caller to handle or log it as needed
     }
+}
+
+export function get_user_id() {
+    return Number(localStorage.getItem("user_id"));
 }
