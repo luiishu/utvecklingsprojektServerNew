@@ -12,17 +12,25 @@ async function init_checkout(){
     orderButton.addEventListener("click", createOrder);
 }
 
+
+function add_order_item(product_id, amount, cost) {
+    console.log("product_id: " + product_id);
+    console.log("amount: " + amount);
+    console.log("cost: " + cost);
+    product_id += 1;
+    order.push({ product_id, amount, cost });
+}
+
 init_checkout();
 async function createOrder() {
     console.log("Create Oreder function is running");
-    const contact_details = cart.getContactDetails();
     let array_cart = share.get_cart_total();
     console.log("Checkout array_cart: ", array_cart);
     let i = 0;
     let items = 0;
     array_cart.forEach(element => {    
         if (element) {
-            add_order_item(i, element, share.price_array[i]);
+            add_order_item(i, array_cart[i].quantity, share.price_array[i]);
             items += 1;
         }
         i += 1;
@@ -47,7 +55,9 @@ async function createOrder() {
 
         'order-items': order,
     };
+    console.log("Bla bla");
     console.log(JSON.stringify(order_data));
+    console.log("Bla Bla");
     await server.send_order(order_data);
     share.reset_cart_total();
     update_total_text();
