@@ -37,7 +37,7 @@ impl Table for Product {
                 product_rating      INTEGER DEFAULT 0,
                 price               INTEGER NOT NULL,
                 --amount              INTEGER DEFAULT 0,
-                amount              INTEGER DEFAULT 1,
+                amount              INTEGER DEFAULT 0,
                 description         TEXT,
                 
                 FOREIGN KEY(product_type_id) REFERENCES product_type(id),
