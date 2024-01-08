@@ -4,20 +4,20 @@ import * as server from "./server.js"
 let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
 let personalInfo = [];
-/*
-document.addEventListener('DOMContentLoaded', function () {
-    // Load cart from localStorage
-    let cart = JSON.parse(localStorage.getItem('cart')) || [];
-    console.log(cart)
-    // Render the cart on page load
-    //renderCart(cart);
-});
 
-*/
+
 
 let allProduct =[];
 let order = [];
 
+
+document.addEventListener("DOMContentLoaded", async function () {
+    document.getElementById('order-details-container').addEventListener('submit', function (event) {
+        event.preventDefault();
+        storeContactDetails();
+        window.location.href = 'checkout.html';
+    });
+});
 
 async function fetchProducts_as_json_forCart() {
     try {
@@ -381,11 +381,6 @@ function storeContactDetails() {
     window.location.href =''
 }
 
-document.getElementById('order-details-container').addEventListener('submit', function (event) {
-    event.preventDefault();
-    storeContactDetails();
-    window.location.href = 'checkout.html';
-});
 
 
 // Function to retrieve contact details from local storage

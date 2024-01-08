@@ -46,10 +46,27 @@
                     `This form has a username of ${username.value} and password of ${password.value}`
                 );
 
-                post_form(username.value, password.value, 'login', 'users');
-
-                username.value = "";
-                password.value = "";
+                post_form(username.value, password.value, 'login', 'users').then(res => {
+                console.log("Inside then function for post and the response is: " + res.ok);
+                // Check if login was successful
+                if (res.ok) {
+                    window.location.href = `/profile?user=${username.value}`;
+                  return res.json();
+                } else {
+                  throw new Error('Login failed');
+                }
+              })
+              .then(userData => {
+                // Redirect to the profile page with user-specific data
+                window.location.href = `/profile?user=${username.value}`;
+              })
+              .catch(error => {
+                console.error('Error:', error);
+                alert('Login failed. Please try again.');
+              });
+              
+            username.value = "";
+            password.value = "";
             }
         });
 

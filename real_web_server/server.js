@@ -29,3 +29,7 @@ export async function send_order(body) {
         return error;
     }
 }
+
+export function get_user_id() {
+    return Number(localStorage.getItem("user_id"));
+}

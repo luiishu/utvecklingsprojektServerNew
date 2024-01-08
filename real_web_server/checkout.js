@@ -13,7 +13,7 @@ async function init_checkout(){
 }
 
 init_checkout();
-function createOrder() {
+async function createOrder() {
     console.log("Create Oreder function is running");
     const contact_details = cart.getContactDetails();
     let array_cart = share.get_cart_total();
@@ -37,7 +37,7 @@ function createOrder() {
 
     const order_data = {
         order: {
-            user_id: cart.createUserId(contact_details.email, contact_details.phoneNumber), // TODO
+            user_id: server.get_user_id() ,
             product_amount: items,
             total_cost: cart.retrieveTotalCost(),
             order_date: cart.getTodayDate(),
@@ -48,7 +48,8 @@ function createOrder() {
         'order-items': order,
     };
     console.log(JSON.stringify(order_data));
-    console.log(server.send_order(order_data));
-
+    await server.send_order(order_data);
     share.reset_cart_total();
+    update_total_text();
+    document.getElementById('append_id').innerHTML = "";
 }

@@ -138,29 +138,23 @@ function post_form(username, password, request_type, resource) {
         if (!res.ok) {
             throw new Error(`HTTP error! Status: ${res.status}`);
         }
-        console.log(res.headers.getSetCookie());
         console.log(res.headers);
         console.log(res);
         return res;
     }
     ).then(data => {
-        if (data) {
-        console.log(data);
-        //var length = data.rows.length;
-        //console.log("array length: " + length);
-        //const value = `${document.cookie}`;
-        console.log("cookie: " + document.cookie);
-        //console.log(value);
-        //document.cookie = "a_cookie=says_hello";
-        console.log("cookie: " + document.cookie);
-        console.log("From setCookie header: " + data.headers.getSetCookie());
-        return data;
-        }
+      console.log(data);
+      let j = JSON.stringify(document.cookie);
+      console.log("cookie: " + getCookieCustom("userId"));
+
+      console.log(data.headers.getSetCookie());
+      localStorage.setItem("username", username);
+      localStorage.setItem("user_id", getCookieCustom("userId"));
     })
-        .catch((error) => {
-            console.error('Error:', error);
-            console.log("server is down!!")   
-        });
+    .catch((error) => {
+        console.error('Error:', error);
+        console.log("server is down!!")   
+    });
 }
 
   
@@ -200,4 +194,29 @@ function fetch_data(uri) {
         });
   
     });
+
+}
+
+function getCookieCustom(cookieName) {
+  let cookies = document.cookie.split(",").toString().split("; ");
+  if (cookies.length < 2) return "";
+
+  if (cookieName == "userId") {
+      if (cookies[0].includes("userId")) {
+          return cookies[0].split("=")[1]
+      }
+      if (cookies[1].includes("userId")) {
+          return cookies[1].split("=")[1]
+      }
+  }
+  else if (cookieName == "username") {
+      if (cookies[0].includes("username")) {
+          return cookies[0].split("=")[1]
+      }
+      if (cookies[1].includes("username")) {
+          return cookies[1].split("=")[1]
+      }
+  }
+
+  return "";
 }
