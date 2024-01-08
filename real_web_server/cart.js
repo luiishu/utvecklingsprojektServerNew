@@ -1,21 +1,23 @@
-
+import * as share from "./share.js"
+import * as server from "./server.js"
 
 let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
 let personalInfo = [];
-/*
-document.addEventListener('DOMContentLoaded', function () {
-    // Load cart from localStorage
-    let cart = JSON.parse(localStorage.getItem('cart')) || [];
-    console.log(cart)
-    // Render the cart on page load
-    //renderCart(cart);
+
+
+
+let allProduct =[];
+let order = [];
+
+
+document.addEventListener("DOMContentLoaded", async function () {
+    document.getElementById('order-details-container').addEventListener('submit', function (event) {
+        event.preventDefault();
+        storeContactDetails();
+        window.location.href = 'checkout.html';
+    });
 });
-
-*/
-
-let allProducts =[];
-
 
 async function fetchProducts_as_json_forCart() {
     try {
@@ -29,7 +31,10 @@ async function fetchProducts_as_json_forCart() {
 }
 
 
- 
+async function alertMessage(){
+    alert("This function works");
+
+}
 
 function saveCartToLocalStorage() {
     localStorage.setItem('cart', JSON.stringify(cart));
@@ -210,6 +215,7 @@ function clearAllLocalStorage (){
     console.log("Local Storage CLeared");
 }
 
+/*
 async function createOrder() {
     try { 
         const product_order_ids = generateOrderId();
@@ -255,6 +261,57 @@ async function createOrder() {
         console.error('Error creating order:', error);
     }
 
+}
+*/
+
+
+
+
+function createOrder() {
+    console.log("Create Oreder function is running");
+    const contact_details = getContactDetails();
+    let array_cart = share.get_cart_total();
+    console.log("Checkout array_cart: ", array_cart);
+    let i = 0;
+    let items = 0;
+    array_cart.forEach(element => {    
+        if (element) {
+            add_order_item(i, element, share.price_array[i]);
+            items += 1;
+        }
+        i += 1;
+    })
+
+    console.log("Checkout items value: ", items);
+    // add_order_item(2, 1, 2, 0);
+    // add_order_item(2, 1, 2, 0);
+    // add_order_item(2, 1, 2, 0);
+
+    //     {"order_id": 2, "product_id": 3, "amount": 3, "cost": 0}
+
+    const order_data = {
+        order: {
+            user_id: createUserId(contact_details.email, contact_details.phoneNumber), // TODO
+            product_amount: items,
+            total_cost: retrieveTotalCost(),
+            order_date: getTodayDate(),
+            order_timestamp: getTimeStamp(),
+            status: 'READY'
+        },
+
+        'order-items': order,
+    };
+    console.log(JSON.stringify(order_data));
+    console.log(server.send_order(order_data));
+
+    share.reset_cart_total();
+}
+
+function add_order_item(product_id, amount, cost) {
+    console.log("product_id: " + product_id);
+    console.log("amount: " + amount);
+    console.log("cost: " + cost);
+    order.push({ product_id, amount, cost });
 }
 
 function getTimeStamp(){
@@ -324,11 +381,6 @@ function storeContactDetails() {
     window.location.href =''
 }
 
-document.getElementById('order-details-container').addEventListener('submit', function (event) {
-    event.preventDefault();
-    storeContactDetails();
-    window.location.href = 'checkout.html';
-});
 
 
 // Function to retrieve contact details from local storage
