@@ -358,7 +358,7 @@ impl OrderSystem {
         body
     }
 
-    // this should increment amount as well
+    // this should increment amount if request is patch
     pub fn update_order_positions(request: &str, conn: &Connection) {
         let body = &Self::get_report_body(request);
         let values: Value = serde_json::from_str(body).unwrap();
@@ -380,9 +380,17 @@ impl OrderSystem {
             
             //OrderPosition::update_product_type_by_id(conn, &order_position_id, &product_type_id); // tralala
             OrderPosition::update_product_type_by_coordinates(conn, &x, &y, &product_type_id);            
-            crate::database::product::Product::update_product_amount_by_id(conn, product_type_id, 1);
-            println!("Amount incremented for type: {product_type_id}");
-            // increment amount
+
+            let request_line = request.lines().next().unwrap();
+            let request_method = (&request_line).split(" ").next().unwrap();        
+            //println!("Request method received:\n{}\n", request_method);
+
+            if request_method == OrderSystemApi::METHOD_PATCH {                
+                // increment amount
+                println!("RECEVIED A PATCH REQUEST IN UPDATE ORDER POSITIONS!");
+                crate::database::product::Product::update_product_amount_by_id(conn, product_type_id, 1);
+                println!("Amount incremented for type: {product_type_id}");
+            }                        
         }
     }
 

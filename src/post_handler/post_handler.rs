@@ -221,7 +221,7 @@ impl PostHandler {
 
         let response_line = ResponseLine::get_response_line(HttpResponseCode::OK);
 
-        return format!("{response_line}\nSet-Cookie: username=; path=/; expires=Thu, Jan 01 1970 00:00:00 UTC;\nContent-Length: 0");
+        return format!("{response_line}\nSet-Cookie: username=; path=/; expires=Thu, Jan 01 1970 00:00:00 UTC;\nSet-Cookie: userId=; path=/; expires=Thu, Jan 01 1970 00:00:00 UTC;\nContent-Length: 0");
     }
 
     fn login_user(user: &User, conn: &Connection) -> String {
@@ -248,12 +248,12 @@ impl PostHandler {
         let hashed_password = Self::get_hashed_password(&user.password);
 
         // 2. Check if username and password exists
-        let query = &format!(
-            "
+        let query = &format!("
         SELECT username, password FROM [user] 
         WHERE username = '{}' AND password = '{}';",
             &user.username, hashed_password
         );
+
         let rows = get_query_iterator(conn, query);
         println!("Rows: {:?}", rows);
 
@@ -267,12 +267,34 @@ impl PostHandler {
             return ResponseLine::get_response_line(HttpResponseCode::BAD_REQUEST);
         }
 
-        // 3. Return OK
         println!("Login was successful!");
+
+        // 3. Get user ID for userId cookie
+        let query = &format!("
+        SELECT id FROM [user] 
+        WHERE username = '{}' AND password = '{}';",
+            &user.username, hashed_password
+        );
+        
+        let rows = get_query_iterator(conn, query);
+        println!("Rows: {:?}", rows);
+
+        if rows.is_empty() {
+            println!(
+                "Failed to get ID from user with username {} and password {}! Returning error...",
+                &user.username, hashed_password
+            );
+            return ResponseLine::get_response_line(HttpResponseCode::INTERNAL_SERVER_ERROR);
+        }
+
+        let id = &rows[0][0];
+        println!("Creating usernameId cookie with ID: {id}");
+
+        // 4. Return response
         //HttpResponseCode::OK
         let response_line = ResponseLine::get_response_line(HttpResponseCode::OK);
 
-        return format!("{response_line}\nSet-Cookie: username={}; path=/;\nPath: /web_server\nConnection: keep-alive\nContent-Length: 0\nAccess-Control-Allow-Origin: http://localhost:7878\nAccess-Control-Max-Age: 86400\nAccess-Control-Allow-Credentials: true\n", user.username);
+        return format!("{response_line}\nSet-Cookie: username={}; path=/;\nSet-Cookie: userId={}; path=/;\nPath: /web_server\nConnection: keep-alive\nContent-Length: 0\nAccess-Control-Allow-Origin: http://localhost:7878\nAccess-Control-Max-Age: 86400\nAccess-Control-Allow-Credentials: true\n", user.username, id);
     }
 
     fn register_user(user: &User, conn: &Connection) -> String {

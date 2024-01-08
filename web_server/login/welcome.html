@@ -29,17 +29,44 @@
                     }
                 }
                 return "";
-        }        
+        }
+        
+        function getCookieCustom(cookieName) {
+            let cookies = document.cookie.split(",").toString().split("; ");
+            if (cookies.length < 2 ) return "";
 
+            if (cookieName == "userId") {
+                if(cookies[0].includes("userId")) {
+                    return cookies[0].split("=")[1]
+                }
+                if(cookies[1].includes("userId")) {
+                    return cookies[1].split("=")[1]
+                }
+            }
+            else if (cookieName == "username") {
+                if(cookies[0].includes("username")) {
+                    return cookies[0].split("=")[1]
+                }
+                if(cookies[1].includes("username")) {
+                    return cookies[1].split("=")[1]
+                }
+            }
+
+            return "";
+        }
 
         api = "api/v1/"
-        let username = getCookie('username');
+        let username = getCookieCustom('username');
+        let userId = getCookieCustom('userId');
         let password = "";
-        alert('username from cookie: ' + username);
+
+        alert('username from cookie custom: [' + username + '] with userId from cookie custom: [' + userId + ']');
+        username = getCookie('username');
+        userId = getCookie('userId');
+        password = "";
+        alert('username from cookie: ' + username + ' with userId from cookie: ' + userId);
 
         document.getElementById("p1").innerHTML = "Welcome " + username + "!";
-
-
 
         function logout() {
             let request_type = "logout";

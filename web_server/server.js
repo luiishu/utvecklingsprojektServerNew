@@ -25,29 +25,10 @@ export async function send_order(body) {
         return await data;
     } catch (error) {
         // Handle errors here
-        console.log("does it come here insted? " + JSON.stringify(error));
+        console.log("does it come here instead? " + JSON.stringify(error));
         return error;
     }
 }
-
-// POST /web_server/api/v1/orders HTTP/1.1
-
-// Body {
-//     "order": {
-//         "user_id": 1,
-//         "product_amount": 0,
-//         "total_cost": 0,
-//         "order_date": "2023-12-19",
-//         "order_timestamp": "2023-12-24 13:37:00",
-//         "status": "READY"
-//     },
-
-//     "order-items": [
-//     {"order_id": 2, "product_id": 1, "amount": 2, "cost": 0},
-//     {"order_id": 2, "product_id": 2, "amount": 3, "cost": 0},
-//     {"order_id": 2, "product_id": 3, "amount": 3, "cost": 0}
-//     ]
-// }
 
 
 
@@ -62,4 +43,8 @@ async function fetch_data(uri) {
         console.error('Error fetching data:', error);
         throw error; // You might want to throw the error for the caller to handle or log it as needed
     }
+}
+
+export function get_user_id() {
+    return Number(localStorage.getItem("user_id"));
 }

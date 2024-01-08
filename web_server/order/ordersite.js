@@ -1,13 +1,13 @@
 import * as server from "../server.js"
 import * as share from "./share.js"
-
+console.log("hello?");
 let error_array = [];
 let storage_array = [];
 let input_array = [];
 let btn_array = [];
+let price_array = [];
 
 let lager_array = [0, 0, 0, 0];
-let price_array = [10, 20, 30, 40];
 
 let cart_total;
 let cart_items;
@@ -15,13 +15,9 @@ let cart_btn;
 
 const sync_time_in_millie = 10000;
 
-
-
-
-
-
 document.addEventListener("DOMContentLoaded", async function () { // storage_txt_blue
-
+    await share.update_price_array();
+    console.log("HEY??");
 
     for (let i = 0; i < share.color_array.length; i++) {
 
@@ -36,6 +32,10 @@ document.addEventListener("DOMContentLoaded", async function () { // storage_txt
             event.preventDefault()
             add_item(i);
         })
+        price_array[i] = document.getElementById("price" + share.color_array[i]);
+        price_array[i].innerHTML = "Pris: " + share.price_array[i] + " kr";
+        console.log("hello??");
+
     }
     cart_total = document.getElementById("carttotal");
     cart_btn = document.getElementById("cartbtn").addEventListener('click', function () {
@@ -49,7 +49,7 @@ document.addEventListener("DOMContentLoaded", async function () { // storage_txt
         sum += element;
     })
     cart_total.innerHTML = sum;
-    setTimeout(on_timer, 500);
+    await on_timer();
 });
 
 
@@ -81,28 +81,10 @@ async function sync_lager() {
 
     let data = await server.get_product_pages();
     let lager = [0, 0, 0, 0];
-    data.rows.forEach(element => {
-        switch (element.color) {
+    for (let i = 0; i < 4; i++) {
+        lager[i] = data.rows[i].amount;
+    }
 
-            case "Red block":
-                lager[0] += 1;
-                break;
-
-            case "Green block":
-                lager[1] += 1;
-                break;
-
-            case "Blue block":
-                lager[2] += 1;
-                break;
-
-            case "Yellow block":
-                lager[3] += 1;
-                break;
-
-            default:
-        }
-    });
     for (let i = 0; i < lager_array.length; i++) {
         lager_array[i] = lager[i];
         if (storage_array[i]) {
@@ -115,56 +97,3 @@ async function sync_lager() {
 
 
 }
-
-
-
-async function create_order(user_id, product_amount, order_items) {
-
-    const order_request = "POST /web_server/api/v1/orders HTTP/1.1"
-
-    let total_cost;
-
-    order_items.forEach(
-        item => {
-            total_cost += item.amount * price_array[item.product_id];
-        }
-    )
-
-    const requestBody = {
-        order: {
-            user_id: user_id,
-            product_amount: 0,
-            total_cost: total_cost,
-            order_date: get_year_month_day(),
-            order_timestamp: get_year_month_day_hour_minute_second(),
-            status: 'READY'
-        },
-        'order-items': [
-            order_items
-        ]
-    };
-
-}
-
-
-
-
-
-// POST /web_server/api/v1/orders HTTP/1.1
-
-// Body {
-//     "order": {
-//         "user_id": 1,
-//         "product_amount": 0,
-//         "total_cost": 0,
-//         "order_date": "2023-12-19",
-//         "order_timestamp": "2023-12-24 13:37:00",
-//         "status": "READY"
-//     },
-
-//     "order-items": [
-//     {"order_id": 2, "product_id": 1, "amount": 2, "cost": 0},
-//     {"order_id": 2, "product_id": 2, "amount": 3, "cost": 0},
-//     {"order_id": 2, "product_id": 3, "amount": 3, "cost": 0}
-//     ]
-// }

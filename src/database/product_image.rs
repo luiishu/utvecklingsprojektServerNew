@@ -6,7 +6,7 @@ use crate::database::product_type;
 
 use super::table::Table;
 
-use rusqlite::{Connection, params, Result, Row};
+use rusqlite::{params, Connection, Result, Row};
 
 pub struct ProductImage {}
 
@@ -21,7 +21,7 @@ impl Table for ProductImage {
 
                 FOREIGN KEY(product_id) REFERENCES product(id)
               );",
-              (),
+            (),
         )?;
         Ok(())
     }
@@ -39,13 +39,16 @@ impl Table for ProductImage {
 }
 
 impl ProductImage {
-    pub fn insert_product_image(conn: &rusqlite::Connection, file_name: &str, file_name_hover: &str, product_id: i64) -> rusqlite::Result<()> {
+    pub fn insert_product_image(
+        conn: &rusqlite::Connection,
+        file_name: &str,
+        file_name_hover: &str,
+        product_id: i64,
+    ) -> rusqlite::Result<()> {
         let query = "INSERT INTO product_image (file_name, file_name_hover, product_id) VALUES (?1, ?2, ?3)";
         match conn.execute(query, (file_name, file_name_hover, product_id)) {
-            Ok(_) => {},
-            Err(e) => {
-                return Err(e)
-            },
+            Ok(_) => {}
+            Err(e) => return Err(e),
         }
 
         Ok(())
@@ -57,10 +60,12 @@ impl ProductImage {
         //print_rows_from_query(conn, query).unwrap();
         //id = table::q
 
-        let data = crate::database::table::get_query_iterator(conn, query);        
+        let data = crate::database::table::get_query_iterator(conn, query);
         println!("{:?}", data);
         if data.len() == 0 {
-            return Err(String::from("Error: there is no order that is ready for processing."));
+            return Err(String::from(
+                "Error: there is no order that is ready for processing.",
+            ));
         }
         let id = match data[0][0].parse::<i64>() {
             Ok(id) => id,
@@ -68,7 +73,7 @@ impl ProductImage {
         };
 
         println!("Returning id: {id}");
-        
+
         Ok(id)
     }
 }
