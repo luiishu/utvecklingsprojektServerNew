@@ -18,7 +18,7 @@ export function reset_cart_total() {
     
 }
 
-export const color_array = ["red", "green", "blue", "yellow"];
+export const color_array = ["red", "yellow", "green", "blue"];
 
 export let price_array = [];
 
