@@ -18,6 +18,8 @@ alert(localStorage.getItem("username"));
 
 document.addEventListener("DOMContentLoaded", async function () { // storage_txt_blue
     await share.init_price();
+    console.log("HEY??");
+
     for (let i = 0; i < share.color_array.length; i++) {
 
         let storage_id = "storagetxt" + share.color_array[i];
