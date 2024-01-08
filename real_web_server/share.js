@@ -6,7 +6,6 @@ export function set_cart_items(cart_items) {
 export function get_cart_total() {
     let cart = JSON.parse(localStorage.getItem('cart'));
     let c = Array.isArray(cart) ? cart : Array.from([0, 0, 0, 0]);
-
     return c;
 }
 

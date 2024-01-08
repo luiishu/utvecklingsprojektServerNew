@@ -252,7 +252,7 @@ async function init() {
     if (products) {
         //Add here what you want to be rendered
         renderProducts(products, "product-container");
-       // renderProducts(products, "product-container-homepage");
+        renderProducts(products, "product-container-homepage");
     }
     else {
         console.error('Failed to fetch products. RenderProducts_Temp will not be called.');
