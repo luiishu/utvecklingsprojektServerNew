@@ -5,7 +5,7 @@ export function set_cart_items(cart_items) {
 }
 
 export function get_cart_total() {
-    let cart = JSON.parse(localStorage.getItem('cart'));
+    let cart = JSON.parse(localStorage.getItem('cartitems'));
     let c = Array.isArray(cart) ? cart : Array.from([0, 0, 0, 0]);
 
     return c;
@@ -15,7 +15,7 @@ export function get_cart_total() {
 export function reset_cart_total() {
 
     localStorage.setItem('cartitems', JSON.stringify([0, 0, 0, 0]));
-    
+
 }
 
 export const color_array = ["red", "yellow", "green", "blue"];

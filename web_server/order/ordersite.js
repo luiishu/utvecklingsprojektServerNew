@@ -13,7 +13,7 @@ let cart_total;
 let cart_items;
 let cart_btn;
 
-const sync_time_in_millie = 10000;
+const sync_time_in_millie = 500;
 
 document.addEventListener("DOMContentLoaded", async function () { // storage_txt_blue
     await share.update_price_array();

@@ -130,7 +130,6 @@ async function on_checkout() {
 
         'order-items': order,
     };
-    console.log(JSON.stringify(order_data));
     await server.send_order(order_data);
     share.reset_cart_total();
     update_total_text();
