@@ -17,7 +17,7 @@ pub struct User {
 impl Table for User {
     fn create_table(conn: &rusqlite::Connection) -> Result<()> {
         conn.execute(
-            "CREATE table [user] (
+            "CREATE TABLE IF NOT EXISTS [user] (
                 id INTEGER PRIMARY KEY,
                 username TEXT UNIQUE NOT NULL,
                 password TEXT NOT NULL,

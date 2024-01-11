@@ -1,6 +1,6 @@
 {
     "order": { 
-        "user_id": 1, 
+        "user_id": 69, 
         "product_amount": 8, 
         "total_cost": 420, 
         "order_date": "2023-12-19", 
@@ -9,8 +9,8 @@
     },
     
     "order-items": [
-    {"product_id": 1, "amount": 2, "cost": 0},
-    {"product_id": 2, "amount": 3, "cost": 0},
-    {"product_id": 3, "amount": 3, "cost": 0}
+    {"product_id": 1, "amount": 2, "cost": 10},
+    {"product_id": 2, "amount": 2, "cost": 100},
+    {"product_id": 3, "amount": 4, "cost": 50}
     ]
 }

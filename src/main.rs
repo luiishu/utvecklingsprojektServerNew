@@ -43,11 +43,11 @@ mod response;
 //mod database/hello_from_database;
 //static mut counter: i32 = 0;
 
-const LAN: bool = true;
+const LAN: bool = false;
 const PRINTING: bool = true;
 
 const LOCALHOST_IP_V4: &str = "127.0.0.1";
-const SERVER_IP_V4: &str = "192.168.0.109"; //
+const SERVER_IP_V4: &str = "192.168.0.109";
 
 const RUST_PORT: u16 = 7878;
 
@@ -98,7 +98,6 @@ pub fn run_server(listener: TcpListener, conn: &Connection) {
     let mut counter = 0;
 
     for stream in listener.incoming() {
-        // seems like it gets stuck here on accept (in tcp-lib assembly code)
         //if PRINTING {println!("f")};
         match stream {
             Ok(stream) => {

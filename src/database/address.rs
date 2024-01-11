@@ -21,7 +21,7 @@ pub enum AddressRows {
 impl Table for Address {
     fn create_table(conn: &rusqlite::Connection) -> Result<()> {
         conn.execute(
-            "CREATE table address (
+            "CREATE TABLE IF NOT EXISTS address (
                 id INTEGER PRIMARY KEY,
                 country TEXT NOT NULL,
                 city TEXT NOT NULL,

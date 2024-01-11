@@ -13,24 +13,7 @@
     <h2>Logout</h2>
     <button onclick="logout()">Logout</button>
 
-
-    <script>
-        function getCookie(cname) {// taken from https://www.w3schools.com/js/js_cookies.asp
-            let name = cname + "=";
-            let decodedCookie = decodeURIComponent(document.cookie);
-            let ca = decodedCookie.split(';');
-                for(let i = 0; i <ca.length; i++) {
-                    let c = ca[i];
-                    while (c.charAt(0) == ' ') {
-                        c = c.substring(1);
-                    }
-                    if (c.indexOf(name) == 0) {
-                        return c.substring(name.length, c.length);
-                    }
-                }
-                return "";
-        }
-        
+    <script>        
         function getCookieCustom(cookieName) {
             let cookies = document.cookie.split(",").toString().split("; ");
             if (cookies.length < 2 ) return "";
@@ -60,17 +43,15 @@
         let userId = getCookieCustom('userId');
         let password = "";
 
-        alert('username from cookie custom: [' + username + '] with userId from cookie custom: [' + userId + ']');
-        username = getCookie('username');
-        userId = getCookie('userId');
+        console.log('username from cookie custom: [' + username + '] with userId from cookie custom: [' + userId + ']');
         password = "";
-        alert('username from cookie: ' + username + ' with userId from cookie: ' + userId);
+        console.log('username from cookie: ' + username + ' with userId from cookie: ' + userId);
 
         document.getElementById("p1").innerHTML = "Welcome " + username + "!";
 
         function logout() {
             let request_type = "logout";
-            alert("It's time to logout user with username: " + username);
+            console.log("It's time to logout user with username: " + username);
             fetch(api + 'users', {
             method: 'POST',
             body: JSON.stringify({username, password, request_type}),

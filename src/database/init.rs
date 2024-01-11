@@ -23,10 +23,18 @@ pub fn init_database(in_memory: bool) -> Connection {
     super::database::create_tables(&conn).unwrap();
 
     // Insert test data
-    super::database::insert_test_data(&conn).unwrap();
-    super::order_position::OrderPosition::insert_initial_positions(&conn).unwrap();    
-    super::product::Product::insert_product_from_json(&conn, "simple_products.json");
-    super::product::Product::insert_product_from_json(&conn, "products.json");
+    if in_memory {
+        super::database::insert_test_data(&conn).unwrap();
+        super::order_position::OrderPosition::insert_initial_positions(&conn).unwrap();    
+        super::product::Product::insert_product_from_json(&conn, "simple_products.json");
+        super::product::Product::insert_product_from_json(&conn, "products.json");
+    }
+
+    //super::database::insert_test_data(&conn).unwrap();
+    //super::order_position::OrderPosition::insert_initial_positions(&conn).unwrap();    
+    //super::product::Product::insert_product_from_json(&conn, "simple_products.json");
+    //super::product::Product::insert_product_from_json(&conn, "products.json");
+    
 
     // Print data (testing)    
     //super::test::database_testing::hello_from_database_testing();

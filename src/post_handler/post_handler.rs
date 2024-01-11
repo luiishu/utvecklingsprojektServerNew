@@ -87,7 +87,7 @@ impl PostHandler {
             println!("{:?}", order_item);
         }
 
-        let newest_order_id = match Order::get_newest_order_id(conn) {//ska fixa
+        let newest_order_id = match Order::get_newest_order_id(conn) {
             Ok(id) => id,
             Err(e) => {
                 eprintln!("{}", e.as_str());
