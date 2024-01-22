@@ -206,6 +206,4 @@ impl Order {
         let query = format!(r#"UPDATE [order] SET status = "{new_status}" WHERE id = {id};"#);
         conn.execute(&query,()).unwrap();
     }
-
-
 }

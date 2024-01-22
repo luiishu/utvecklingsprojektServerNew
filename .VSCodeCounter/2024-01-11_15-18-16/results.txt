@@ -1,0 +1,150 @@
+Date : 2024-01-11 15:18:16
+Directory : c:\Users\mekka\Documents\programming\rust\utvecklingsprojekt\server
+Total : 103 files,  9540 codes, 1671 comments, 1641 blanks, all 12852 lines
+
+Languages
++------------+------------+------------+------------+------------+------------+
+| language   | files      | code       | comment    | blank      | total      |
++------------+------------+------------+------------+------------+------------+
+| Rust       |         39 |      3,060 |        598 |        831 |      4,489 |
+| HTML       |         30 |      2,488 |        326 |        288 |      3,102 |
+| JSON       |         16 |      1,813 |          0 |          4 |      1,817 |
+| JavaScript |         13 |      1,044 |        504 |        296 |      1,844 |
+| CSS        |          2 |        868 |        243 |        206 |      1,317 |
+| Database   |          1 |        265 |          0 |         16 |        281 |
+| Markdown   |          2 |          2 |          0 |          0 |          2 |
++------------+------------+------------+------------+------------+------------+
+
+Directories
++--------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                                         | files      | code       | comment    | blank      | total      |
++--------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                                            |        103 |      9,540 |      1,671 |      1,641 |     12,852 |
+| . (Files)                                                                                                    |          8 |        510 |         10 |         31 |        551 |
+| json                                                                                                         |          9 |        957 |          0 |          3 |        960 |
+| real_web_server                                                                                              |         23 |      3,510 |      1,027 |        468 |      5,005 |
+| src                                                                                                          |         41 |      3,107 |        598 |        831 |      4,536 |
+| src (Files)                                                                                                  |          6 |        508 |        110 |        138 |        756 |
+| src\archive                                                                                                  |          2 |        218 |         77 |         72 |        367 |
+| src\database                                                                                                 |         17 |      1,463 |        257 |        371 |      2,091 |
+| src\database (Files)                                                                                         |         15 |      1,411 |        111 |        343 |      1,865 |
+| src\database\test                                                                                            |          2 |         52 |        146 |         28 |        226 |
+| src\fetch_handler                                                                                            |          7 |        143 |         22 |         39 |        204 |
+| src\order_system                                                                                             |          3 |        389 |         96 |        118 |        603 |
+| src\post_handler                                                                                             |          4 |        347 |         36 |         89 |        472 |
+| src\response                                                                                                 |          2 |         39 |          0 |          4 |         43 |
+| web_server                                                                                                   |         22 |      1,456 |         36 |        308 |      1,800 |
+| web_server (Files)                                                                                           |         15 |        769 |         18 |        157 |        944 |
+| web_server\login                                                                                             |          2 |        240 |          0 |         36 |        276 |
+| web_server\order                                                                                             |          5 |        447 |         18 |        115 |        580 |
++--------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++--------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| filename                                                                                                     | language   | code       | comment    | blank      | total      |
++--------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| c:\Users\mekka\Documents\programming\rust\utvecklingsprojekt\server\README.md                                | Markdown   |          1 |          0 |          0 |          1 |
+| c:\Users\mekka\Documents\programming\rust\utvecklingsprojekt\server\database.db                              | Database   |        265 |          0 |         16 |        281 |
+| c:\Users\mekka\Documents\programming\rust\utvecklingsprojekt\server\error.html                               | HTML       |         11 |          0 |          1 |         12 |
+| c:\Users\mekka\Documents\programming\rust\utvecklingsprojekt\server\grattis.html                             | HTML       |         11 |          9 |          4 |         24 |
+| c:\Users\mekka\Documents\programming\rust\utvecklingsprojekt\server\index.html                               | HTML       |         28 |          1 |          9 |         38 |
+| c:\Users\mekka\Documents\programming\rust\utvecklingsprojekt\server\json\detailed_products.json              | JSON       |        256 |          0 |          0 |        256 |
+| c:\Users\mekka\Documents\programming\rust\utvecklingsprojekt\server\json\detailed_products2.json             | JSON       |        256 |          0 |          0 |        256 |
+| c:\Users\mekka\Documents\programming\rust\utvecklingsprojekt\server\json\order_position.json                 | JSON       |        172 |          0 |          0 |        172 |
+| c:\Users\mekka\Documents\programming\rust\utvecklingsprojekt\server\json\order_posting.json                  | JSON       |         19 |          0 |          1 |         20 |
+| c:\Users\mekka\Documents\programming\rust\utvecklingsprojekt\server\json\order_posting2.json                 | JSON       |         15 |          0 |          1 |         16 |
+| c:\Users\mekka\Documents\programming\rust\utvecklingsprojekt\server\json\order_posting_real.json             | JSON       |         15 |          0 |          1 |         16 |
+| c:\Users\mekka\Documents\programming\rust\utvecklingsprojekt\server\json\ordsys_response_amounts.json        | JSON       |         24 |          0 |          0 |         24 |
+| c:\Users\mekka\Documents\programming\rust\utvecklingsprojekt\server\json\ordsys_response_full.json           | JSON       |        191 |          0 |          0 |        191 |
+| c:\Users\mekka\Documents\programming\rust\utvecklingsprojekt\server\json\test.json                           | JSON       |          9 |          0 |          0 |          9 |
+| c:\Users\mekka\Documents\programming\rust\utvecklingsprojekt\server\modulo.html                              | HTML       |         10 |          0 |          1 |         11 |
+| c:\Users\mekka\Documents\programming\rust\utvecklingsprojekt\server\products.json                            | JSON       |        136 |          0 |          0 |        136 |
+| c:\Users\mekka\Documents\programming\rust\utvecklingsprojekt\server\real_web_server\README.md                | Markdown   |          1 |          0 |          0 |          1 |
+| c:\Users\mekka\Documents\programming\rust\utvecklingsprojekt\server\real_web_server\about.html               | HTML       |         96 |         19 |          4 |        119 |
+| c:\Users\mekka\Documents\programming\rust\utvecklingsprojekt\server\real_web_server\blog.html                | HTML       |         91 |         19 |          3 |        113 |
+| c:\Users\mekka\Documents\programming\rust\utvecklingsprojekt\server\real_web_server\cart.html                | HTML       |        159 |         44 |          8 |        211 |
+| c:\Users\mekka\Documents\programming\rust\utvecklingsprojekt\server\real_web_server\cart.js                  | JavaScript |        251 |         88 |         78 |        417 |
+| c:\Users\mekka\Documents\programming\rust\utvecklingsprojekt\server\real_web_server\checkout.html            | HTML       |        108 |         19 |          5 |        132 |
+| c:\Users\mekka\Documents\programming\rust\utvecklingsprojekt\server\real_web_server\checkout.js              | JavaScript |         50 |          5 |         10 |         65 |
+| c:\Users\mekka\Documents\programming\rust\utvecklingsprojekt\server\real_web_server\contact.html             | HTML       |         91 |         19 |          4 |        114 |
+| c:\Users\mekka\Documents\programming\rust\utvecklingsprojekt\server\real_web_server\detailed_products.json   | JSON       |        256 |          0 |          0 |        256 |
+| c:\Users\mekka\Documents\programming\rust\utvecklingsprojekt\server\real_web_server\index.html               | HTML       |        136 |        117 |         12 |        265 |
+| c:\Users\mekka\Documents\programming\rust\utvecklingsprojekt\server\real_web_server\orderDetails.html        | HTML       |        164 |          0 |          5 |        169 |
+| c:\Users\mekka\Documents\programming\rust\utvecklingsprojekt\server\real_web_server\orders.json              | JSON       |        233 |          0 |          0 |        233 |
+| c:\Users\mekka\Documents\programming\rust\utvecklingsprojekt\server\real_web_server\payment.html             | HTML       |        149 |         19 |          5 |        173 |
+| c:\Users\mekka\Documents\programming\rust\utvecklingsprojekt\server\real_web_server\product-filter.js        | JavaScript |        186 |        337 |         65 |        588 |
+| c:\Users\mekka\Documents\programming\rust\utvecklingsprojekt\server\real_web_server\products.html            | HTML       |        134 |         19 |          6 |        159 |
+| c:\Users\mekka\Documents\programming\rust\utvecklingsprojekt\server\real_web_server\products.json            | JSON       |        136 |          0 |          1 |        137 |
+| c:\Users\mekka\Documents\programming\rust\utvecklingsprojekt\server\real_web_server\profile.html             | HTML       |         95 |         19 |          6 |        120 |
+| c:\Users\mekka\Documents\programming\rust\utvecklingsprojekt\server\real_web_server\script.js                | JavaScript |         13 |          0 |          3 |         16 |
+| c:\Users\mekka\Documents\programming\rust\utvecklingsprojekt\server\real_web_server\server.js                | JavaScript |         30 |          2 |          3 |         35 |
+| c:\Users\mekka\Documents\programming\rust\utvecklingsprojekt\server\real_web_server\share.js                 | JavaScript |         13 |          0 |          5 |         18 |
+| c:\Users\mekka\Documents\programming\rust\utvecklingsprojekt\server\real_web_server\signin.html              | HTML       |        130 |         19 |         13 |        162 |
+| c:\Users\mekka\Documents\programming\rust\utvecklingsprojekt\server\real_web_server\signin.js                | JavaScript |        144 |         46 |         32 |        222 |
+| c:\Users\mekka\Documents\programming\rust\utvecklingsprojekt\server\real_web_server\style.css                | CSS        |        844 |        236 |        200 |      1,280 |
+| c:\Users\mekka\Documents\programming\rust\utvecklingsprojekt\server\simple_products.json                     | JSON       |         48 |          0 |          0 |         48 |
+| c:\Users\mekka\Documents\programming\rust\utvecklingsprojekt\server\src\archive\archive.rs                   | Rust       |        197 |         77 |         65 |        339 |
+| c:\Users\mekka\Documents\programming\rust\utvecklingsprojekt\server\src\archive\old_database_stuff.rs        | Rust       |         21 |          0 |          7 |         28 |
+| c:\Users\mekka\Documents\programming\rust\utvecklingsprojekt\server\src\database\address.rs                  | Rust       |         69 |          2 |         26 |         97 |
+| c:\Users\mekka\Documents\programming\rust\utvecklingsprojekt\server\src\database\database.rs                 | Rust       |        212 |         45 |         54 |        311 |
+| c:\Users\mekka\Documents\programming\rust\utvecklingsprojekt\server\src\database\init.rs                     | Rust       |         22 |         14 |          9 |         45 |
+| c:\Users\mekka\Documents\programming\rust\utvecklingsprojekt\server\src\database\mod.rs                      | Rust       |         15 |          0 |          4 |         19 |
+| c:\Users\mekka\Documents\programming\rust\utvecklingsprojekt\server\src\database\order.rs                    | Rust       |        153 |         15 |         43 |        211 |
+| c:\Users\mekka\Documents\programming\rust\utvecklingsprojekt\server\src\database\order_item.rs               | Rust       |         37 |          2 |          8 |         47 |
+| c:\Users\mekka\Documents\programming\rust\utvecklingsprojekt\server\src\database\order_position.rs           | Rust       |         75 |          2 |         22 |         99 |
+| c:\Users\mekka\Documents\programming\rust\utvecklingsprojekt\server\src\database\product.rs                  | Rust       |        388 |         17 |         64 |        469 |
+| c:\Users\mekka\Documents\programming\rust\utvecklingsprojekt\server\src\database\product_brand.rs            | Rust       |         25 |          0 |          5 |         30 |
+| c:\Users\mekka\Documents\programming\rust\utvecklingsprojekt\server\src\database\product_category.rs         | Rust       |         25 |          0 |          5 |         30 |
+| c:\Users\mekka\Documents\programming\rust\utvecklingsprojekt\server\src\database\product_image.rs            | Rust       |         62 |          3 |         15 |         80 |
+| c:\Users\mekka\Documents\programming\rust\utvecklingsprojekt\server\src\database\product_review.rs           | Rust       |         29 |          0 |          6 |         35 |
+| c:\Users\mekka\Documents\programming\rust\utvecklingsprojekt\server\src\database\product_type.rs             | Rust       |         44 |          2 |         18 |         64 |
+| c:\Users\mekka\Documents\programming\rust\utvecklingsprojekt\server\src\database\table.rs                    | Rust       |        181 |          9 |         43 |        233 |
+| c:\Users\mekka\Documents\programming\rust\utvecklingsprojekt\server\src\database\test\database_testing.rs    | Rust       |         51 |        146 |         28 |        225 |
+| c:\Users\mekka\Documents\programming\rust\utvecklingsprojekt\server\src\database\test\mod.rs                 | Rust       |          1 |          0 |          0 |          1 |
+| c:\Users\mekka\Documents\programming\rust\utvecklingsprojekt\server\src\database\user.rs                     | Rust       |         74 |          0 |         21 |         95 |
+| c:\Users\mekka\Documents\programming\rust\utvecklingsprojekt\server\src\fetch_handler\fetch_generator.rs     | Rust       |          0 |          0 |          1 |          1 |
+| c:\Users\mekka\Documents\programming\rust\utvecklingsprojekt\server\src\fetch_handler\fetch_handler.rs       | Rust       |         68 |         22 |         29 |        119 |
+| c:\Users\mekka\Documents\programming\rust\utvecklingsprojekt\server\src\fetch_handler\fetch_resources.rs     | Rust       |         17 |          0 |          7 |         24 |
+| c:\Users\mekka\Documents\programming\rust\utvecklingsprojekt\server\src\fetch_handler\mod.rs                 | Rust       |          4 |          0 |          0 |          4 |
+| c:\Users\mekka\Documents\programming\rust\utvecklingsprojekt\server\src\fetch_handler\ordsys_response.json   | JSON       |         23 |          0 |          0 |         23 |
+| c:\Users\mekka\Documents\programming\rust\utvecklingsprojekt\server\src\fetch_handler\test.json              | JSON       |         24 |          0 |          0 |         24 |
+| c:\Users\mekka\Documents\programming\rust\utvecklingsprojekt\server\src\fetch_handler\test.rs                | Rust       |          7 |          0 |          2 |          9 |
+| c:\Users\mekka\Documents\programming\rust\utvecklingsprojekt\server\src\get_handler.rs                       | Rust       |        154 |         14 |         27 |        195 |
+| c:\Users\mekka\Documents\programming\rust\utvecklingsprojekt\server\src\init.rs                              | Rust       |         11 |         35 |          3 |         49 |
+| c:\Users\mekka\Documents\programming\rust\utvecklingsprojekt\server\src\lib.rs                               | Rust       |        120 |         17 |         45 |        182 |
+| c:\Users\mekka\Documents\programming\rust\utvecklingsprojekt\server\src\main.rs                              | Rust       |        162 |         38 |         45 |        245 |
+| c:\Users\mekka\Documents\programming\rust\utvecklingsprojekt\server\src\order_system\mod.rs                  | Rust       |          2 |          0 |          0 |          2 |
+| c:\Users\mekka\Documents\programming\rust\utvecklingsprojekt\server\src\order_system\order_system.rs         | Rust       |        291 |         61 |         95 |        447 |
+| c:\Users\mekka\Documents\programming\rust\utvecklingsprojekt\server\src\order_system\order_system_testing.rs | Rust       |         96 |         35 |         23 |        154 |
+| c:\Users\mekka\Documents\programming\rust\utvecklingsprojekt\server\src\post_handler\mod.rs                  | Rust       |          3 |          0 |          0 |          3 |
+| c:\Users\mekka\Documents\programming\rust\utvecklingsprojekt\server\src\post_handler\post_handler.rs         | Rust       |        272 |         27 |         62 |        361 |
+| c:\Users\mekka\Documents\programming\rust\utvecklingsprojekt\server\src\post_handler\supported_resources.rs  | Rust       |          9 |          0 |          3 |         12 |
+| c:\Users\mekka\Documents\programming\rust\utvecklingsprojekt\server\src\post_handler\test.rs                 | Rust       |         63 |          9 |         24 |         96 |
+| c:\Users\mekka\Documents\programming\rust\utvecklingsprojekt\server\src\request_handler.rs                   | Rust       |         25 |          4 |         11 |         40 |
+| c:\Users\mekka\Documents\programming\rust\utvecklingsprojekt\server\src\request_line.rs                      | Rust       |         36 |          2 |          7 |         45 |
+| c:\Users\mekka\Documents\programming\rust\utvecklingsprojekt\server\src\response\mod.rs                      | Rust       |          1 |          0 |          0 |          1 |
+| c:\Users\mekka\Documents\programming\rust\utvecklingsprojekt\server\src\response\response.rs                 | Rust       |         38 |          0 |          4 |         42 |
+| c:\Users\mekka\Documents\programming\rust\utvecklingsprojekt\server\web_server\cart.html                     | HTML       |        118 |          0 |         18 |        136 |
+| c:\Users\mekka\Documents\programming\rust\utvecklingsprojekt\server\web_server\database_get.html             | HTML       |         11 |          0 |          0 |         11 |
+| c:\Users\mekka\Documents\programming\rust\utvecklingsprojekt\server\web_server\fetch_handler.html            | HTML       |         63 |          1 |         13 |         77 |
+| c:\Users\mekka\Documents\programming\rust\utvecklingsprojekt\server\web_server\fetch_post_test.html          | HTML       |        125 |          0 |         23 |        148 |
+| c:\Users\mekka\Documents\programming\rust\utvecklingsprojekt\server\web_server\forms_test.html               | HTML       |         81 |          0 |         20 |        101 |
+| c:\Users\mekka\Documents\programming\rust\utvecklingsprojekt\server\web_server\images_test.html              | HTML       |         24 |          0 |          2 |         26 |
+| c:\Users\mekka\Documents\programming\rust\utvecklingsprojekt\server\web_server\login.html                    | HTML       |         21 |          1 |          5 |         27 |
+| c:\Users\mekka\Documents\programming\rust\utvecklingsprojekt\server\web_server\login\login.html              | HTML       |        163 |          0 |         28 |        191 |
+| c:\Users\mekka\Documents\programming\rust\utvecklingsprojekt\server\web_server\login\welcome.html            | HTML       |         77 |          0 |          8 |         85 |
+| c:\Users\mekka\Documents\programming\rust\utvecklingsprojekt\server\web_server\order\cart.html               | HTML       |        106 |          1 |         23 |        130 |
+| c:\Users\mekka\Documents\programming\rust\utvecklingsprojekt\server\web_server\order\cart.js                 | JavaScript |        144 |         16 |         32 |        192 |
+| c:\Users\mekka\Documents\programming\rust\utvecklingsprojekt\server\web_server\order\ordersite.html          | HTML       |        100 |          0 |         23 |        123 |
+| c:\Users\mekka\Documents\programming\rust\utvecklingsprojekt\server\web_server\order\ordersite.js            | JavaScript |         75 |          1 |         24 |        100 |
+| c:\Users\mekka\Documents\programming\rust\utvecklingsprojekt\server\web_server\order\share.js                | JavaScript |         22 |          0 |         13 |         35 |
+| c:\Users\mekka\Documents\programming\rust\utvecklingsprojekt\server\web_server\order_post.html               | HTML       |         10 |          0 |          1 |         11 |
+| c:\Users\mekka\Documents\programming\rust\utvecklingsprojekt\server\web_server\ordersite_edited.html         | HTML       |         71 |          0 |         17 |         88 |
+| c:\Users\mekka\Documents\programming\rust\utvecklingsprojekt\server\web_server\ordersite_edited.js           | JavaScript |         41 |          4 |         18 |         63 |
+| c:\Users\mekka\Documents\programming\rust\utvecklingsprojekt\server\web_server\products.html                 | HTML       |         94 |          0 |         20 |        114 |
+| c:\Users\mekka\Documents\programming\rust\utvecklingsprojekt\server\web_server\script.js                     | JavaScript |         34 |          2 |          7 |         43 |
+| c:\Users\mekka\Documents\programming\rust\utvecklingsprojekt\server\web_server\server.js                     | JavaScript |         41 |          3 |          6 |         50 |
+| c:\Users\mekka\Documents\programming\rust\utvecklingsprojekt\server\web_server\styles.css                    | CSS        |         24 |          7 |          6 |         37 |
+| c:\Users\mekka\Documents\programming\rust\utvecklingsprojekt\server\web_server\test_jpeg.html                | HTML       |         11 |          0 |          1 |         12 |
+| Total                                                                                                        |            |      9,540 |      1,671 |      1,641 |     12,852 |
++--------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+

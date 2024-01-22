@@ -19,7 +19,7 @@ use rusqlite::{params, Connection, Result};
 use server::{database::order, order_system::order_system::*};
 //use server::database::database::hello_from_database;
 
-use crate::database::database::*;
+use crate::database::{database::*, table::print_rows_from_query};
 use crate::get_handler::*;
 use crate::post_handler::*;
 use crate::request_line::*;
@@ -40,6 +40,7 @@ mod post_handler;
 mod request_handler;
 mod request_line;
 mod response;
+mod tests;
 //mod database/hello_from_database;
 //static mut counter: i32 = 0;
 
@@ -60,9 +61,6 @@ pub const SLEEP_DURATION: Duration = Duration::from_millis(SLEEP_DURATION_IN_MIL
 //static conn: Connection = Connection::open_in_memory().unwrap();
 
 fn main() {
-    //hello();
-    //hello_from_database();
-
     println!("\nInitializing server...");
 
     let listener = TcpListener::from(if LAN {
@@ -90,6 +88,9 @@ fn main() {
 
     println!("Running server on: {}", listener.local_addr().unwrap());
     //run_server(listener, &conn);
+    println!("a");
+    //print_rows_from_query(&conn, "SELECT tbl_name FROM sqlite_master WHERE type = 'table' AND tbl_name = 'product';");
+    println!("b");
     run_server(listener, &conn);
     println!("\nExiting server...");
 }

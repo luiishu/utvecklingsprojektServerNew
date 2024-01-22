@@ -167,7 +167,7 @@ impl Product {
 
             //ProductImage::print_rows(conn);
             //Self::print_rows(conn);
-            Self::print_detailed_products_json(conn);
+            //Self::print_detailed_products_json(conn);
 
             //println!("{}", json["data"][0]["id"]);
     }

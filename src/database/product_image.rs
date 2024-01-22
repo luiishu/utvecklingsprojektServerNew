@@ -61,7 +61,7 @@ impl ProductImage {
         //id = table::q
 
         let data = crate::database::table::get_query_iterator(conn, query);
-        println!("{:?}", data);
+        //println!("{:?}", data);
         if data.len() == 0 {
             return Err(String::from(
                 "Error: there is no order that is ready for processing.",
@@ -72,7 +72,7 @@ impl ProductImage {
             Err(e) => return Err(e.to_string()),
         };
 
-        println!("Returning id: {id}");
+        //println!("Returning id: {id}");
 
         Ok(id)
     }
