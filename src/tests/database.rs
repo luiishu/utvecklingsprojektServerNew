@@ -12,7 +12,9 @@ pub fn table_exists<'a>(conn: &Connection, table_name: &'a str) -> (&'a str, boo
 
 #[cfg(test)]
 mod test {
-    use std::path::Path;    
+    use std::{fs, path::Path};    
+    use crate::{database::product::Product, request_handler, response::response::{HttpResponseCode, HttpResponseCodes, ResponseLine}};
+
     use super::*;
 
     // Checks if a file named 'database.db' exists in project's root directory.
@@ -88,4 +90,203 @@ mod test {
         assert_eq!(("4", "Blue block"), (rows[3][0].as_str(), rows[3][1].as_str()));
         assert_ne!(("5", "Purple block"), (rows[3][0].as_str(), rows[3][1].as_str()));
     }
+
+    // Tests that product amounts are updated correctly
+    #[test]
+    fn test_update_product_amount_by_id() {
+        let conn = database::init::init_database(true);
+        let query = "SELECT * FROM product LIMIT 4;";
+        let n = get_query_iterator(&conn, query).len();
+
+        for i in 1..=n {
+            //println!("{i}");
+            let id = i.try_into().unwrap();
+            let amount = Product::get_amount_by_id(&conn, id);
+            assert_eq!(0, amount);
+        }
+
+        for i in 1..=n {
+            //println!("{i}");            
+            let id = i.try_into().unwrap();
+            Product::update_product_amount_by_id(&conn, id, 1);
+            let amount = Product::get_amount_by_id(&conn, id);
+            assert_eq!(1, amount);
+
+            Product::update_product_amount_by_id(&conn, id, 0);
+            let amount = Product::get_amount_by_id(&conn, id);
+            assert_eq!(1, amount);
+
+            Product::update_product_amount_by_id(&conn, id, -1);
+            let amount = Product::get_amount_by_id(&conn, id);
+            assert_eq!(0, amount);
+        }
+
+    }
+
+    // Tests user registration by trying to register the same user twice.
+    #[test]
+    fn test_user_registration() {
+        let conn = database::init::init_database(true);
+
+        let request_line = String::from("POST /web_server/api/v1/users HTTP/1.1");
+        let username = "username";
+        let password = "password";
+        let body = format!(r#"{{"username":"{username}","password":"{password}", "request_type":"register"}}"#);
+        let request = format!("{request_line}\n{body}");
+
+        let response = request_handler::handle_request(&request, &conn);
+        let response_line = response.split("\n").next().unwrap();
+
+        println!("Request sent:\n{request}");
+        println!("Response received:\n{response}");
+
+        assert_eq!(ResponseLine::get_response_line(HttpResponseCode::CREATED), response_line);
+
+        let response = request_handler::handle_request(&request, &conn);
+        let response_line = response.split("\n").next().unwrap();
+
+        println!("Request sent:\n{request}");
+        println!("Response received:\n{response}");
+
+        assert_eq!(ResponseLine::get_response_line(HttpResponseCode::CONFLICT), response_line);
+    }
+
+        // Tests user login by trying to login before and after registration.
+        #[test]
+        fn test_user_login() {
+            let conn = database::init::init_database(true);
+    
+            let request_line = String::from("POST /web_server/api/v1/users HTTP/1.1");
+            let username = "username";
+            let password = "password";
+            
+            let login_body = format!(r#"{{"username":"{username}","password":"{password}", "request_type":"login"}}"#);
+            let registration_body = format!(r#"{{"username":"{username}","password":"{password}", "request_type":"register"}}"#);
+            
+            let login_request = format!("{request_line}\n{login_body}");
+            let registration_request = format!("{request_line}\n{registration_body}");
+    
+            let response = request_handler::handle_request(&login_request, &conn);
+            let response_line = response.split("\n").next().unwrap();
+    
+            println!("Request sent:\n{login_request}");
+            println!("Response received:\n{response}");
+    
+            assert_eq!(ResponseLine::get_response_line(HttpResponseCode::NOT_FOUND), response_line);
+
+            let response = request_handler::handle_request(&registration_request, &conn);
+            let response_line = response.split("\n").next().unwrap();
+    
+            println!("Request sent:\n{registration_request}");
+            println!("Response received:\n{response}");
+    
+            assert_eq!(ResponseLine::get_response_line(HttpResponseCode::CREATED), response_line);
+
+            let response = request_handler::handle_request(&login_request, &conn);
+            let response_line = response.split("\n").next().unwrap();
+    
+            println!("Request sent:\n{login_request}");
+            println!("Response received:\n{response}");
+    
+            assert_eq!(ResponseLine::get_response_line(HttpResponseCode::OK), response_line);
+        }
+
+        // Tests user login by trying to login a user before and after registration.
+        #[test]
+        fn test_password_encryption() {
+            let conn = database::init::init_database(true);
+    
+            let request_line = String::from("POST /web_server/api/v1/users HTTP/1.1");
+            let username = "username";
+            let password = "password";
+            
+            let login_body = format!(r#"{{"username":"{username}","password":"{password}", "request_type":"login"}}"#);
+            let registration_body = format!(r#"{{"username":"{username}","password":"{password}", "request_type":"register"}}"#);
+
+            let login_request = format!("{request_line}\n{login_body}");
+            let registration_request = format!("{request_line}\n{registration_body}");
+
+            let response = request_handler::handle_request(&registration_request, &conn);
+            let response_line = response.split("\n").next().unwrap();
+    
+            println!("Request sent:\n{registration_request}");
+            println!("Response received:\n{response}");
+    
+            assert_eq!(ResponseLine::get_response_line(HttpResponseCode::CREATED), response_line);
+
+            let query = format!("SELECT password FROM [user] WHERE username = '{username}';");
+            let encrypted_password = &get_query_iterator(&conn, &query)[0][0];
+
+            println!("Unencrypted password:\n{password}");
+            println!("Encrypted password:\n{encrypted_password}");
+
+            assert_ne!(password, encrypted_password);
+
+            let response = request_handler::handle_request(&login_request, &conn);
+            let response_line = response.split("\n").next().unwrap();
+
+            println!("Request sent:\n{login_request}");
+            println!("Response received:\n{response}");
+
+            assert_eq!(ResponseLine::get_response_line(HttpResponseCode::OK), response_line);
+
+            let encrypted_login_body = format!(r#"{{"username":"{username}","password":"{encrypted_password}", "request_type":"login"}}"#);
+            let encrypted_login_request = format!("{request_line}\n{encrypted_login_body}");
+
+            let response = request_handler::handle_request(&encrypted_login_request, &conn);
+            let response_line = response.split("\n").next().unwrap();
+
+            println!("Request sent:\n{encrypted_login_request}");
+            println!("Response received:\n{response}");
+
+            assert_eq!(ResponseLine::get_response_line(HttpResponseCode::BAD_REQUEST), response_line);
+        }
+
+        // Tests order posting by posting an order multiple times after updating product amounts.
+        #[test]
+        fn test_order_posting() {
+            let conn = database::init::init_database(true);
+            let request_line = String::from("POST /web_server/api/v1/orders HTTP/1.1");
+
+            let body = fs::read_to_string("json/order_posting_real.json").expect("Unable to open file");    
+            let request = format!("{request_line}\n{body}");        
+            
+            let response = request_handler::handle_request(&request, &conn);
+            let response_line = response.split("\n").next().unwrap();
+
+            //println!("Request sent:\n{request}");
+            //println!("Response received:\n{response}");
+
+            assert_eq!(ResponseLine::get_response_line(HttpResponseCode::CONFLICT), response_line);
+
+            Product::update_product_amount_by_id(&conn, 1, 2);
+
+            let response = request_handler::handle_request(&request, &conn);
+            let response_line = response.split("\n").next().unwrap();
+
+            //println!("Request sent:\n{request}");
+            //println!("Response received:\n{response}");
+
+            assert_eq!(ResponseLine::get_response_line(HttpResponseCode::CONFLICT), response_line);
+
+            Product::update_product_amount_by_id(&conn, 2, 2);
+
+            let response = request_handler::handle_request(&request, &conn);
+            let response_line = response.split("\n").next().unwrap();
+
+            //println!("Request sent:\n{request}");
+            //println!("Response received:\n{response}");
+
+            assert_eq!(ResponseLine::get_response_line(HttpResponseCode::CONFLICT), response_line);
+
+            Product::update_product_amount_by_id(&conn, 3, 4);
+
+            let response = request_handler::handle_request(&request, &conn);
+            let response_line = response.split("\n").next().unwrap();
+
+            //println!("Request sent:\n{request}");
+            //println!("Response received:\n{response}");
+
+            assert_eq!(ResponseLine::get_response_line(HttpResponseCode::CREATED), response_line);
+        }
 }
